@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication;
+namespace LaminasTest\Authentication;
 
-use Zend\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationService;
 
 /**
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class AuthenticationServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,14 +21,14 @@ class AuthenticationServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that getStorage() returns Zend_Auth_Storage_Session
+     * Ensures that getStorage() returns Laminas_Auth_Storage_Session
      *
      * @return void
      */
     public function testGetStorage()
     {
         $storage = $this->auth->getStorage();
-        $this->assertInstanceOf('Zend\Authentication\Storage\Session', $storage);
+        $this->assertInstanceOf('Laminas\Authentication\Storage\Session', $storage);
     }
 
     public function testAdapter()
@@ -49,7 +48,7 @@ class AuthenticationServiceTest extends \PHPUnit_Framework_TestCase
     public function testAuthenticate()
     {
         $result = $this->authenticate();
-        $this->assertInstanceOf('Zend\Authentication\Result', $result);
+        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
         $this->assertTrue($this->auth->hasIdentity());
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }
@@ -57,7 +56,7 @@ class AuthenticationServiceTest extends \PHPUnit_Framework_TestCase
     public function testAuthenticateSetAdapter()
     {
         $result = $this->authenticate(new TestAsset\SuccessAdapter());
-        $this->assertInstanceOf('Zend\Authentication\Result', $result);
+        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
         $this->assertTrue($this->auth->hasIdentity());
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }
