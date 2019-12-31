@@ -1,14 +1,15 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-authentication for the canonical source repository
- * @copyright Copyright (c) 2012-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-authentication/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\TestAsset;
+namespace LaminasTest\Authentication\TestAsset;
 
-use Zend\Authentication\Adapter\AdapterInterface;
-use Zend\Authentication\Result as AuthenticationResult;
+use Laminas\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Result as AuthenticationResult;
 
 class SuccessAdapter implements AdapterInterface
 {

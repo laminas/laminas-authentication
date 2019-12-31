@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-authentication for the canonical source repository
- * @copyright Copyright (c) 2013-2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-authentication/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Validator;
+namespace LaminasTest\Authentication\Validator;
 
+use Laminas\Authentication\Adapter\ValidatableAdapterInterface;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Exception;
+use Laminas\Authentication\Result as AuthenticationResult;
+use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
+use LaminasTest\Authentication as AuthTest;
 use PHPUnit\Framework\TestCase;
-use Zend\Authentication\Adapter\ValidatableAdapterInterface;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Exception;
-use Zend\Authentication\Result as AuthenticationResult;
-use Zend\Authentication\Validator\Authentication as AuthenticationValidator;
-use ZendTest\Authentication as AuthTest;
 
 class AuthenticationTest extends TestCase
 {

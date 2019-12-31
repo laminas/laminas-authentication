@@ -1,13 +1,13 @@
 # LDAP Authentication
 
-`Zend\Authentication\Adapter\Ldap` supports web application authentication with
+`Laminas\Authentication\Adapter\Ldap` supports web application authentication with
 LDAP services. Its features include username and domain name canonicalization,
 multi-domain authentication, and failover capabilities. It has been tested to
 work with [Microsoft Active Directory](http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/)
 and [OpenLDAP](http://www.openldap.org/), but it should also work with other
 LDAP service providers.
 
-This documentation includes a guide on using `Zend\Authentication\Adapter\Ldap`,
+This documentation includes a guide on using `Laminas\Authentication\Adapter\Ldap`,
 an exploration of its API, an outline of the various available options,
 diagnostic information for troubleshooting authentication problems, and example
 options for both Active Directory and OpenLDAP servers.
@@ -19,8 +19,8 @@ authentication adapter, and also illustrates how to work with the
 authentication messages returned in the authentication result.
 
 ```php
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Adapter\Ldap as LdapAdapter;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Adapter\Ldap as LdapAdapter;
 
 // Retrieve the username and pasword from the request somehow.
 $username = /* ... */;
@@ -90,11 +90,11 @@ A later section on [server options](#server-options) details all available optio
 
 ## The API
 
-The `Zend\Authentication\Adapter\Ldap` constructor accepts three parameters.
+The `Laminas\Authentication\Adapter\Ldap` constructor accepts three parameters.
 
 The `$options` parameter is required and must be an array containing one or
 more sets of options.  Note that it is **an array of arrays**, with each
-sub-array providing [zend-ldap](http://framework.zend.com/manual/current/en/modules/zend.ldap.introduction.html)
+sub-array providing [laminas-ldap](https://docs.laminas.dev/laminas.ldap.introduction.html)
 options. Even if you will be using only one LDAP server, the options must still
 be within a sub-array.
 
@@ -127,22 +127,22 @@ another will be queried.
 > ### The Gory Details: What Happens in the Authenticate Method?
 >
 > When the `authenticate()` method is called, the adapter iterates over each
-> set of server options, passes them to the internal `Zend\Ldap\Ldap` instance,
-> and calls the `Zend\Ldap\Ldap::bind()` method with the username and password
+> set of server options, passes them to the internal `Laminas\Ldap\Ldap` instance,
+> and calls the `Laminas\Ldap\Ldap::bind()` method with the username and password
 > being authenticated.
 >
-> `Zend\Ldap\Ldap` checks to see if the username is qualified with a domain
+> `Laminas\Ldap\Ldap` checks to see if the username is qualified with a domain
 > (e.g., has a domain component like `alice@foo.net` or `FOO\alice`). If a
 > domain is present, but does not match either of the server's domain names
 > (e.g., `foo.net` or `FOO`), a special exception is thrown and caught by
-> `Zend\Authentication\Adapter\Ldap` that causes that server to be ignored, and
+> `Laminas\Authentication\Adapter\Ldap` that causes that server to be ignored, and
 > progression to the next server configured.
 >
 > If a domain matches, or if the user did not supply a qualified username,
-> `Zend\Ldap\Ldap` proceeds to try to bind with the supplied credentials. if
-> the bind is unsuccessful, `Zend\Ldap\Ldap` throws a
-> `Zend\Ldap\Exception\LdapException` which is caught by
-> `Zend\Authentication\Adapter\Ldap` and, again, the adapter progresses to the
+> `Laminas\Ldap\Ldap` proceeds to try to bind with the supplied credentials. if
+> the bind is unsuccessful, `Laminas\Ldap\Ldap` throws a
+> `Laminas\Ldap\Exception\LdapException` which is caught by
+> `Laminas\Authentication\Adapter\Ldap` and, again, the adapter progresses to the
 > next configured server.
 >
 > If the bind is successful, server iteration stops, and the adapter's
@@ -151,16 +151,16 @@ another will be queried.
 > If all configured servers fail to authenticate, `authenticate()` returns a
 > failure result with error messages from the last server consulted.
 
-The username and password parameters of the `Zend\Authentication\Adapter\Ldap`
+The username and password parameters of the `Laminas\Authentication\Adapter\Ldap`
 constructor represent the credentials being authenticated (i.e., the
 credentials supplied by the user through your HTML login form). Alternatively,
 they may also be set with the `setUsername()` and `setPassword()` methods.
 
 ## Server Options
 
-Each set of server options in the context of `Zend\Authentication\Adapter\Ldap`
+Each set of server options in the context of `Laminas\Authentication\Adapter\Ldap`
 consists of the following options, which are passed, largely unmodified, to
-`Zend\Ldap\Ldap::setOptions()`:
+`Laminas\Ldap\Ldap::setOptions()`:
 
 Name                     | Description
 ------------------------ | -----------
@@ -170,9 +170,9 @@ Name                     | Description
 `useSsl`                 | Whether or not the LDAP client should use SSL encrypted transport. The `useSsl` and `useStartTls` options are mutually exclusive, but `useStartTls` should be favored if the server and LDAP client library support it. This value also changes the default port value (see port description above).
 `username`               | The DN of the account used to perform account DN lookups. LDAP servers that require the username to be in DN form when performing the “bind” require this option. Meaning, if `bindRequiresDn` is `TRUE`, this option is required. This account does not need to be a privileged account; an account with read-only access to objects under the `baseDn` is all that is necessary (and preferred based on the Principle of Least Privilege).
 `password`               | The password of the account used to perform account DN lookups. If this option is not supplied, the LDAP client will attempt an “anonymous bind” when performing account DN lookups.
-`bindRequiresDn`         | Some LDAP servers require that the username used to bind be in DN form like `CN=Alice Baker,OU=Sales,DC=foo,DC=net` (basically all servers except Active Directory). If this option is `TRUE`, this instructs `Zend\Ldap\Ldap` to automatically retrieve the DN corresponding to the username being authenticated, if it is not already in DN form, and then re-bind with the proper DN. The default value is `FALSE`. Currently only Microsoft Active Directory Server (ADS) is known not to require usernames to be in DN form when binding, and therefore this option may be `FALSE` with AD (and it should be, as retrieving the DN requires an extra round trip to the server). Otherwise, this option must be set to `TRUE` (e.g. for OpenLDAP). This option also controls the default `accountFilterFormat` used when searching for accounts. See the `accountFilterFormat` option.
+`bindRequiresDn`         | Some LDAP servers require that the username used to bind be in DN form like `CN=Alice Baker,OU=Sales,DC=foo,DC=net` (basically all servers except Active Directory). If this option is `TRUE`, this instructs `Laminas\Ldap\Ldap` to automatically retrieve the DN corresponding to the username being authenticated, if it is not already in DN form, and then re-bind with the proper DN. The default value is `FALSE`. Currently only Microsoft Active Directory Server (ADS) is known not to require usernames to be in DN form when binding, and therefore this option may be `FALSE` with AD (and it should be, as retrieving the DN requires an extra round trip to the server). Otherwise, this option must be set to `TRUE` (e.g. for OpenLDAP). This option also controls the default `accountFilterFormat` used when searching for accounts. See the `accountFilterFormat` option.
 `baseDn`                 | The DN under which all accounts being authenticated are located. This option is required. if you are uncertain about the correct baseDn value, it should be sufficient to derive it from the user’s DNS domain using `DC=` components. For example, if the user’s principal name is `alice@foo.net`, a `baseDn` of `DC=foo,DC=net` should work. A more precise location (e.g., `OU=Sales,DC=foo,DC=net`) will be more efficient, however.
-`accountCanonicalForm`   | A value of 2, 3, or 4 indicating the form to which account names should be canonicalized after successful authentication. Values are as follows: 2 for traditional username style names (e.g., `alice`), 3 for backslash-style names (e.g., `FOO\alice`) or 4 for principal style usernames (e.g., `alice@foo.net`). The default value is 4 (e.g., `alice@foo.net`). For example, with a value of 3, the identity returned by `Zend\Authentication\Result::getIdentity()` (and `Zend\Authentication\AuthenticationService::getIdentity()`, if `Zend\Authentication\AuthenticationService` was used) will always be `FOO\alice`, regardless of what form Alice supplied, whether it be `alice`, `alice@foo.net`, `FOO\alice`, `FoO\aLicE`, `foo.net\alice`, etc. See the [Account Name Canonicalization](http://framework.zend.com/manual/current/en/modules/zend.ldap.introduction.html#account-name-canonicalization) section in the zend-ldap documentation for details. Note that when using multiple sets of server options it is recommended, but not required, that the same `accountCanonicalForm` be used with all server options so that the resulting usernames are always canonicalized to the same form (e.g., if you canonicalize to `EXAMPLE\username` with an AD server but to `username@example.com` with an OpenLDAP server, that may be awkward for the application’s high-level logic).
+`accountCanonicalForm`   | A value of 2, 3, or 4 indicating the form to which account names should be canonicalized after successful authentication. Values are as follows: 2 for traditional username style names (e.g., `alice`), 3 for backslash-style names (e.g., `FOO\alice`) or 4 for principal style usernames (e.g., `alice@foo.net`). The default value is 4 (e.g., `alice@foo.net`). For example, with a value of 3, the identity returned by `Laminas\Authentication\Result::getIdentity()` (and `Laminas\Authentication\AuthenticationService::getIdentity()`, if `Laminas\Authentication\AuthenticationService` was used) will always be `FOO\alice`, regardless of what form Alice supplied, whether it be `alice`, `alice@foo.net`, `FOO\alice`, `FoO\aLicE`, `foo.net\alice`, etc. See the [Account Name Canonicalization](https://docs.laminas.dev/laminas.ldap.introduction.html#account-name-canonicalization) section in the laminas-ldap documentation for details. Note that when using multiple sets of server options it is recommended, but not required, that the same `accountCanonicalForm` be used with all server options so that the resulting usernames are always canonicalized to the same form (e.g., if you canonicalize to `EXAMPLE\username` with an AD server but to `username@example.com` with an OpenLDAP server, that may be awkward for the application’s high-level logic).
 `accountDomainName`      | The FQDN domain name for which the target LDAP server is an authority (e.g., `example.com`). This option is used to canonicalize names so that the username supplied by the user can be converted as necessary for binding. It is also used to determine if the server is an authority for the supplied username (e.g., if `accountDomainName` is `foo.net` and the user supplies `bob@bar.net`, the server will not be queried, and a failure will result). This option is not required, but if it is not supplied, usernames in principal name form (e.g., `alice@foo.net`) are not supported. It is strongly recommended that you supply this option, as there are many use-cases that require generating the principal name form.
 `accountDomainNameShort` | The ‘short’ domain for which the target LDAP server is an authority (e.g., `FOO`). Note that there is a 1:1 mapping between the `accountDomainName` and `accountDomainNameShort`. This option should be used to specify the NetBIOS domain name for Windows networks, but may also be used by non-AD servers (e.g., for consistency when multiple sets of server options with the backslash style `accountCanonicalForm`). This option is not required but if it is not supplied, usernames in backslash form (e.g., `FOO\alice`) are not supported.
 `accountFilterFormat`    | The LDAP search filter used to search for accounts. This string is a `printf()`-style expression that must contain one `%s` to accommodate the username. The default value is `(&(objectClass=user)(sAMAccountName=%s))`, unless `bindRequiresDn` is set to `TRUE`, in which case the default is `(&(objectClass=posixAccount)(uid=%s))`. For example, if for some reason you wanted to use `bindRequiresDn = true` with AD you would need to set `accountFilterFormat = '(&(objectClass=user)(sAMAccountName=%s))'`.
@@ -192,10 +192,10 @@ Name                     | Description
 
 ## Collecting Debugging Messages
 
-`Zend\Authentication\Adapter\Ldap` collects debugging information within its
+`Laminas\Authentication\Adapter\Ldap` collects debugging information within its
 `authenticate()` method. This information is stored in the
-`Zend\Authentication\Result` object as messages. The array returned by
-`Zend\Authentication\Result::getMessages()` is described as follows:
+`Laminas\Authentication\Result` object as messages. The array returned by
+`Laminas\Authentication\Result::getMessages()` is described as follows:
 
 Messages Array Index | Description
 -------------------- | -----------
@@ -204,7 +204,7 @@ Index 1              | A more detailed error message that is not suitable to be 
 Indexes 2 and higher | All log messages in order starting at index 2.
 
 In practice, index 0 should be displayed to the user (e.g., using the
-[FlashMessenger helper](https://docs.zendframework.com/zend-mvc-plugin-flashmessenger)),
+[FlashMessenger helper](https://docs.laminas.dev/laminas-mvc-plugin-flashmessenger)),
 index 1 should be logged and, if debugging information is being collected,
 indexes 2 and higher could be logged as well (although the final message always
 includes the string from index 1).
@@ -228,7 +228,7 @@ Name                     | Additional Notes
 > #### Use qualified account names
 >
 > Technically there should be no danger of accidental cross-domain
-> authentication with the current `Zend\Authentication\Adapter\Ldap`
+> authentication with the current `Laminas\Authentication\Adapter\Ldap`
 > implementation, since server domains are explicitly checked, but this may not
 > be true of a future implementation that discovers the domain at runtime, or
 > if an alternative adapter is used (e.g., Kerberos). In general, account name

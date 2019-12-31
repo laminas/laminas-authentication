@@ -1,35 +1,34 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Authentication\Adapter\DbTable;
+namespace LaminasTest\Authentication\Adapter\DbTable;
 
+use Laminas\Authentication;
+use Laminas\Authentication\Adapter;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
 use PHPUnit\Framework\TestCase;
-use Zend\Authentication;
-use Zend\Authentication\Adapter;
-use Zend\Db\Adapter\Adapter as DbAdapter;
 
 /**
- * @group Zend_Auth
- * @group Zend_Db_Table
+ * @group Laminas_Auth
+ * @group Laminas_Db_Table
  */
 class CredentialTreatmentAdapterDb2Test extends TestCase
 {
     /**
      * IbmDb2 database connection
      *
-     * @var \Zend\Db\Adapter\Adapter
+     * @var \Laminas\Db\Adapter\Adapter
      */
     protected $db = null;
 
     /**
      * Database table authentication adapter
      *
-     * @var \Zend\Authentication\Adapter\DbTable
+     * @var \Laminas\Authentication\Adapter\DbTable
      */
     protected $adapter = null;
 
@@ -50,7 +49,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function setUp()
     {
-        if (! getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')) {
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
         }
 
@@ -60,15 +59,15 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
         $this->dbAdapterParams = [
             'driver'           => 'IbmDb2',
-            'dbname'           => getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_DATABASE'),
-            'username'         => getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_USERNAME'),
-            'password'         => getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_PASSWORD'),
+            'dbname'           => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_DATABASE'),
+            'username'         => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_USERNAME'),
+            'password'         => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_PASSWORD'),
             'platform_options' => ['quote_identifiers' => false],
             'driver_options'   => [],
         ];
         $this->dbAdapterParams['driver_options']['i5_commit'] = constant('DB2_I5_TXN_NO_COMMIT');
         $this->dbAdapterParams['driver_options']['i5_naming'] = constant('DB2_I5_NAMING_OFF');
-        $this->tableName = getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE');
+        $this->tableName = getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE');
 
         $this->setupDbAdapter();
         $this->setupAuthAdapter();
@@ -207,15 +206,15 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterCanReturnDbSelectObject()
     {
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $this->authAdapter->getDbSelect());
+        $this->assertInstanceOf('Laminas\Db\Sql\Select', $this->authAdapter->getDbSelect());
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterCanUseModifiedDbSelectObject()
     {
@@ -229,7 +228,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth()
     {
@@ -318,9 +317,9 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      * Test to see same usernames with different passwords can not authenticate
      * when flag is not set.
      * This is the current state of
-     * Zend_Auth_Adapter_DbTable (up to ZF 1.10.6)
+     * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
-     * @group ZF-7289
+     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet()
     {
@@ -339,7 +338,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
      *
-     * @group ZF-7289
+     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet()
     {
