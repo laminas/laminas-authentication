@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-authentication for the canonical source repository
- * @copyright Copyright (c) 2012-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-authentication/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter\Http;
+namespace LaminasTest\Authentication\Adapter\Http;
 
-use Zend\Authentication\Adapter\Http;
-use Zend\Http\Headers;
-use Zend\Http\Request;
-use Zend\Http\Response;
+use Laminas\Authentication\Adapter\Http;
+use Laminas\Http\Headers;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 
 class AuthTest extends \PHPUnit_Framework_TestCase
 {
@@ -128,7 +129,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $digest = $this->_digestChallenge();
 
         // Make sure the result is false
-        $this->assertInstanceOf('Zend\\Authentication\\Result', $result);
+        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
         $this->assertFalse($result->isValid());
 
         // Verify the status code and the presence of both challenges
@@ -400,8 +401,8 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     {
         $nc       = '00000001';
         $timeout  = ceil(time() / 300) * 300;
-        $nonce    = md5($timeout . ':PHPUnit:Zend\Authentication\Adapter\Http');
-        $opaque   = md5('Opaque Data:Zend\\Authentication\\Adapter\\Http');
+        $nonce    = md5($timeout . ':PHPUnit:Laminas\Authentication\Adapter\Http');
+        $opaque   = md5('Opaque Data:Laminas\\Authentication\\Adapter\\Http');
         $cnonce   = md5('cnonce');
         $response = md5(md5($user . ':' . $this->_digestConfig['realm'] . ':' . $pass) . ":$nonce:$nc:$cnonce:auth:"
                   . md5('GET:/'));
@@ -433,7 +434,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
-        $this->assertInstanceOf('Zend\\Authentication\\Result', $result);
+        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
         $this->assertFalse($result->isValid());
 
         // Verify the status code and the presence of the challenge
@@ -468,7 +469,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is true
-        $this->assertInstanceOf('Zend\\Authentication\\Result', $result);
+        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
         $this->assertTrue($result->isValid(), var_export($result, 1));
 
         // Verify we got a 200 response
@@ -487,7 +488,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
-        $this->assertInstanceOf('Zend\\Authentication\\Result', $result);
+        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
         $this->assertFalse($result->isValid());
 
         // Make sure it set the right HTTP code
@@ -501,7 +502,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $result = $this->_doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
         $result = $result['result'];
 
-        $this->assertInstanceOf('Zend\\Authentication\\Result', $result);
+        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
         $this->assertTrue($result->isValid());
     }
 

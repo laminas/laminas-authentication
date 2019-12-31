@@ -1,6 +1,6 @@
 docs_dir: doc/book
 site_dir: doc/html
-pages:
+nav:
     - index.md
     - Intro: intro.md
     - Adapters:
@@ -14,7 +14,6 @@ pages:
         - LDAP: adapter/ldap.md
     - "Identity Persistence": storage.md
     - Validation: validator.md
-site_name: zend-authentication
-site_description: zend-authentication
-repo_url: 'https://github.com/zendframework/zend-authentication'
-copyright: 'Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
+site_name: laminas-authentication
+site_description: laminas-authentication
+repo_url: 'https://github.com/laminas/laminas-authentication'
