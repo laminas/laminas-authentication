@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter\Http;
+namespace LaminasTest\Authentication\Adapter\Http;
 
-use Zend\Authentication\Adapter\Http;
+use Laminas\Authentication\Adapter\Http;
 
 /**
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class FileResolverTest extends \PHPUnit_Framework_TestCase
 {
@@ -76,7 +75,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetFileInvalid()
     {
-        $this->setExpectedException('Zend\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
+        $this->setExpectedException('Laminas\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
         $this->_resolver->setFile($this->_badPath);
     }
 
@@ -98,7 +97,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructInvalid()
     {
-        $this->setExpectedException('Zend\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
+        $this->setExpectedException('Laminas\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
         $v = new Http\FileResolver($this->_badPath);
     }
 
@@ -109,7 +108,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveUsernameEmpty()
     {
-        $this->setExpectedException('Zend\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Username is required');
+        $this->setExpectedException('Laminas\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Username is required');
         $this->_resolver->resolve('', '');
     }
 
@@ -120,7 +119,7 @@ class FileResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testResolveRealmEmpty()
     {
-        $this->setExpectedException('Zend\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Realm is required');
+        $this->setExpectedException('Laminas\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Realm is required');
         $this->_resolver->resolve('username', '');
     }
 
