@@ -1,14 +1,15 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-authentication for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-authentication/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication;
+namespace LaminasTest\Authentication;
 
+use Laminas\Authentication\AuthenticationService;
 use PHPUnit\Framework\TestCase;
-use Zend\Authentication\AuthenticationService;
 
 class AuthenticationServiceTest extends TestCase
 {
@@ -18,14 +19,14 @@ class AuthenticationServiceTest extends TestCase
     }
 
     /**
-     * Ensures that getStorage() returns Zend_Auth_Storage_Session
+     * Ensures that getStorage() returns Laminas_Auth_Storage_Session
      *
      * @return void
      */
     public function testGetStorage()
     {
         $storage = $this->auth->getStorage();
-        $this->assertInstanceOf('Zend\Authentication\Storage\Session', $storage);
+        $this->assertInstanceOf('Laminas\Authentication\Storage\Session', $storage);
     }
 
     public function testAdapter()
@@ -45,7 +46,7 @@ class AuthenticationServiceTest extends TestCase
     public function testAuthenticate()
     {
         $result = $this->authenticate();
-        $this->assertInstanceOf('Zend\Authentication\Result', $result);
+        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
         $this->assertTrue($this->auth->hasIdentity());
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }
@@ -53,7 +54,7 @@ class AuthenticationServiceTest extends TestCase
     public function testAuthenticateSetAdapter()
     {
         $result = $this->authenticate(new TestAsset\ValidatableAdapter());
-        $this->assertInstanceOf('Zend\Authentication\Result', $result);
+        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
         $this->assertTrue($this->auth->hasIdentity());
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }

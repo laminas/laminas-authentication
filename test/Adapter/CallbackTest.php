@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter;
+namespace LaminasTest\Authentication\Adapter;
 
 use Exception;
+use Laminas\Authentication\Adapter\Callback;
+use Laminas\Authentication\Exception as AuthenticationException;
+use Laminas\Authentication\Result;
 use PHPUnit\Framework\TestCase as TestCase;
-use Zend\Authentication\Adapter\Callback;
-use Zend\Authentication\Exception as AuthenticationException;
-use Zend\Authentication\Result;
 
 class CallbackTest extends TestCase
 {

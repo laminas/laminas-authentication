@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-authentication for the canonical source repository
- * @copyright Copyright (c) 2012-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-authentication/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter;
+namespace Laminas\Authentication\Adapter;
 
-use Zend\Authentication;
-use Zend\Http\Request as HTTPRequest;
-use Zend\Http\Response as HTTPResponse;
-use Zend\Uri\UriFactory;
-use Zend\Crypt\Utils as CryptUtils;
+use Laminas\Authentication;
+use Laminas\Crypt\Utils as CryptUtils;
+use Laminas\Http\Request as HTTPRequest;
+use Laminas\Http\Response as HTTPResponse;
+use Laminas\Uri\UriFactory;
 
 /**
  * HTTP Authentication Adapter
@@ -487,7 +488,7 @@ class Http implements AdapterInterface
             return $this->challengeClient();
         }
 
-        // See ZF-1253. Validate the credentials the same way the digest
+        // See Laminas-1253. Validate the credentials the same way the digest
         // implementation does. If invalid credentials are detected,
         // re-challenge the client.
         if (! ctype_print($auth)) {
@@ -500,7 +501,7 @@ class Http implements AdapterInterface
         }
         list($username, $password) = explode(':', $auth, 2);
 
-        // Fix for ZF-1515: Now re-challenges on empty username or password
+        // Fix for Laminas-1515: Now re-challenges on empty username or password
         if (empty($username) || empty($password)) {
             return $this->challengeClient();
         }
@@ -554,7 +555,7 @@ class Http implements AdapterInterface
             );
         }
 
-        // See ZF-1052. This code was a bit too unforgiving of invalid
+        // See Laminas-1052. This code was a bit too unforgiving of invalid
         // usernames. Now, if the username is bad, we re-challenge the client.
         if ('::invalid::' == $data['username']) {
             return $this->challengeClient();
@@ -643,7 +644,7 @@ class Http implements AdapterInterface
         } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
         } else {
-            $userAgent = 'Zend_Authenticaion';
+            $userAgent = 'Laminas_Authenticaion';
         }
         $nonce = hash('md5', $timeout . ':' . $userAgent . ':' . __CLASS__);
         return $nonce;
@@ -682,7 +683,7 @@ class Http implements AdapterInterface
         $temp = null;
         $data = [];
 
-        // See ZF-1052. Detect invalid usernames instead of just returning a
+        // See Laminas-1052. Detect invalid usernames instead of just returning a
         // 400 code.
         $ret = preg_match('/username="([^"]+)"/', $header, $temp);
         if (! $ret || empty($temp[1])
@@ -816,7 +817,7 @@ class Http implements AdapterInterface
 
         // Not optional in this implementation. The spec says this value
         // shouldn't be a quoted string, but apparently some implementations
-        // quote it anyway. See ZF-1544.
+        // quote it anyway. See Laminas-1544.
         $ret = preg_match('/nc="?([0-9A-Fa-f]{8})"?/', $header, $temp);
         if (! $ret || empty($temp[1])) {
             return false;

@@ -22,7 +22,7 @@ someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8
 
 ## Specifics
 
-The digest authentication adapter, `Zend\Authentication\Adapter\Digest`,
+The digest authentication adapter, `Laminas\Authentication\Adapter\Digest`,
 requires several input parameters:
 
 - `filename`: Filename against which authentication queries are performed.
@@ -34,13 +34,13 @@ These parameters must be set prior to calling `authenticate()`.
 
 ## Identity
 
-The digest authentication adapter returns a `Zend\Authentication\Result` object
+The digest authentication adapter returns a `Laminas\Authentication\Result` object
 populated with the identity as an array containing the keys `realm` and
 `username`. The respective array values associated with these keys correspond
 to the values set before `authenticate()` is called.
 
 ```php
-use Zend\Authentication\Adapter\Digest as AuthAdapter;
+use Laminas\Authentication\Adapter\Digest as AuthAdapter;
 
 $adapter = new AuthAdapter(
     $filename,

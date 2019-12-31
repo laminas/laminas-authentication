@@ -1,8 +1,8 @@
 <?php
 
-namespace ZendTest\Authentication\TestAsset;
+namespace LaminasTest\Authentication\TestAsset;
 
-use Zend\Authentication\Adapter;
+use Laminas\Authentication\Adapter;
 
 class Wrapper extends Adapter\Http
 {

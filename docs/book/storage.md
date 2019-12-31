@@ -10,40 +10,40 @@ requests in server-side web applications.
 
 ## Default Persistence in the PHP Session
 
-By default, zend-authentication provides persistent storage of the identity from a successful
+By default, laminas-authentication provides persistent storage of the identity from a successful
 authentication attempt using PHP session facilities. Upon a successful authentication attempt,
-`Zend\Authentication\AuthenticationService::authenticate()` stores the identity from the
+`Laminas\Authentication\AuthenticationService::authenticate()` stores the identity from the
 authentication result into persistent storage. Unless specified otherwise,
-`Zend\Authentication\AuthenticationService` uses a storage class named
-`Zend\Authentication\Storage\Session`, which depends on
-[zend-session](https://github.com/zendframework/zend-session).
+`Laminas\Authentication\AuthenticationService` uses a storage class named
+`Laminas\Authentication\Storage\Session`, which depends on
+[laminas-session](https://github.com/laminas/laminas-session).
 
-You may also implement `Zend\Authentication\Storage\StorageInterface`, and
-provide your implementation to `Zend\Authentication\AuthenticationService::setStorage()`.
+You may also implement `Laminas\Authentication\Storage\StorageInterface`, and
+provide your implementation to `Laminas\Authentication\AuthenticationService::setStorage()`.
 
 > ### Bypass the AuthenticationService
 >
 > If automatic persistent storage of the identity is not appropriate for your
-> use case, you can skip usage of `Zend\Authentication\AuthenticationService`
+> use case, you can skip usage of `Laminas\Authentication\AuthenticationService`
 > altogether, and instead use an adapter directly.
 
 ## Modifying the Session Namespace
 
-`Zend\Authentication\Storage\Session` uses the session namespace `Zend_Auth`.
+`Laminas\Authentication\Storage\Session` uses the session namespace `Laminas_Auth`.
 This namespace may be overridden by passing a different value to the constructor
-of `Zend\Authentication\Storage\Session`, and this value is internally passed
-along to the constructor of [Zend\\Session\\Container](https://github.com/zendframework/zend-session).
+of `Laminas\Authentication\Storage\Session`, and this value is internally passed
+along to the constructor of [Laminas\\Session\\Container](https://github.com/laminas/laminas-session).
 This should occur before authentication is attempted, since
-`Zend\Authentication\AuthenticationService::authenticate()` injects the
+`Laminas\Authentication\AuthenticationService::authenticate()` injects the
 authenticated identity into the configured storage.
 
 ```php
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Storage\Session as SessionStorage;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Storage\Session as SessionStorage;
 
 $auth = new AuthenticationService();
 
-// Use 'someNamespace' instead of 'Zend_Auth'
+// Use 'someNamespace' instead of 'Laminas_Auth'
 $auth->setStorage(new SessionStorage('someNamespace'));
 
 // Set up the auth adapter, $authAdapter
@@ -65,7 +65,7 @@ way:
 ```php
 $storage = new Chain;
 $storage->add(new Session);
-$storage->add(new OAuth);   // Note: imaginary storage, not part of zend-authentication
+$storage->add(new OAuth);   // Note: imaginary storage, not part of laminas-authentication
 ```
 
 When the `Chain` Storage is used, its underlying storage adapters will be
@@ -96,19 +96,19 @@ $chain->add(new B, 10); // B will be used first
 ## Implementing Custom Storage
 
 Sometimes developers may need to use a different identity storage mechanism than
-that provided by `Zend\Authentication\Storage\Session`. To do so, implement
-`Zend\Authentication\Storage\StorageInterface` and supply an instance of your
-implementation to `Zend\Authentication\AuthenticationService::setStorage()`.
+that provided by `Laminas\Authentication\Storage\Session`. To do so, implement
+`Laminas\Authentication\Storage\StorageInterface` and supply an instance of your
+implementation to `Laminas\Authentication\AuthenticationService::setStorage()`.
 
 The following examples demonstrate the process.
 
-First, implement `Zend\Authentication\Storage\StorageInterface`:
+First, implement `Laminas\Authentication\Storage\StorageInterface`:
 
 ```php
 <?php
 namespace My;
 
-use Zend\Authentication\Storage\StorageInterface;
+use Laminas\Authentication\Storage\StorageInterface;
 
 class Storage implements StorageInterface
 {
@@ -116,7 +116,7 @@ class Storage implements StorageInterface
      * Returns true if and only if storage is empty.
      *
      * @return boolean
-     * @throws \Zend\Authentication\Exception\ExceptionInterface If it is
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If it is
      *     impossible to determine whether storage is empty.
      */
     public function isEmpty()
@@ -132,7 +132,7 @@ class Storage implements StorageInterface
      * Behavior is undefined when storage is empty.
      *
      * @return mixed
-     * @throws \Zend\Authentication\Exception\ExceptionInterface If reading
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If reading
      *     contents from storage is impossible
      */
 
@@ -148,7 +148,7 @@ class Storage implements StorageInterface
      *
      * @param  mixed $contents
      * @return void
-     * @throws \Zend\Authentication\Exception\ExceptionInterface If writing
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If writing
      *     $contents to storage is impossible
      */
 
@@ -163,7 +163,7 @@ class Storage implements StorageInterface
      * Clears contents from storage.
      *
      * @return void
-     * @throws \Zend\Authentication\Exception\ExceptionInterface If clearing
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If clearing
      *     contents from storage is impossible.
      */
 
@@ -176,12 +176,12 @@ class Storage implements StorageInterface
 }
 ```
 
-In order to use this custom storage class, `Zend\Authentication\AuthenticationService::setStorage()`
+In order to use this custom storage class, `Laminas\Authentication\AuthenticationService::setStorage()`
 is invoked before an authentication query is attempted:
 
 ```php
 use My\Storage;
-use Zend\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationService;
 
 // Create the authentication service instance:
 $auth = new AuthenticationService();

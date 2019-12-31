@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter\DbTable;
+namespace LaminasTest\Authentication\Adapter\DbTable;
 
+use Laminas\Authentication;
+use Laminas\Authentication\Adapter;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
 use PHPUnit\Framework\TestCase;
-use Zend\Authentication;
-use Zend\Authentication\Adapter;
-use Zend\Db\Adapter\Adapter as DbAdapter;
 
 /**
- * @group      Zend_Auth
- * @group      Zend_Db_Table
+ * @group      Laminas_Auth
+ * @group      Laminas_Db_Table
  */
 class CallbackCheckAdapterTest extends TestCase
 {
@@ -24,14 +23,14 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * SQLite database connection
      *
-     * @var \Zend\Db\Adapter\Adapter
+     * @var \Laminas\Db\Adapter\Adapter
      */
     protected $_db = null;
 
     /**
      * Database table authentication adapter
      *
-     * @var \Zend\Authentication\Adapter\DbTable
+     * @var \Laminas\Authentication\Adapter\DbTable
      */
     protected $_adapter = null;
     // @codingStandardsIgnoreEnd
@@ -41,7 +40,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function setUp()
     {
-        if (! getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')) {
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
             return;
         } elseif (! extension_loaded('pdo')) {
@@ -188,15 +187,15 @@ class CallbackCheckAdapterTest extends TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterCanReturnDbSelectObject()
     {
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $this->_adapter->getDbSelect());
+        $this->assertInstanceOf('Laminas\Db\Sql\Select', $this->_adapter->getDbSelect());
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterCanUseModifiedDbSelectObject()
     {
@@ -210,7 +209,7 @@ class CallbackCheckAdapterTest extends TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth()
     {
@@ -298,9 +297,9 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * Test to see same usernames with different passwords can not authenticate
      * when flag is not set. This is the current state of
-     * Zend_Auth_Adapter_DbTable (up to ZF 1.10.6)
+     * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
-     * @group   ZF-7289
+     * @group   Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet()
     {
@@ -323,7 +322,7 @@ class CallbackCheckAdapterTest extends TestCase
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
      *
-     * @group   ZF-7289
+     * @group   Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet()
     {
@@ -365,7 +364,7 @@ class CallbackCheckAdapterTest extends TestCase
         // @codingStandardsIgnoreEnd
         $params = [
             'driver' => 'pdo_sqlite',
-            'dbname' => getenv('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE'),
+            'dbname' => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE'),
         ];
 
         if (! empty($optionalParams)) {

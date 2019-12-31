@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter\Http;
+namespace LaminasTest\Authentication\Adapter\Http;
 
+use Laminas\Authentication;
+use Laminas\Authentication\Adapter;
+use Laminas\Authentication\Adapter\Http;
+use Laminas\Http\Headers;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
 use PHPUnit\Framework\TestCase;
-use Zend\Authentication\Adapter\Http;
-use Zend\Authentication\Adapter;
-use Zend\Authentication;
-use Zend\Http\Headers;
-use Zend\Http\Request;
-use Zend\Http\Response;
 
 /**
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class ObjectTest extends TestCase
 {

@@ -1,6 +1,6 @@
 # DbTable Credential Treatment
 
-`Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` will execute a
+`Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` will execute a
 SQL query containing the provided identity and credentials, passing the
 credentials to a *credential treatment* function defined on the RDBMS server;
 if an identity is returned, authentication succeeds. Credential
@@ -53,8 +53,8 @@ The available configuration options include:
 ## Basic Usage
 
 As explained above, the
-`Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` constructor
-requires an instance of `Zend\Db\Adapter\Adapter` that serves as the database
+`Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` constructor
+requires an instance of `Laminas\Db\Adapter\Adapter` that serves as the database
 connection to which the authentication adapter instance is bound. First, the
 database connection should be created.
 
@@ -64,7 +64,7 @@ authentication query later. This example requires the PDO SQLite extension to
 be available:
 
 ```php
-use Zend\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
 
 // Create a SQLite database connection
 $dbAdapter = new DbAdapter([
@@ -91,12 +91,12 @@ $dbAdapter->query($sqlInsert);
 ```
 
 With the database connection and table data available, an instance of
-`Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` may be
+`Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` may be
 created. Configuration option values may be passed to the constructor or
 deferred as parameters to setter methods after instantiation:
 
 ```php
-use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
+use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
 // Configure the instance with constructor parameters:
 $authAdapter = new AuthAdapter(
@@ -131,7 +131,7 @@ $result = $authAdapter->authenticate();
 ```
 
 In addition to the availability of the `getIdentity()` method upon the
-authentication result object, `Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter`
+authentication result object, `Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter`
 also supports retrieving the table row upon authentication success:
 
 ```php
@@ -197,7 +197,7 @@ Array
 
 ## Advanced Usage
 
-While the primary purpose of zend-authentication is **authentication** and not
+While the primary purpose of laminas-authentication is **authentication** and not
 **authorization**, there are a few instances and problems that toe the line
 between which domain they fit.  Depending on how you've decided to explain your
 problem, it sometimes makes sense to solve what could look like an
@@ -213,7 +213,7 @@ that the user has not been flagged as "compromised", which is a potential value
 of the `status` field for the user record.
 
 ```php
-use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
+use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
 // The status field value of an account is not equal to "compromised"
 $adapter = new AuthAdapter(
@@ -232,7 +232,7 @@ if we require a user to login once over X days, or if we need to ensure that
 they have followed a verification process.
 
 ```php
-use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
+use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
 // The active field value of an account is equal to "TRUE"
 $adapter = new AuthAdapter(
@@ -268,15 +268,15 @@ the [random_compat package provides them for older, supported versions of PHP](h
 $salt = random_bytes(32);
 ```
 
-For earlier versions of PHP, use [zend-math](https://github.com/zendframework/zend-math)'s `Zend\Math\Rand`:
+For earlier versions of PHP, use [laminas-math](https://github.com/laminas/laminas-math)'s `Laminas\Math\Rand`:
 
 ```php
-use Zend\Math\Rand;
+use Laminas\Math\Rand;
 
 $salt = Rand::getBytes(32, true);
 ```
 
-(As of zend-math 2.7.0, `Rand::getBytes()` will proxy to `random_bytes()` when
+(As of laminas-math 2.7.0, `Rand::getBytes()` will proxy to `random_bytes()` when
 running under PHP 7, making it a good, forwards-compatible solution for your
 application.)
 
@@ -313,8 +313,8 @@ $db,
 ### Alter the SQL select directly
 
 Another alternative is to use the `getDbSelect()` method to retrieve the
-`Zend\Db\Sql\Select` instance associated with the adapter and modify it. (The
-method is common to all `Zend\Authentication\Adapter\DbTable` adapters.) The
+`Laminas\Db\Sql\Select` instance associated with the adapter and modify it. (The
+method is common to all `Laminas\Authentication\Adapter\DbTable` adapters.) The
 `Select` instance is consumed by the `authenticate()` routine when building the
 SQL to execute on the RDBMS server.  It is important to note that this method
 will always return the same `Select` instance regardless if `authenticate()`
