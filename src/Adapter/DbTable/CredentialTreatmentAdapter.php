@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter\DbTable;
+namespace Laminas\Authentication\Adapter\DbTable;
 
-use Zend\Authentication\Result as AuthenticationResult;
-use Zend\Db\Adapter\Adapter as DbAdapter;
-use Zend\Db\Sql;
-use Zend\Db\Sql\Expression as SqlExpr;
-use Zend\Db\Sql\Predicate\Operator as SqlOp;
+use Laminas\Authentication\Result as AuthenticationResult;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Sql;
+use Laminas\Db\Sql\Expression as SqlExpr;
+use Laminas\Db\Sql\Predicate\Operator as SqlOp;
 
 class CredentialTreatmentAdapter extends AbstractAdapter
 {
@@ -27,20 +26,20 @@ class CredentialTreatmentAdapter extends AbstractAdapter
     /**
      * __construct() - Sets configuration options
      *
-     * @param DbAdapter $zendDb
+     * @param DbAdapter $laminasDb
      * @param string    $tableName           Optional
      * @param string    $identityColumn      Optional
      * @param string    $credentialColumn    Optional
      * @param string    $credentialTreatment Optional
      */
     public function __construct(
-        DbAdapter $zendDb,
+        DbAdapter $laminasDb,
         $tableName = null,
         $identityColumn = null,
         $credentialColumn = null,
         $credentialTreatment = null
     ) {
-        parent::__construct($zendDb, $tableName, $identityColumn, $credentialColumn);
+        parent::__construct($laminasDb, $tableName, $identityColumn, $credentialColumn);
 
         if (null !== $credentialTreatment) {
             $this->setCredentialTreatment($credentialTreatment);
@@ -71,7 +70,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
     }
 
     /**
-     * _authenticateCreateSelect() - This method creates a Zend\Db\Sql\Select object that
+     * _authenticateCreateSelect() - This method creates a Laminas\Db\Sql\Select object that
      * is completely configured to be queried against the database.
      *
      * @return Sql\Select
@@ -85,7 +84,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
 
         $credentialExpression = new SqlExpr(
             '(CASE WHEN ?' . ' = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
-            array($this->credentialColumn, $this->credential, 'zend_auth_credential_match'),
+            array($this->credentialColumn, $this->credential, 'laminas_auth_credential_match'),
             array(SqlExpr::TYPE_IDENTIFIER, SqlExpr::TYPE_VALUE, SqlExpr::TYPE_IDENTIFIER)
         );
 
@@ -108,13 +107,13 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      */
     protected function authenticateValidateResult($resultIdentity)
     {
-        if ($resultIdentity['zend_auth_credential_match'] != '1') {
+        if ($resultIdentity['laminas_auth_credential_match'] != '1') {
             $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
             $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
             return $this->authenticateCreateAuthResult();
         }
 
-        unset($resultIdentity['zend_auth_credential_match']);
+        unset($resultIdentity['laminas_auth_credential_match']);
         $this->resultRow = $resultIdentity;
 
         $this->authenticateResultInfo['code']       = AuthenticationResult::SUCCESS;
