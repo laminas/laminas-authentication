@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Authentication
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Storage;
+namespace Laminas\Authentication\Storage;
 
-use Zend\Authentication\Storage\StorageInterface as AuthenticationStorage;
-use Zend\Session\Container as SessionContainer;
-use Zend\Session\ManagerInterface as SessionManager;
+use Laminas\Authentication\Storage\StorageInterface as AuthenticationStorage;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Session\ManagerInterface as SessionManager;
 
 /**
- * @category   Zend
- * @package    Zend_Authentication
+ * @category   Laminas
+ * @package    Laminas_Authentication
  * @subpackage Storage
  */
 class Session implements StorageInterface
@@ -24,7 +22,7 @@ class Session implements StorageInterface
     /**
      * Default session namespace
      */
-    const NAMESPACE_DEFAULT = 'Zend_Auth';
+    const NAMESPACE_DEFAULT = 'Laminas_Auth';
 
     /**
      * Default session object member name
@@ -91,7 +89,7 @@ class Session implements StorageInterface
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @return boolean
      */
@@ -101,7 +99,7 @@ class Session implements StorageInterface
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @return mixed
      */
@@ -111,7 +109,7 @@ class Session implements StorageInterface
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @param  mixed $contents
      * @return void
@@ -122,7 +120,7 @@ class Session implements StorageInterface
     }
 
     /**
-     * Defined by Zend\Authentication\Storage\StorageInterface
+     * Defined by Laminas\Authentication\Storage\StorageInterface
      *
      * @return void
      */
