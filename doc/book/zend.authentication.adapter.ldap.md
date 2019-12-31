@@ -2,30 +2,30 @@
 
 ## Introduction
 
-`Zend\Authentication\Adapter\Ldap` supports web application authentication with *LDAP* services. Its
+`Laminas\Authentication\Adapter\Ldap` supports web application authentication with *LDAP* services. Its
 features include username and domain name canonicalization, multi-domain authentication, and
 failover capabilities. It has been tested to work with [Microsoft Active
 Directory](http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/) and
 [OpenLDAP](http://www.openldap.org/), but it should also work with other *LDAP* service providers.
 
-This documentation includes a guide on using `Zend\Authentication\Adapter\Ldap`, an exploration of
+This documentation includes a guide on using `Laminas\Authentication\Adapter\Ldap`, an exploration of
 its *API*, an outline of the various available options, diagnostic information for troubleshooting
 authentication problems, and example options for both Active Directory and OpenLDAP servers.
 
 ## Usage
 
-To incorporate `Zend\Authentication\Adapter\Ldap` authentication into your application quickly, even
-if you're not using `Zend\Mvc`, the meat of your code should look something like the following:
+To incorporate `Laminas\Authentication\Adapter\Ldap` authentication into your application quickly, even
+if you're not using `Laminas\Mvc`, the meat of your code should look something like the following:
 
 ```php
 <?php
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Adapter\Ldap as AuthAdapter;
-use Zend\Config\Reader\Ini as ConfigReader;
-use Zend\Config\Config;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream as LogWriter;
-use Zend\Log\Filter\Priority as LogFilter;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Adapter\Ldap as AuthAdapter;
+use Laminas\Config\Reader\Ini as ConfigReader;
+use Laminas\Config\Config;
+use Laminas\Log\Logger;
+use Laminas\Log\Writer\Stream as LogWriter;
+use Laminas\Log\Filter\Priority as LogFilter;
 
 $username = $this->getRequest()->getPost('username');
 $password = $this->getRequest()->getPost('password');
@@ -69,16 +69,16 @@ if ($log_path) {
 ```
 
 Of course, the logging code is optional, but it is highly recommended that you use a logger.
-`Zend\Authentication\Adapter\Ldap` will record just about every bit of information anyone could want
+`Laminas\Authentication\Adapter\Ldap` will record just about every bit of information anyone could want
 in `$messages` (more below), which is a nice feature in itself for something that has a history of
 being notoriously difficult to debug.
 
-The `Zend\Config\Reader\Ini` code is used above to load the adapter options. It is also optional. A
+The `Laminas\Config\Reader\Ini` code is used above to load the adapter options. It is also optional. A
 regular array would work equally well. The following is an example `ldap-config.ini` file that has
 options for two separate servers. With multiple sets of server options the adapter will try each, in
 order, until the credentials are successfully authenticated. The names of the servers (e.g.,
 'server1' and 'server2') are largely arbitrary. For details regarding the options array, see the
-**Server Options** section below. Note that `Zend\Config\Reader\Ini` requires that any values with
+**Server Options** section below. Note that `Laminas\Config\Reader\Ini` requires that any values with
 "equals" characters (**=**) will need to be quoted (like the DNs shown below).
 
 ```ini
@@ -105,7 +105,7 @@ ldap.server2.accountCanonicalForm = 3
 ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
 ```
 
-The above configuration will instruct `Zend\Authentication\Adapter\Ldap` to attempt to authenticate
+The above configuration will instruct `Laminas\Authentication\Adapter\Ldap` to attempt to authenticate
 users with the OpenLDAP server `s0.foo.net` first. If the authentication fails for any reason, the
 AD server `dc1.w.net` will be tried.
 
@@ -118,10 +118,10 @@ Canonicalization** section below).
 
 ## The API
 
-The `Zend\Authentication\Adapter\Ldap` constructor accepts three parameters.
+The `Laminas\Authentication\Adapter\Ldap` constructor accepts three parameters.
 
 The `$options` parameter is required and must be an array containing one or more sets of options.
-Note that it is **an array of arrays** of [Zend\\Ldap\\Ldap](zend.ldap.introduction) options. Even
+Note that it is **an array of arrays** of [Laminas\\Ldap\\Ldap](laminas.ldap.introduction) options. Even
 if you will be using only one *LDAP* server, the options must still be within another array.
 
 Below is [print\_r()](http://php.net/print_r) output of an example options parameter containing two
@@ -171,7 +171,7 @@ This structure is best explored with an *LDAP* browser like the *ADSI* Edit *MMC
 Directory or phpLDAPadmin.
 
 The names of servers (e.g. 'server1' and 'server2' shown above) are largely arbitrary, but for the
-sake of using `Zend\Config\Reader\Ini`, the identifiers should be present (as opposed to being
+sake of using `Laminas\Config\Reader\Ini`, the identifiers should be present (as opposed to being
 numeric indexes) and should not contain any special characters used by the associated file formats
 (e.g. the '**.**'*INI* property separator, '**&**' for *XML* entity references, etc).
 
@@ -181,29 +181,29 @@ provide failover so that if one server is not available, another will be queried
 > ## Note
 #### The Gory Details: What Happens in the Authenticate Method?
 When the `authenticate()` method is called, the adapter iterates over each set of server options,
-sets them on the internal `Zend\Ldap\Ldap` instance, and calls the `Zend\Ldap\Ldap::bind()` method
-with the username and password being authenticated. The `Zend\Ldap\Ldap` class checks to see if the
+sets them on the internal `Laminas\Ldap\Ldap` instance, and calls the `Laminas\Ldap\Ldap::bind()` method
+with the username and password being authenticated. The `Laminas\Ldap\Ldap` class checks to see if the
 username is qualified with a domain (e.g., has a domain component like `alice@foo.net` or
 `FOO\alice`). If a domain is present, but does not match either of the server's domain names
-(`foo.net` or *FOO*), a special exception is thrown and caught by `Zend\Authentication\Adapter\Ldap`
+(`foo.net` or *FOO*), a special exception is thrown and caught by `Laminas\Authentication\Adapter\Ldap`
 that causes that server to be ignored and the next set of server options is selected. If a domain
-**does** match, or if the user did not supply a qualified username, `Zend\Ldap\Ldap` proceeds to try
-to bind with the supplied credentials. if the bind is not successful, `Zend\Ldap\Ldap` throws a
-`Zend\Ldap\Exception\LdapException` which is caught by `Zend\Authentication\Adapter\Ldap` and the
+**does** match, or if the user did not supply a qualified username, `Laminas\Ldap\Ldap` proceeds to try
+to bind with the supplied credentials. if the bind is not successful, `Laminas\Ldap\Ldap` throws a
+`Laminas\Ldap\Exception\LdapException` which is caught by `Laminas\Authentication\Adapter\Ldap` and the
 next set of server options is tried. If the bind is successful, the iteration stops, and the
 adapter's `authenticate()` method returns a successful result. If all server options have been tried
 without success, the authentication fails, and `authenticate()` returns a failure result with error
 messages from the last iteration.
 
-The username and password parameters of the `Zend\Authentication\Adapter\Ldap` constructor represent
+The username and password parameters of the `Laminas\Authentication\Adapter\Ldap` constructor represent
 the credentials being authenticated (i.e., the credentials supplied by the user through your *HTML*
 login form). Alternatively, they may also be set with the `setUsername()` and `setPassword()`
 methods.
 
 ## Server Options
 
-Each set of server options **in the context of Zend\\Authentication\\Adapter\\Ldap** consists of the
-following options, which are passed, largely unmodified, to `Zend\Ldap\Ldap::setOptions()`:
+Each set of server options **in the context of Laminas\\Authentication\\Adapter\\Ldap** consists of the
+following options, which are passed, largely unmodified, to `Laminas\Ldap\Ldap::setOptions()`:
 
 > ## Note
 If you enable **useStartTls = TRUE** or **useSsl = TRUE** you may find that the *LDAP* client
@@ -216,9 +216,9 @@ put it on the web server so that the OpenLDAP client can validate the server's i
 
 ## Collecting Debugging Messages
 
-`Zend\Authentication\Adapter\Ldap` collects debugging information within its `authenticate()`
-method. This information is stored in the `Zend\Authentication\Result` object as messages. The array
-returned by `Zend\Authentication\Result::getMessages()` is described as follows
+`Laminas\Authentication\Adapter\Ldap` collects debugging information within its `authenticate()`
+method. This information is stored in the `Laminas\Authentication\Result` object as messages. The array
+returned by `Laminas\Authentication\Result::getMessages()` is described as follows
 
 In practice, index 0 should be displayed to the user (e.g., using the FlashMessenger helper), index
 1 should be logged and, if debugging information is being collected, indexes 2 and higher could be
@@ -232,7 +232,7 @@ For *ADS*, the following options are noteworthy:
 
 > ## Note
 Technically there should be no danger of accidental cross-domain authentication with the current
-`Zend\Authentication\Adapter\Ldap` implementation, since server domains are explicitly checked, but
+`Laminas\Authentication\Adapter\Ldap` implementation, since server domains are explicitly checked, but
 this may not be true of a future implementation that discovers the domain at runtime, or if an
 alternative adapter is used (e.g., Kerberos). In general, account name ambiguity is known to be the
 source of security issues, so always try to use qualified account names.
