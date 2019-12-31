@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Authentication
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter;
+namespace LaminasTest\Authentication\Adapter;
 
-use Zend\Authentication\Adapter;
-use Zend\Authentication;
+use Laminas\Authentication;
+use Laminas\Authentication\Adapter;
 
 /**
- * @category   Zend
- * @package    Zend_Auth
+ * @category   Laminas
+ * @package    Laminas_Auth
  * @subpackage UnitTests
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class DigestTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,7 +47,7 @@ class DigestTest extends \PHPUnit_Framework_TestCase
         $adapter = new Adapter\Digest();
         try {
             $adapter->authenticate();
-            $this->fail('Expected Zend_Auth_Adapter_Exception not thrown upon authentication attempt before setting '
+            $this->fail('Expected Laminas_Auth_Adapter_Exception not thrown upon authentication attempt before setting '
                       . 'a required option');
         } catch (Adapter\Exception\ExceptionInterface $e) {
             $this->assertContains('must be set before authentication', $e->getMessage());
@@ -66,7 +64,7 @@ class DigestTest extends \PHPUnit_Framework_TestCase
         $adapter = new Adapter\Digest('nonexistent', 'realm', 'username', 'password');
         try {
             $adapter->authenticate();
-            $this->fail('Expected Zend_Auth_Adapter_Exception not thrown upon authenticating against nonexistent '
+            $this->fail('Expected Laminas_Auth_Adapter_Exception not thrown upon authenticating against nonexistent '
                       . 'file');
         } catch (Adapter\Exception\ExceptionInterface $e) {
             $this->assertContains('Cannot open', $e->getMessage());
