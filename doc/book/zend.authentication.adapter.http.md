@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`Zend\Authentication\Adapter\Http` provides a mostly-compliant implementation of
+`Laminas\Authentication\Adapter\Http` provides a mostly-compliant implementation of
 [RFC-2617](http://tools.ietf.org/html/rfc2617),
 [Basic](http://en.wikipedia.org/wiki/Basic_authentication_scheme) and
 [Digest](http://en.wikipedia.org/wiki/Digest_access_authentication) *HTTP* Authentication. Digest
@@ -35,7 +35,7 @@ authentication is successful.
 
 ## Configuration Options
 
-The `Zend\Authentication\Adapter\Http` class requires a configuration array passed to its
+The `Laminas\Authentication\Adapter\Http` class requires a configuration array passed to its
 constructor. There are several configuration options available, and some are required:
 
 > ## Note
@@ -52,8 +52,8 @@ authentication expects to receive the Base64 encoded version of the user's passw
 authentication expects to receive a hash of the user's username, the realm, and their password (each
 separated by colons). Currently, the only supported hash algorithm is *MD5*.
 
-`Zend\Authentication\Adapter\Http` relies on objects implementing
-`Zend\Authentication\Adapter\Http\ResolverInterface`. A text file resolver class is included with
+`Laminas\Authentication\Adapter\Http` relies on objects implementing
+`Laminas\Authentication\Adapter\Http\ResolverInterface`. A text file resolver class is included with
 this adapter, but any other kind of resolver can be created simply by implementing the resolver
 interface.
 
@@ -77,7 +77,7 @@ There are two equally easy ways to create a File resolver:
 
 ```php
 <?php
-use Zend\Authentication\Adapter\Http\FileResolver;
+use Laminas\Authentication\Adapter\Http\FileResolver;
 
 $path     = 'files/passwd.txt';
 $resolver = new FileResolver($path);
@@ -116,11 +116,11 @@ authenticated access to all the areas of the site under `/members_only` and `/my
 value is usually displayed by the browser in the password dialog box. The `nonce_timeout`, of
 course, behaves as described above.
 
-Next, create the `Zend\Authentication\Adapter\Http` object:
+Next, create the `Laminas\Authentication\Adapter\Http` object:
 
 ```php
 <?php
-$adapter = new Zend\Authentication\Adapter\Http($config);
+$adapter = new Laminas\Authentication\Adapter\Http($config);
 
 ```
 
@@ -129,7 +129,7 @@ Note that this could just as easily be two different classes:
 
 ```php
 <?php
-use Zend\Authentication\Adapter\Http\FileResolver;
+use Laminas\Authentication\Adapter\Http\FileResolver;
 
 $basicResolver = new FileResolver();
 $basicResolver->setFile('files/basicPasswd.txt');
@@ -147,8 +147,8 @@ Response objects in order to do its job:
 
 ```php
 <?php
-assert($request instanceof Zend\Http\Request);
-assert($response instanceof Zend\Http\Response);
+assert($request instanceof Laminas\Http\Request);
+assert($response instanceof Laminas\Http\Response);
 
 $adapter->setRequest($request);
 $adapter->setResponse($response);

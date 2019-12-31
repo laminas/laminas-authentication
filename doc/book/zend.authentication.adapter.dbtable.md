@@ -1,17 +1,17 @@
 # Database Table Authentication
 
 > ## Note
-`Zend\Authentication\Adapter\DbTable` has been deprecated, as its responsibilities have been
-splitted off into `Zend\Authentication\Adapter\DbTable\CallbackCheck` and
-`Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter`. Use
-`Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` instead of
-`Zend\Authentication\Adapter\DbTable`.
+`Laminas\Authentication\Adapter\DbTable` has been deprecated, as its responsibilities have been
+splitted off into `Laminas\Authentication\Adapter\DbTable\CallbackCheck` and
+`Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter`. Use
+`Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter` instead of
+`Laminas\Authentication\Adapter\DbTable`.
 
 ## Introduction
 
-`Zend\Authentication\Adapter\DbTable` provides the ability to authenticate against credentials
-stored in a database table. Because `Zend\Authentication\Adapter\DbTable` requires an instance of
-`Zend\Db\Adapter\Adapter` to be passed to its constructor, each instance is bound to a particular
+`Laminas\Authentication\Adapter\DbTable` provides the ability to authenticate against credentials
+stored in a database table. Because `Laminas\Authentication\Adapter\DbTable` requires an instance of
+`Laminas\Db\Adapter\Adapter` to be passed to its constructor, each instance is bound to a particular
 database connection. Other configuration options may be set through the constructor and through
 instance methods, one for each option.
 
@@ -33,8 +33,8 @@ database system.
 
 ## Basic Usage
 
-As explained in the introduction, the `Zend\Authentication\Adapter\DbTable` constructor requires an
-instance of `Zend\Db\Adapter\Adapter` that serves as the database connection to which the
+As explained in the introduction, the `Laminas\Authentication\Adapter\DbTable` constructor requires an
+instance of `Laminas\Db\Adapter\Adapter` that serves as the database connection to which the
 authentication adapter instance is bound. First, the database connection should be created.
 
 The following code creates an adapter for an in-memory database, creates a simple table schema, and
@@ -43,7 +43,7 @@ inserts a row against which we can perform an authentication query later. This e
 
 ```php
 <?php
-use Zend\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
 
 // Create a SQLite database connection
 $dbAdapter = new DbAdapter(array(
@@ -71,12 +71,12 @@ $dbAdapter->query($sqlInsert);
 ```
 
 With the database connection and table data available, an instance of
-`Zend\Authentication\Adapter\DbTable` may be created. Configuration option values may be passed to
+`Laminas\Authentication\Adapter\DbTable` may be created. Configuration option values may be passed to
 the constructor or deferred as parameters to setter methods after instantiation:
 
 ```php
 <?php
-use Zend\Authentication\Adapter\DbTable as AuthAdapter;
+use Laminas\Authentication\Adapter\DbTable as AuthAdapter;
 
 // Configure the instance with constructor parameters...
 $authAdapter = new AuthAdapter($dbAdapter,
@@ -113,7 +113,7 @@ $authAdapter
 ```
 
 In addition to the availability of the `getIdentity()` method upon the authentication result object,
-`Zend\Authentication\Adapter\DbTable` also supports retrieving the table row upon authentication
+`Laminas\Authentication\Adapter\DbTable` also supports retrieving the table row upon authentication
 success:
 
 ```php
@@ -177,15 +177,15 @@ Array
 
 ## Advanced Usage: Persisting a DbTable Result Object
 
-By default, `Zend\Authentication\Adapter\DbTable` returns the identity supplied back to the auth
+By default, `Laminas\Authentication\Adapter\DbTable` returns the identity supplied back to the auth
 object upon successful authentication. Another use case scenario, where developers want to store to
-the persistent storage mechanism of `Zend\Authentication` an identity object containing other useful
+the persistent storage mechanism of `Laminas\Authentication` an identity object containing other useful
 information, is solved by using the `getResultRowObject()` method to return a **stdClass** object.
 The following code snippet illustrates its use:
 
 ```php
 <?php
-// authenticate with Zend\Authentication\Adapter\DbTable
+// authenticate with Laminas\Authentication\Adapter\DbTable
 $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
@@ -214,19 +214,19 @@ if ($result->isValid()) {
 
 ### Advanced Usage By Example
 
-While the primary purpose of the `Zend\Authentication` component (and consequently
-`Zend\Authentication\Adapter\DbTable`) is primarily **authentication** and not **authorization**,
+While the primary purpose of the `Laminas\Authentication` component (and consequently
+`Laminas\Authentication\Adapter\DbTable`) is primarily **authentication** and not **authorization**,
 there are a few instances and problems that toe the line between which domain they fit within.
 Depending on how you've decided to explain your problem, it sometimes makes sense to solve what
 could look like an authorization problem within the authentication adapter.
 
-With that disclaimer out of the way, `Zend\Authentication\Adapter\DbTable` has some built in
+With that disclaimer out of the way, `Laminas\Authentication\Adapter\DbTable` has some built in
 mechanisms that can be leveraged for additional checks at authentication time to solve some common
 user problems.
 
 ```php
 <?php
-use Zend\Authentication\Adapter\DbTable as AuthAdapter;
+use Laminas\Authentication\Adapter\DbTable as AuthAdapter;
 
 // The status field value of an account is not equal to "compromised"
 $adapter = new AuthAdapter($db,
@@ -291,8 +291,8 @@ the case that your database is compromised (e. g. by an *SQL* injection attack) 
 is intact your data is still unusable for the attacker.
 
 Another alternative is to use the `getDbSelect()` method of the
-`Zend\Authentication\Adapter\DbTable` after the adapter has been constructed. This method will
-return the `Zend\Db\Sql\Select` object instance it will use to complete the `authenticate()`
+`Laminas\Authentication\Adapter\DbTable` after the adapter has been constructed. This method will
+return the `Laminas\Db\Sql\Select` object instance it will use to complete the `authenticate()`
 routine. It is important to note that this method will always return the same object regardless if
 `authenticate()` has been called or not. This object **will not** have any of the identity or
 credential information in it as those values are placed into the select object at `authenticate()`

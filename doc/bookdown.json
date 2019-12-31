@@ -1,12 +1,12 @@
 {
-    "title": "Zend\\Authentication",
+    "title": "Laminas\\Authentication",
     "target": "html\/",
     "content": [
-        "book\/zend.authentication.intro.md",
-        "book\/zend.authentication.adapter.dbtable.md",
-        "book\/zend.authentication.adapter.digest.md",
-        "book\/zend.authentication.adapter.http.md",
-        "book\/zend.authentication.adapter.ldap.md",
-        "book\/zend.authentication.validator.authentication.md"
+        "book\/laminas.authentication.intro.md",
+        "book\/laminas.authentication.adapter.dbtable.md",
+        "book\/laminas.authentication.adapter.digest.md",
+        "book\/laminas.authentication.adapter.http.md",
+        "book\/laminas.authentication.adapter.ldap.md",
+        "book\/laminas.authentication.validator.authentication.md"
     ]
 }
