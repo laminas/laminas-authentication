@@ -3,7 +3,7 @@
 Some verification operations cannot be performed well on RDBMS servers. Other
 times, you may be unsure which RDBMS system you will be using long-term, and
 need to ensure authentication will work consistently. For these situations, you
-can use the `Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter` adapter.
+can use the `Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter` adapter.
 Similar to the [CredentialTreatmentAdapter](credential-treatment.md), it
 accepts a table name, identity column, and credential column; however, instead
 of a credential treatment, it accepts a *credential validation callback* that
@@ -41,7 +41,7 @@ authentication query later. This example requires the PDO SQLite extension to
 be available:
 
 ```php
-use Zend\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
 
 // Create a SQLite database connection
 $dbAdapter = new DbAdapter([
@@ -92,11 +92,11 @@ $passwordValidation = function ($hash, $password) {
 ```
 
 Now that we have the database connection and a password validation function,
-we can create our `Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter` adapter
+we can create our `Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter` adapter
 instance, passing the options to the constructor or later via setter methods:
 
 ```php
-use Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
+use Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;
 
 // Configure the instance with constructor parameters:
 $authAdapter = new AuthAdapter(
@@ -133,7 +133,7 @@ $result = $authAdapter->authenticate();
 ```
 
 In addition to the availability of the `getIdentity()` method upon the
-authentication result object, `Zend\Authentication\Adapter\DbTable\CallbackCheckAdapter`
+authentication result object, `Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter`
 also supports retrieving the table row upon authentication success:
 
 ```php
@@ -208,7 +208,7 @@ match.
 Since the validation callback is only provided the hash value from the database
 and the credential provided by the user, you cannot do more complex matching
 within it. However, you can add criteria to the SQL sent to the server by
-retrieving the `Zend\Db\Sql\Select` instance is uses.
+retrieving the `Laminas\Db\Sql\Select` instance is uses.
 
 As an example, many websites require a user to activate their account before
 allowing them to login for the first time. We can add that criteria as follows:

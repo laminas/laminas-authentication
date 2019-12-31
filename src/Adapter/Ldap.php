@@ -1,30 +1,29 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter;
+namespace Laminas\Authentication\Adapter;
 
+use Laminas\Authentication\Result as AuthenticationResult;
+use Laminas\Ldap as LaminasLdap;
+use Laminas\Ldap\Exception\LdapException;
 use stdClass;
-use Zend\Authentication\Result as AuthenticationResult;
-use Zend\Ldap as ZendLdap;
-use Zend\Ldap\Exception\LdapException;
 
 class Ldap extends AbstractAdapter
 {
     /**
-     * The Zend\Ldap\Ldap context.
+     * The Laminas\Ldap\Ldap context.
      *
-     * @var ZendLdap\Ldap
+     * @var LaminasLdap\Ldap
      */
     protected $ldap = null;
 
     /**
-     * The array of arrays of Zend\Ldap\Ldap options passed to the constructor.
+     * The array of arrays of Laminas\Ldap\Ldap options passed to the constructor.
      *
      * @var array
      */
@@ -40,7 +39,7 @@ class Ldap extends AbstractAdapter
     /**
      * Constructor
      *
-     * @param  array  $options    An array of arrays of Zend\Ldap\Ldap options
+     * @param  array  $options    An array of arrays of Laminas\Ldap\Ldap options
      * @param  string $identity   The username of the account being authenticated
      * @param  string $credential The password of the account being authenticated
      */
@@ -56,7 +55,7 @@ class Ldap extends AbstractAdapter
     }
 
     /**
-     * Returns the array of arrays of Zend\Ldap\Ldap options of this adapter.
+     * Returns the array of arrays of Laminas\Ldap\Ldap options of this adapter.
      *
      * @return array|null
      */
@@ -66,10 +65,10 @@ class Ldap extends AbstractAdapter
     }
 
     /**
-     * Sets the array of arrays of Zend\Ldap\Ldap options to be used by
+     * Sets the array of arrays of Laminas\Ldap\Ldap options to be used by
      * this adapter.
      *
-     * @param  array $options The array of arrays of Zend\Ldap\Ldap options
+     * @param  array $options The array of arrays of Laminas\Ldap\Ldap options
      * @return self Provides a fluent interface
      */
     public function setOptions($options)
@@ -131,12 +130,12 @@ class Ldap extends AbstractAdapter
     /**
      * Returns the LDAP Object
      *
-     * @return ZendLdap\Ldap The Zend\Ldap\Ldap object used to authenticate the credentials
+     * @return LaminasLdap\Ldap The Laminas\Ldap\Ldap object used to authenticate the credentials
      */
     public function getLdap()
     {
         if ($this->ldap === null) {
-            $this->ldap = new ZendLdap\Ldap();
+            $this->ldap = new LaminasLdap\Ldap();
         }
 
         return $this->ldap;
@@ -145,10 +144,10 @@ class Ldap extends AbstractAdapter
     /**
      * Set an Ldap connection
      *
-     * @param  ZendLdap\Ldap $ldap An existing Ldap object
+     * @param  LaminasLdap\Ldap $ldap An existing Ldap object
      * @return self Provides a fluent interface
      */
-    public function setLdap(ZendLdap\Ldap $ldap)
+    public function setLdap(LaminasLdap\Ldap $ldap)
     {
         $this->ldap = $ldap;
 
@@ -235,7 +234,7 @@ class Ldap extends AbstractAdapter
                      * invalid with another server for the same domain. The
                      * $failedAuthorities array tracks this condition (and also
                      * serves to supply the original error message).
-                     * This fixes issue ZF-4093.
+                     * This fixes issue Laminas-4093.
                      */
                     $messages[1] = $failedAuthorities[$dname];
                     $messages[] = "Skipping previously failed authority: $dname";
@@ -248,7 +247,7 @@ class Ldap extends AbstractAdapter
                  * Fixes problem when authenticated user is not allowed to retrieve
                  * group-membership information or own account.
                  * This requires that the user specified with "username" and optionally
-                 * "password" in the Zend\Ldap\Ldap options is able to retrieve the required
+                 * "password" in the Laminas\Ldap\Ldap options is able to retrieve the required
                  * information.
                  */
                 $requireRebind = false;
@@ -256,7 +255,7 @@ class Ldap extends AbstractAdapter
                     $ldap->bind();
                     $requireRebind = true;
                 }
-                $dn = $ldap->getCanonicalAccountName($canonicalName, ZendLdap\Ldap::ACCTNAME_FORM_DN);
+                $dn = $ldap->getCanonicalAccountName($canonicalName, LaminasLdap\Ldap::ACCTNAME_FORM_DN);
 
                 $groupResult = $this->checkGroupMembership($ldap, $canonicalName, $dn, $adapterOptions);
                 if ($groupResult === true) {
@@ -318,18 +317,18 @@ class Ldap extends AbstractAdapter
     }
 
     /**
-     * Sets the LDAP specific options on the Zend\Ldap\Ldap instance
+     * Sets the LDAP specific options on the Laminas\Ldap\Ldap instance
      *
-     * @param  ZendLdap\Ldap $ldap
+     * @param  LaminasLdap\Ldap $ldap
      * @param  array         $options
      * @return array of auth-adapter specific options
      */
-    protected function prepareOptions(ZendLdap\Ldap $ldap, array $options)
+    protected function prepareOptions(LaminasLdap\Ldap $ldap, array $options)
     {
         $adapterOptions = [
             'group'       => null,
             'groupDn'     => $ldap->getBaseDn(),
-            'groupScope'  => ZendLdap\Ldap::SEARCH_SCOPE_SUB,
+            'groupScope'  => LaminasLdap\Ldap::SEARCH_SCOPE_SUB,
             'groupAttr'   => 'cn',
             'groupFilter' => 'objectClass=groupOfUniqueNames',
             'memberAttr'  => 'uniqueMember',
@@ -345,9 +344,9 @@ class Ldap extends AbstractAdapter
                         if (in_array(
                             $value,
                             [
-                                ZendLdap\Ldap::SEARCH_SCOPE_BASE,
-                                ZendLdap\Ldap::SEARCH_SCOPE_ONE,
-                                ZendLdap\Ldap::SEARCH_SCOPE_SUB,
+                                LaminasLdap\Ldap::SEARCH_SCOPE_BASE,
+                                LaminasLdap\Ldap::SEARCH_SCOPE_ONE,
+                                LaminasLdap\Ldap::SEARCH_SCOPE_SUB,
                             ],
                             true
                         )) {
@@ -371,13 +370,13 @@ class Ldap extends AbstractAdapter
     /**
      * Checks the group membership of the bound user
      *
-     * @param  ZendLdap\Ldap $ldap
+     * @param  LaminasLdap\Ldap $ldap
      * @param  string        $canonicalName
      * @param  string        $dn
      * @param  array         $adapterOptions
      * @return string|true
      */
-    protected function checkGroupMembership(ZendLdap\Ldap $ldap, $canonicalName, $dn, array $adapterOptions)
+    protected function checkGroupMembership(LaminasLdap\Ldap $ldap, $canonicalName, $dn, array $adapterOptions)
     {
         if ($adapterOptions['group'] === null) {
             return true;
@@ -389,9 +388,9 @@ class Ldap extends AbstractAdapter
             $user = $dn;
         }
 
-        $groupName   = ZendLdap\Filter::equals($adapterOptions['groupAttr'], $adapterOptions['group']);
-        $membership  = ZendLdap\Filter::equals($adapterOptions['memberAttr'], $user);
-        $group       = ZendLdap\Filter::andFilter($groupName, $membership);
+        $groupName   = LaminasLdap\Filter::equals($adapterOptions['groupAttr'], $adapterOptions['group']);
+        $membership  = LaminasLdap\Filter::equals($adapterOptions['memberAttr'], $user);
+        $group       = LaminasLdap\Filter::andFilter($groupName, $membership);
         $groupFilter = $adapterOptions['groupFilter'];
         if (! empty($groupFilter)) {
             $group = $group->addAnd($groupFilter);
@@ -409,8 +408,8 @@ class Ldap extends AbstractAdapter
     /**
      * getAccountObject() - Returns the result entry as a stdClass object
      *
-     * This resembles the feature {@see Zend\Authentication\Adapter\DbTable::getResultRowObject()}.
-     * Closes ZF-6813
+     * This resembles the feature {@see Laminas\Authentication\Adapter\DbTable::getResultRowObject()}.
+     * Closes Laminas-6813
      *
      * @param  array $returnAttribs
      * @param  array $omitAttribs

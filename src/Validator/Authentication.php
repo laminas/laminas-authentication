@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-authentication for the canonical source repository
- * @copyright Copyright (c) 2013-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-authentication/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Validator;
+namespace Laminas\Authentication\Validator;
 
+use Laminas\Authentication\Adapter\ValidatableAdapterInterface;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Exception;
+use Laminas\Authentication\Result;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\AbstractValidator;
 use Traversable;
-use Zend\Authentication\Adapter\ValidatableAdapterInterface;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Result;
-use Zend\Authentication\Exception;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\AbstractValidator;
 
 /**
  * Authentication Validator
