@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link       http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Validator;
+namespace Laminas\Authentication\Validator;
 
+use Laminas\Authentication\Adapter\ValidatableAdapterInterface;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Exception;
+use Laminas\Authentication\Result;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\AbstractValidator;
 use Traversable;
-use Zend\Authentication\Adapter\ValidatableAdapterInterface;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Result;
-use Zend\Authentication\Exception;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\AbstractValidator;
 
 /**
  * Authentication Validator
@@ -46,7 +45,7 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication Adapter
-     * @var Zend\Authentication\Adapter\Adapter
+     * @var Laminas\Authentication\Adapter\Adapter
      */
     protected $adapter;
 
@@ -64,7 +63,7 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication Service
-     * @var Zend\Authentication\AuthenticationService
+     * @var Laminas\Authentication\AuthenticationService
      */
     protected $service;
 
@@ -99,7 +98,7 @@ class Authentication extends AbstractValidator
     /**
      * Get Adapter
      *
-     * @return Zend\Authentication\Adapter\ValidatableAdapterInterface
+     * @return Laminas\Authentication\Adapter\ValidatableAdapterInterface
      */
     public function getAdapter()
     {
@@ -109,7 +108,7 @@ class Authentication extends AbstractValidator
     /**
      * Set Adapter
      *
-     * @param  Zend\Authentication\Adapter\ValidatableAdapterInterface $adapter
+     * @param  Laminas\Authentication\Adapter\ValidatableAdapterInterface $adapter
      * @return Authentication
      */
     public function setAdapter(ValidatableAdapterInterface $adapter)
@@ -168,7 +167,7 @@ class Authentication extends AbstractValidator
     /**
      * Get Service
      *
-     * @return Zend\Authentication\AuthenticationService
+     * @return Laminas\Authentication\AuthenticationService
      */
     public function getService()
     {
@@ -178,7 +177,7 @@ class Authentication extends AbstractValidator
     /**
      * Set Service
      *
-     * @param  Zend\Authentication\AuthenticationService $service
+     * @param  Laminas\Authentication\AuthenticationService $service
      * @return Authentication
      */
     public function setService(AuthenticationService $service)

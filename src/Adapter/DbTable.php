@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter;
+namespace Laminas\Authentication\Adapter;
 
+use Laminas\Authentication\Result as AuthenticationResult;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\Sql\Expression;
+use Laminas\Db\Sql\Select as DbSelect;
 use stdClass;
-use Zend\Authentication\Result as AuthenticationResult;
-use Zend\Db\Adapter\Adapter as DbAdapter;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\Sql\Expression;
-use Zend\Db\Sql\Select as DbSelect;
 
 class DbTable extends AbstractAdapter
 {
@@ -24,7 +23,7 @@ class DbTable extends AbstractAdapter
      *
      * @var DbAdapter
      */
-    protected $zendDb = null;
+    protected $laminasDb = null;
 
     /**
      * @var DbSelect
@@ -85,17 +84,17 @@ class DbTable extends AbstractAdapter
     /**
      * __construct() - Sets configuration options
      *
-     * @param  DbAdapter $zendDb
+     * @param  DbAdapter $laminasDb
      * @param  string    $tableName           Optional
      * @param  string    $identityColumn      Optional
      * @param  string    $credentialColumn    Optional
      * @param  string    $credentialTreatment Optional
-     * @return \Zend\Authentication\Adapter\DbTable
+     * @return \Laminas\Authentication\Adapter\DbTable
      */
-    public function __construct(DbAdapter $zendDb, $tableName = null, $identityColumn = null,
+    public function __construct(DbAdapter $laminasDb, $tableName = null, $identityColumn = null,
                                 $credentialColumn = null, $credentialTreatment = null)
     {
-        $this->zendDb = $zendDb;
+        $this->laminasDb = $laminasDb;
 
         if (null !== $tableName) {
             $this->setTableName($tableName);
@@ -326,7 +325,7 @@ class DbTable extends AbstractAdapter
     }
 
     /**
-     * _authenticateCreateSelect() - This method creates a Zend\Db\Sql\Select object that
+     * _authenticateCreateSelect() - This method creates a Laminas\Db\Sql\Select object that
      * is completely configured to be queried against the database.
      *
      * @return DbSelect
@@ -340,23 +339,23 @@ class DbTable extends AbstractAdapter
 
         $credentialExpression = new Expression(
             '(CASE WHEN '
-            . $this->zendDb->getPlatform()->quoteIdentifier($this->credentialColumn)
+            . $this->laminasDb->getPlatform()->quoteIdentifier($this->credentialColumn)
             . ' = ' . $this->credentialTreatment
             . ' THEN 1 ELSE 0 END) AS '
-            . $this->zendDb->getPlatform()->quoteIdentifier('zend_auth_credential_match')
+            . $this->laminasDb->getPlatform()->quoteIdentifier('laminas_auth_credential_match')
         );
 
         // get select
         $dbSelect = clone $this->getDbSelect();
         $dbSelect->from($this->tableName)
                  ->columns(array('*', $credentialExpression))
-                 ->where($this->zendDb->getPlatform()->quoteIdentifier($this->identityColumn) . ' = ?');
+                 ->where($this->laminasDb->getPlatform()->quoteIdentifier($this->identityColumn) . ' = ?');
 
         return $dbSelect;
     }
 
     /**
-     * _authenticateQuerySelect() - This method accepts a Zend\Db\Sql\Select object and
+     * _authenticateQuerySelect() - This method accepts a Laminas\Db\Sql\Select object and
      * performs a query against the database with that object.
      *
      * @param  DbSelect $dbSelect
@@ -365,8 +364,8 @@ class DbTable extends AbstractAdapter
      */
     protected function _authenticateQuerySelect(DbSelect $dbSelect)
     {
-        $statement = $this->zendDb->createStatement();
-        $dbSelect->prepareStatement($this->zendDb, $statement);
+        $statement = $this->laminasDb->createStatement();
+        $dbSelect->prepareStatement($this->laminasDb, $statement);
         $resultSet = new ResultSet();
         try {
             $resultSet->initialize($statement->execute(array($this->credential, $this->identity)));
@@ -386,7 +385,7 @@ class DbTable extends AbstractAdapter
      * certain that only one record was returned in the resultset
      *
      * @param  array $resultIdentities
-     * @return bool|\Zend\Authentication\Result
+     * @return bool|\Laminas\Authentication\Result
      */
     protected function _authenticateValidateResultSet(array $resultIdentities)
     {
@@ -414,13 +413,13 @@ class DbTable extends AbstractAdapter
      */
     protected function _authenticateValidateResult($resultIdentity)
     {
-        if ($resultIdentity['zend_auth_credential_match'] != '1') {
+        if ($resultIdentity['laminas_auth_credential_match'] != '1') {
             $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
             $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
             return $this->_authenticateCreateAuthResult();
         }
 
-        unset($resultIdentity['zend_auth_credential_match']);
+        unset($resultIdentity['laminas_auth_credential_match']);
         $this->resultRow = $resultIdentity;
 
         $this->authenticateResultInfo['code']       = AuthenticationResult::SUCCESS;
@@ -429,7 +428,7 @@ class DbTable extends AbstractAdapter
     }
 
     /**
-     * Creates a Zend\Authentication\Result object from the information that
+     * Creates a Laminas\Authentication\Result object from the information that
      * has been collected during the authenticate() attempt.
      *
      * @return AuthenticationResult
