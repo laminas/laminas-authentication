@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter\Http;
+namespace LaminasTest\Authentication\Adapter\Http;
 
-use Zend\Authentication\Adapter\Http\ApacheResolver as Apache;
-use Zend\Authentication\Result as AuthResult;
+use Laminas\Authentication\Adapter\Http\ApacheResolver as Apache;
+use Laminas\Authentication\Result as AuthResult;
 
 /**
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class ApacheResolverTest extends \PHPUnit_Framework_TestCase
 {
@@ -71,7 +70,7 @@ class ApacheResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetFileInvalid()
     {
-        $this->setExpectedException('Zend\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
+        $this->setExpectedException('Laminas\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
         $this->_apache->setFile($this->_badPath);
     }
 
@@ -93,7 +92,7 @@ class ApacheResolverTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructInvalid()
     {
-        $this->setExpectedException('Zend\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
+        $this->setExpectedException('Laminas\\Authentication\\Adapter\\Http\\Exception\\ExceptionInterface', 'Path not readable');
         $apache = new Apache($this->_badPath);
     }
 

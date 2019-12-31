@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter;
+namespace Laminas\Authentication\Adapter;
 
 interface AdapterInterface
 {
     /**
      * Performs an authentication attempt
      *
-     * @return \Zend\Authentication\Result
-     * @throws \Zend\Authentication\Adapter\Exception\ExceptionInterface If authentication cannot be performed
+     * @return \Laminas\Authentication\Result
+     * @throws \Laminas\Authentication\Adapter\Exception\ExceptionInterface If authentication cannot be performed
      */
     public function authenticate();
 }
