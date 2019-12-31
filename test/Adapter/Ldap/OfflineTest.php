@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication\Adapter\Ldap;
+namespace LaminasTest\Authentication\Adapter\Ldap;
 
-use Zend\Authentication\Adapter;
-use Zend\Ldap;
+use Laminas\Authentication\Adapter;
+use Laminas\Ldap;
 
 /**
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class OfflineTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +26,7 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
     /**
      * Setup operations run prior to each test method:
      *
-     * * Creates an instance of Zend\Authentication\Adapter\Ldap
+     * * Creates an instance of Laminas\Authentication\Adapter\Ldap
      *
      * @return void
      */
@@ -42,7 +41,7 @@ class OfflineTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('LDAP is not enabled');
         }
         $this->adapter->setLdap(new Ldap\Ldap());
-        $this->assertInstanceOf('Zend\Ldap\Ldap', $this->adapter->getLdap());
+        $this->assertInstanceOf('Laminas\Ldap\Ldap', $this->adapter->getLdap());
     }
 
     public function testUsernameIsNullIfNotSet()
