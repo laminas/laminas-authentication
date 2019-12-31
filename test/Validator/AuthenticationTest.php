@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Authentication\Validator\Authentication as AuthenticationValidator;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication as Auth;
-use ZendTest\Authentication as AuthTest;
+use Laminas\Authentication as Auth;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
+use LaminasTest\Authentication as AuthTest;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class AthenticationTest extends \PHPUnit_Framework_TestCase
 {
