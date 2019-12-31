@@ -1,35 +1,34 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
-namespace ZendTest\Authentication\Adapter\DbTable;
+namespace LaminasTest\Authentication\Adapter\DbTable;
 
-use Zend\Authentication;
-use Zend\Authentication\Adapter;
-use Zend\Db\Adapter\Adapter as DbAdapter;
-use Zend\Db\Sql\Select as DBSelect;
+use Laminas\Authentication;
+use Laminas\Authentication\Adapter;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Sql\Select as DBSelect;
 
 /**
- * @group Zend_Auth
- * @group Zend_Db_Table
+ * @group Laminas_Auth
+ * @group Laminas_Db_Table
  */
 class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
 {
     /**
      * IbmDb2 database connection
      *
-     * @var \Zend\Db\Adapter\Adapter
+     * @var \Laminas\Db\Adapter\Adapter
      */
     protected $db = null;
 
     /**
      * Database table authentication adapter
      *
-     * @var \Zend\Authentication\Adapter\DbTable
+     * @var \Laminas\Authentication\Adapter\DbTable
      */
     protected $adapter = null;
 
@@ -38,9 +37,9 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
      */
     protected $dbAdapterParams = array(
         'driver'           => 'IbmDb2',
-        'dbname'           => TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_DATABASE,
-        'username'         => TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_USERNAME,
-        'password'         => TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_PASSWORD,
+        'dbname'           => TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_DATABASE,
+        'username'         => TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_USERNAME,
+        'password'         => TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_PASSWORD,
         'platform_options' => array('quote_identifiers' => false),
         'driver_options'   => array(),
     );
@@ -50,15 +49,15 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
      *
      * @var string in the format 'LIBRARY_NAME.TABLE_NAME' or
      */
-    protected $tableName = TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE;
+    protected $tableName = TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE;
 
     /**
      * Set up test configuration
      */
     public function setUp()
     {
-        if (!defined('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')
-            || constant('TESTS_ZEND_AUTH_ADAPTER_DBTABLE_DB2_ENABLED') === false
+        if (!defined('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')
+            || constant('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED') === false
         ) {
             $this->markTestSkipped('Tests are not enabled in TestConfiguration.php');
         }
@@ -204,7 +203,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterCanReturnDbSelectObject()
     {
@@ -212,7 +211,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterCanUseModifiedDbSelectObject()
     {
@@ -226,7 +225,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-5957
+     * @group Laminas-5957
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth()
     {
@@ -249,7 +248,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
      */
     public function testCatchExceptionNoTable()
     {
-        $this->setExpectedException('Zend\Authentication\Adapter\DbTable\Exception\RuntimeException', 'A table must be supplied for');
+        $this->setExpectedException('Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException', 'A table must be supplied for');
         $adapter = new Adapter\DbTable($this->db);
         $adapter->authenticate();
     }
@@ -260,7 +259,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     public function testCatchExceptionNoIdentityColumn()
     {
         $this->setExpectedException(
-            'Zend\Authentication\Adapter\DbTable\Exception\RuntimeException',
+            'Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException',
             'An identity column must be supplied for the'
         );
         $adapter = new Adapter\DbTable($this->db, 'users');
@@ -273,7 +272,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     public function testCatchExceptionNoCredentialColumn()
     {
         $this->setExpectedException(
-            'Zend\Authentication\Adapter\DbTable\Exception\RuntimeException',
+            'Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException',
             'A credential column must be supplied'
         );
         $adapter = new Adapter\DbTable($this->db, 'users', 'username');
@@ -286,7 +285,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     public function testCatchExceptionNoIdentity()
     {
         $this->setExpectedException(
-            'Zend\Authentication\Adapter\DbTable\Exception\RuntimeException',
+            'Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException',
             'A value for the identity was not provided prior'
         );
         $this->authAdapter->authenticate();
@@ -298,7 +297,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     public function testCatchExceptionNoCredential()
     {
         $this->setExpectedException(
-            'Zend\Authentication\Adapter\DbTable\Exception\RuntimeException',
+            'Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException',
             'A credential value was not provided prior'
         );
         $this->authAdapter->setIdentity('my_username');
@@ -311,7 +310,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
     public function testCatchExceptionBadSql()
     {
         $this->setExpectedException(
-            'Zend\Authentication\Adapter\DbTable\Exception\RuntimeException',
+            'Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException',
             'The supplied parameters to'
         );
         $this->authAdapter->setTableName('bad_table_name');
@@ -324,9 +323,9 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
      * Test to see same usernames with different passwords can not authenticate
      * when flag is not set.
      * This is the current state of
-     * Zend_Auth_Adapter_DbTable (up to ZF 1.10.6)
+     * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
-     * @group ZF-7289
+     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet()
     {
@@ -345,7 +344,7 @@ class CredentialTreatmentAdapterDb2Test extends \PHPUnit_Framework_TestCase
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
      *
-     * @group ZF-7289
+     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet()
     {
