@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="laminas-authentication">  
+    <link rel="canonical" href="https://docs.laminas.dev/adapter/http/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>HTTP - laminas-authentication - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">laminas-authentication</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Intro</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Adapters</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">DbTable</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../dbtable/intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../dbtable/credential-treatment/" class="subnavigation__link">CredentialTreatmentAdapter</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../dbtable/callback-check/" class="subnavigation__link">CallbackCheck</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../digest/" class="subnavigation__link">Digest</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">HTTP</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../ldap/" class="subnavigation__link">LDAP</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../storage/" class="subnavigation__link">Identity Persistence</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../validator/" class="subnavigation__link">Validation</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-authentication</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-authentication/" class="header__link header__link--github" title="Go to repository of laminas-authentication">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#major-features" class="toc__link">Major Features</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#requirements" class="toc__link">Requirements</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#design-overview" class="toc__link">Design Overview</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#configuration-options" class="toc__link">Configuration Options</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#resolvers" class="toc__link">Resolvers</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#basic-usage" class="toc__link">Basic Usage</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../..">laminas-authentication</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Adapters</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">HTTP</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Adapters</h2>
+    
+
+    <h1 id="http-authentication-adapter">HTTP Authentication Adapter</h1>
+<p><code>Laminas\Authentication\Adapter\Http</code> provides a mostly-compliant implementation of
+<a href="http://tools.ietf.org/html/rfc2617">RFC-2617</a>,
+<a href="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basic</a> and
+<a href="http://en.wikipedia.org/wiki/Digest_access_authentication">Digest</a> HTTP
+Authentication. Digest authentication is a method of HTTP authentication that
+improves upon Basic authentication by providing a way to authenticate without
+having to transmit the password in clear text across the network.</p>
+<h2 id="major-features">Major Features</h2>
+<ul>
+<li>Supports both Basic and Digest authentication.</li>
+<li>Issues challenges in all supported schemes, so client can respond with any
+  scheme it supports.</li>
+<li>Supports proxy authentication.</li>
+<li>Includes support for authenticating against text files and provides an
+  interface for authenticating against other sources, such as databases.</li>
+</ul>
+<p>There are a few notable features of RFC-2617 that are not implemented yet:</p>
+<ul>
+<li>Nonce tracking, which would allow for "stale" support, and increased replay
+  attack protection.</li>
+<li>Authentication with integrity checking, or "auth-int".</li>
+<li>Authentication-Info HTTP header.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>The HTTP authentication adapter requires <a href="https://github.com/laminas/laminas-http">laminas-http</a>
+in order to do its work:</p>
+<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-http
+</pre></div></p>
+<h2 id="design-overview">Design Overview</h2>
+<p>This adapter consists of two sub-components, the HTTP authentication class
+itself, and its "Resolvers." The HTTP authentication class encapsulates the
+logic for carrying out both Basic and Digest authentication. It consumes
+Resolvers to look up a client's identity in some data store (text file by
+default), and retrieve the credentials from the data store. The "resolved"
+credentials are then compared to the values submitted by the client to
+determine whether authentication is successful.</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<p><code>Laminas\Authentication\Adapter\Http</code> requires a configuration array passed to its
+constructor. There are several configuration options available, and some are
+required:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option Name</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>accept_schemes</code></td>
+<td>Yes</td>
+<td>Determines which authentication schemes the adapter will accept from the client. Must be a space-separated list containing <code>basic</code> and/or <code>digest</code>.</td>
+</tr>
+<tr>
+<td><code>realm</code></td>
+<td>Yes</td>
+<td>Sets the authentication realm; usernames should be unique within a given realm.</td>
+</tr>
+<tr>
+<td><code>digest_domains</code></td>
+<td>Yes, when <code>accept_schemes</code> contains digest</td>
+<td>Space-separated list of URIs for which the same authentication information is valid. The URIs need not all point to the same server.</td>
+</tr>
+<tr>
+<td><code>nonce_timeout</code></td>
+<td>Yes, when <code>accept_schemes</code> contains digest</td>
+<td>Sets the number of seconds for which the nonce is valid. See notes below.</td>
+</tr>
+<tr>
+<td><code>use_opaque</code></td>
+<td>No</td>
+<td>Specifies whether to send the opaque value in the header. True by default.</td>
+</tr>
+<tr>
+<td><code>algorithm</code></td>
+<td>No</td>
+<td>Specified the algorithm. Defaults to MD5, the only supported option (for now).</td>
+</tr>
+<tr>
+<td><code>proxy_auth</code></td>
+<td>No</td>
+<td>Disabled by default. Enable to perform Proxy authentication, instead of normal origin server authentication.</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<h3>nonce timeout</h3>
+<p>The current implementation of the <code>nonce_timeout</code> has some interesting side
+effects. This setting is supposed to determine the valid lifetime of a given
+nonce, or effectively how long a client's authentication information is
+accepted. As an example, if it's set to 3600, it will cause the adapter to
+prompt the client for new credentials every hour, on the hour.  This will be
+resolved in a future release, once nonce tracking and stale support are
+implemented.</p>
+</blockquote>
+<h2 id="resolvers">Resolvers</h2>
+<p>A resolver's job is to take a username and realm, and return some kind of
+credential value. Basic authentication expects to receive the base64-encoded
+version of the user's password. Digest authentication expects to receive a hash
+of the user's username, the realm, and their password (each separated by
+colons). Currently, the only supported hash algorithm is MD5.</p>
+<p><code>Laminas\Authentication\Adapter\Http</code> relies on objects implementing
+<code>Laminas\Authentication\Adapter\Http\ResolverInterface</code>. The component includes
+resolvers for plain text files and Apache <code>htpasswd</code>-generated files; you can
+also provide your own implementations.</p>
+<h3>File Resolver</h3>
+<p>The file resolver is a very simple class. It has a single property specifying a
+filename, which can also be passed to the constructor. Its <code>resolve()</code> method
+walks through the text file, searching for a line with a matching username and
+realm. The text file format is similar to Apache <code>htpasswd</code> files:</p>
+<p> <div class=codehilite><pre><span></span>&lt;username&gt;:&lt;realm&gt;:&lt;credentials&gt;
+</pre></div></p>
+<p>Each line consists of three fields &mdash; username, realm, and credentials
+&mdash; each separated by a colon.  The credentials field is opaque to the file
+resolver; it simply returns that value as-is to the caller. Therefore, this
+same file format serves both Basic and Digest authentication. In Basic
+authentication, the credentials field should be written in clear text. In
+Digest authentication, it should be the MD5 hash described above.</p>
+<p>There are two ways to create a file resolver:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http\FileResolver;</span>
+
+<span class=x>$path     = &#39;data/passwd.txt&#39;;</span>
+<span class=x>$resolver = new FileResolver($path);</span>
+</pre></div></p>
+<p>or</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$path     = &#39;data/passwd.txt&#39;;</span>
+<span class=x>$resolver = new FileResolver();</span>
+<span class=x>$resolver-&gt;setFile($path);</span>
+</pre></div></p>
+<p>If the given path is empty or not readable, an exception is thrown.</p>
+<h3>Apache Resolver</h3>
+<p><code>Laminas\Authentication\Adapter\Http\ApacheResolver</code> operates similarly to the
+<code>FileResolver</code>, but is capable of reading files generated by Apache's <code>htpasswd</code>
+facility, as described in the <a href="http://httpd.apache.org/docs/current/misc/password_encryptions.html">Apache documentation</a>.</p>
+<p>In order to do so, you will need to also install <a href="http://docs.laminas.dev/laminas-crypt/">laminas-crypt</a>:</p>
+<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-crypt
+</pre></div></p>
+<p>In all other ways, it behaves like the <code>FileResolver</code>, meaning you instantiate
+it with a path to the <code>htpasswd</code>-generated file, or inject the path after
+instantiation:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http\ApacheResolver;</span>
+
+<span class=x>$path = &#39;data/htpasswd&#39;;</span>
+
+<span class=x>// Inject at instantiation:</span>
+<span class=x>$resolver = new ApacheResolver($path);</span>
+
+<span class=x>// Or afterwards:</span>
+<span class=x>$resolver = new ApacheResolver();</span>
+<span class=x>$resolver-&gt;setFile($path);</span>
+</pre></div></p>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>First, set up an array with the required configuration values:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$config = [</span>
+<span class=x>    &#39;accept_schemes&#39; =&gt; &#39;basic digest&#39;,</span>
+<span class=x>    &#39;realm&#39;          =&gt; &#39;My Web Site&#39;,</span>
+<span class=x>    &#39;digest_domains&#39; =&gt; &#39;/members_only /my_account&#39;,</span>
+<span class=x>    &#39;nonce_timeout&#39;  =&gt; 3600,</span>
+<span class=x>];</span>
+</pre></div></p>
+<p>This array will cause the adapter to accept either Basic or Digest
+authentication, and will require authenticated access to all the areas of the
+site under <code>/members_only</code> and <code>/my_account</code>. The realm value is usually
+displayed by the browser in the password dialog box. The <code>nonce_timeout</code>
+behaves as described above.</p>
+<p>Next, create the <code>Laminas\Authentication\Adapter\Http</code> object:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http;</span>
+
+<span class=x>$adapter = new Http($config);</span>
+</pre></div></p>
+<p>Since we're supporting both Basic and Digest authentication, we need two
+different resolver objects.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http\FileResolver;</span>
+
+<span class=x>$basicResolver  = new FileResolver(&#39;data/basic-passwd.txt&#39;);</span>
+<span class=x>$digestResolver = new FileResolver(&#39;data/digest-passwd.txt&#39;);</span>
+
+<span class=x>$adapter-&gt;setBasicResolver($basicResolver);</span>
+<span class=x>$adapter-&gt;setDigestResolver($digestResolver);</span>
+</pre></div></p>
+<p>Finally, we perform authentication. The adapter requires laminas-http request and
+response instances in order to lookup credentials and provide challenge responses:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\Request;</span>
+<span class=x>use Laminas\Http\Response;</span>
+
+<span class=x>// $request is an instance of Request</span>
+<span class=x>// $response is an instance of Response</span>
+<span class=x>$adapter-&gt;setRequest($request);</span>
+<span class=x>$adapter-&gt;setResponse($response);</span>
+
+<span class=x>$result = $adapter-&gt;authenticate();</span>
+<span class=x>if (! $result-&gt;isValid()) {</span>
+<span class=x>    // Bad username/password, or canceled password prompt</span>
+<span class=x>}</span>
+</pre></div></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../digest/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../ldap/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-authentication/edit/master/docs/book/adapter/http.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">laminas-authentication</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Intro</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Adapters</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">DbTable</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../dbtable/intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../dbtable/credential-treatment/" class="subnavigation__link">CredentialTreatmentAdapter</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../dbtable/callback-check/" class="subnavigation__link">CallbackCheck</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../digest/" class="subnavigation__link">Digest</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">HTTP</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../ldap/" class="subnavigation__link">LDAP</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../storage/" class="subnavigation__link">Identity Persistence</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../validator/" class="subnavigation__link">Validation</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../..',
+            project  = "components",
+            siteName = 'laminas-authentication';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-authentication" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="laminas-authentication">  
+    <link rel="canonical" href="https://docs.laminas.dev/adapter/dbtable/callback-check/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>CallbackCheck - laminas-authentication - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../../..">laminas-authentication</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../.." class="subnavigation__link">laminas-authentication</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../../intro/" class="subnavigation__link">Intro</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Adapters</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">DbTable</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../credential-treatment/" class="subnavigation__link">CredentialTreatmentAdapter</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">CallbackCheck</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../digest/" class="subnavigation__link">Digest</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../http/" class="subnavigation__link">HTTP</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../ldap/" class="subnavigation__link">LDAP</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../../storage/" class="subnavigation__link">Identity Persistence</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../../validator/" class="subnavigation__link">Validation</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-authentication</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-authentication/" class="header__link header__link--github" title="Go to repository of laminas-authentication">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#configuration-options" class="toc__link">Configuration options</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#basic-usage" class="toc__link">Basic Usage</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#advanced-usage" class="toc__link">Advanced Usage</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../../..">laminas-authentication</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Adapters</li>
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">DbTable</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">CallbackCheck</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">DbTable</h2>
+    
+
+    <h1 id="callback-verification">Callback Verification</h1>
+<p>Some verification operations cannot be performed well on RDBMS servers. Other
+times, you may be unsure which RDBMS system you will be using long-term, and
+need to ensure authentication will work consistently. For these situations, you
+can use the <code>Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter</code> adapter.
+Similar to the <a href="../credential-treatment/">CredentialTreatmentAdapter</a>, it
+accepts a table name, identity column, and credential column; however, instead
+of a credential treatment, it accepts a <em>credential validation callback</em> that
+is executed when the database returns any matches, and which can be used to
+perform additional credential verifications.</p>
+<h2 id="configuration-options">Configuration options</h2>
+<p>The available configuration options include:</p>
+<ul>
+<li><code>tableName</code>: This is the name of the database table that contains the
+  authentication credentials, and against which the database authentication
+  query is performed.</li>
+<li><code>identityColumn</code>: This is the name of the database table column used to
+  represent the identity.  The identity column must contain unique values, such
+  as a username or e-mail address.</li>
+<li><code>credentialColumn</code>: This is the name of the database table column used to
+  represent the credential. Under a simple identity and password authentication
+  scheme, the credential value corresponds to the password.</li>
+<li><code>credentialValidationCallback</code>: A PHP callable to execute when the database returns matches. The callback will receive:</li>
+<li>the value of the <code>credentialColumn</code> returned from the database</li>
+<li>the credential that was used by the adapter during authentication</li>
+</ul>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Many databases do not provide functions that implement a cryptographically
+secure hashing mechanism. Additionally, you may want to ensure that should you
+switch database systems, hashing is consistent. This is a perfect use case for
+the <code>CallbackCheckAdapter</code> adapter; you can implement the password hashing and
+verification within PHP instead.</p>
+<p>The following code creates an adapter for an in-memory database, creates a
+simple table schema, and inserts a row against which we can perform an
+authentication query later. This example requires the PDO SQLite extension to
+be available:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Db\Adapter\Adapter as DbAdapter;</span>
+
+<span class=x>// Create a SQLite database connection</span>
+<span class=x>$dbAdapter = new DbAdapter([</span>
+<span class=x>    &#39;driver&#39;   =&gt; &#39;Pdo_Sqlite&#39;,</span>
+<span class=x>    &#39;database&#39; =&gt; &#39;data/sqlite.db&#39;,</span>
+<span class=x>]);</span>
+
+<span class=x>// Build a simple table creation query</span>
+<span class=x>$sqlCreate = &#39;CREATE TABLE [users] (&#39;</span>
+<span class=x>    . &#39;[id] INTEGER  NOT NULL PRIMARY KEY, &#39;</span>
+<span class=x>    . &#39;[username] VARCHAR(50) UNIQUE NOT NULL, &#39;</span>
+<span class=x>    . &#39;[password] VARCHAR(255) NULL, &#39;</span>
+<span class=x>    . &#39;[real_name] VARCHAR(150) NULL)&#39;;</span>
+
+<span class=x>// Create the authentication credentials table</span>
+<span class=x>$dbAdapter-&gt;query($sqlCreate);</span>
+
+<span class=x>// Build a query to insert a row for which authentication may succeed</span>
+<span class=x>$sqlInsert = &quot;INSERT INTO users (username, password, real_name) &quot;</span>
+<span class=x>    . &quot;VALUES (&#39;my_username&#39;, &#39;my_password&#39;, &#39;My Real Name&#39;)&quot;;</span>
+
+<span class=x>// Insert the data</span>
+<span class=x>$dbAdapter-&gt;query($sqlInsert);</span>
+</pre></div></p>
+<p>As you add users, you will need to create a hash of the password provided and
+insert that into the database. For users on PHP 5.5+, you can use
+<a href="http://php.net/password_hash">password_hash()</a>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$hash = password_hash($password, PASSWORD_DEFAULT);</span>
+</pre></div></p>
+<blockquote>
+<h3>Password hash length</h3>
+<p>As of the time of writing, PHP uses a bcrypt algorithm by default for hashing
+passwords with <code>password_hash()</code>, and this produces 60 character strings. However,
+the default may change over time, and php.net recommends using 255 character
+fields for storage to allow for larger hash sizes in the future.</p>
+</blockquote>
+<p>To verify a password, we'll create a callback that uses
+<a href="http://php.net/manual/en/function.password-verify.php">password_verify()</a>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$passwordValidation = function ($hash, $password) {</span>
+<span class=x>    return password_verify($password, $hash);</span>
+<span class=x>};</span>
+</pre></div></p>
+<p>Now that we have the database connection and a password validation function,
+we can create our <code>Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter</code> adapter
+instance, passing the options to the constructor or later via setter methods:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter as AuthAdapter;</span>
+
+<span class=x>// Configure the instance with constructor parameters:</span>
+<span class=x>$authAdapter = new AuthAdapter(</span>
+<span class=x>    $dbAdapter,</span>
+<span class=x>    &#39;users&#39;,</span>
+<span class=x>    &#39;username&#39;,</span>
+<span class=x>    &#39;password&#39;,</span>
+<span class=x>    $passwordValidation</span>
+<span class=x>);</span>
+
+<span class=x>// Or configure the instance with setter methods:</span>
+<span class=x>$authAdapter = new AuthAdapter($dbAdapter);</span>
+
+<span class=x>$authAdapter</span>
+<span class=x>    -&gt;setTableName(&#39;users&#39;)</span>
+<span class=x>    -&gt;setIdentityColumn(&#39;username&#39;)</span>
+<span class=x>    -&gt;setCredentialColumn(&#39;password&#39;)</span>
+<span class=x>    -&gt;setCredentialValidationCallback($passwordValidation);</span>
+</pre></div></p>
+<p>At this point, the authentication adapter instance is ready to accept
+authentication queries. In order to formulate an authentication query, the
+input credential values are passed to the adapter prior to calling the
+<code>authenticate()</code> method:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Set the input credential values (e.g., from a login form):</span>
+<span class=x>$authAdapter</span>
+<span class=x>    -&gt;setIdentity(&#39;my_username&#39;)</span>
+<span class=x>    -&gt;setCredential(&#39;my_password&#39;);</span>
+
+<span class=x>// Perform the authentication query, saving the result</span>
+<span class=x>$result = $authAdapter-&gt;authenticate();</span>
+</pre></div></p>
+<p>In addition to the availability of the <code>getIdentity()</code> method upon the
+authentication result object, <code>Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter</code>
+also supports retrieving the table row upon authentication success:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Print the identity:</span>
+<span class=x>echo $result-&gt;getIdentity() . &quot;\n\n&quot;;</span>
+
+<span class=x>// Print the result row:</span>
+<span class=x>print_r($authAdapter-&gt;getResultRowObject());</span>
+
+<span class=x>/* Output:</span>
+<span class=x>my_username</span>
+
+<span class=x>Array</span>
+<span class=x>(</span>
+<span class=x>    [id] =&gt; 1</span>
+<span class=x>    [username] =&gt; my_username</span>
+<span class=x>    [password] =&gt; my_password</span>
+<span class=x>    [real_name] =&gt; My Real Name</span>
+<span class=x>)</span>
+<span class=x>*/</span>
+</pre></div></p>
+<p>Since the table row contains the credential value, it is important to secure
+the values against unintended access.</p>
+<p>When retrieving the result object, we can either specify what columns to
+return, or what columns to omit:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Specify the columns to return:</span>
+<span class=x>$columnsToReturn = [</span>
+<span class=x>    &#39;id&#39;,</span>
+<span class=x>    &#39;username&#39;,</span>
+<span class=x>    &#39;real_name&#39;,</span>
+<span class=x>];</span>
+<span class=x>print_r($authAdapter-&gt;getResultRowObject($columnsToReturn));</span>
+
+<span class=x>/* Output:</span>
+
+<span class=x>Array</span>
+<span class=x>(</span>
+<span class=x>   [id] =&gt; 1</span>
+<span class=x>   [username] =&gt; my_username</span>
+<span class=x>   [real_name] =&gt; My Real Name</span>
+<span class=x>)</span>
+<span class=x>*/</span>
+
+<span class=x>// Or specify the columns to omit; when using this approach,</span>
+<span class=x>// pass a null value as the first argument to getResultRowObject():</span>
+<span class=x>$columnsToOmit = [&#39;password&#39;];</span>
+<span class=x>print_r($authAdapter-&gt;getResultRowObject(null, $columnsToOmit);</span>
+
+<span class=x>/* Output:</span>
+
+<span class=x>Array</span>
+<span class=x>(</span>
+<span class=x>   [id] =&gt; 1</span>
+<span class=x>   [username] =&gt; my_username</span>
+<span class=x>   [real_name] =&gt; My Real Name</span>
+<span class=x>)</span>
+<span class=x>*/</span>
+</pre></div></p>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<p>While the basic use case will fit most scenarios, there may be cases where you have
+specialized needs, such as additional criteria that needs to be met for a user to
+match.</p>
+<h3>Adding criteria to match</h3>
+<p>Since the validation callback is only provided the hash value from the database
+and the credential provided by the user, you cannot do more complex matching
+within it. However, you can add criteria to the SQL sent to the server by
+retrieving the <code>Laminas\Db\Sql\Select</code> instance is uses.</p>
+<p>As an example, many websites require a user to activate their account before
+allowing them to login for the first time. We can add that criteria as follows:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// Create a basic adapter</span>
+<span class=x>$adapter = new AuthAdapter(</span>
+<span class=x>    $db,</span>
+<span class=x>    &#39;users&#39;,</span>
+<span class=x>    &#39;username&#39;,</span>
+<span class=x>    &#39;password&#39;,</span>
+<span class=x>    $passwordValidation</span>
+<span class=x>);</span>
+
+<span class=x>// Now retrieve the Select instance and modify it:</span>
+<span class=x>$select = $adapter-&gt;getDbSelect();</span>
+<span class=x>$select-&gt;where(&#39;active = &quot;TRUE&quot;&#39;);</span>
+
+<span class=x>// Authenticate; this will include &quot;users.active = TRUE&quot; in the WHERE clause:</span>
+<span class=x>$adapter-&gt;authenticate();</span>
+</pre></div></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../credential-treatment/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../../digest/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-authentication/edit/master/docs/book/adapter/dbtable/callback-check.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../../..">laminas-authentication</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../.." class="subnavigation__link">laminas-authentication</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../../intro/" class="subnavigation__link">Intro</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Adapters</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">DbTable</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../intro/" class="subnavigation__link">Intro</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../credential-treatment/" class="subnavigation__link">CredentialTreatmentAdapter</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">CallbackCheck</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../digest/" class="subnavigation__link">Digest</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../http/" class="subnavigation__link">HTTP</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../ldap/" class="subnavigation__link">LDAP</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../../storage/" class="subnavigation__link">Identity Persistence</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../../validator/" class="subnavigation__link">Validation</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../../..',
+            project  = "components",
+            siteName = 'laminas-authentication';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../../../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-authentication" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
