@@ -1,41 +1,22 @@
 {
-    "name": "zendframework/zend-authentication",
+    "name": "laminas/laminas-authentication",
     "description": "provides an API for authentication and includes concrete authentication adapters for common use case scenarios",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "authentication"
     ],
-    "homepage": "https://github.com/zendframework/zend-authentication",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Authentication": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-authentication/",
+        "issues": "https://github.com/laminas/laminas-authentication/issues",
+        "source": "https://github.com/laminas/laminas-authentication",
+        "rss": "https://github.com/laminas/laminas-authentication/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-stdlib": "self.version"
-    },
-    "require-dev": {
-        "zendframework/zend-db": "self.version",
-        "zendframework/zend-crypt": "self.version",
-        "zendframework/zend-http": "self.version",
-        "zendframework/zend-ldap": "self.version",
-        "zendframework/zend-session": "self.version",
-        "zendframework/zend-validator": "self.version",
-        "zendframework/zend-uri": "self.version",
-        "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
-    },
-    "suggest": {
-        "zendframework/zend-db": "Zend\\Db component",
-        "zendframework/zend-crypt": "Zend\\Crypt component",
-        "zendframework/zend-http": "Zend\\Http component",
-        "zendframework/zend-ldap": "Zend\\Ldap component",
-        "zendframework/zend-session": "Zend\\Session component",
-        "zendframework/zend-uri": "Zend\\Uri component",
-        "zendframework/zend-validator": "Zend\\Validator component"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -43,9 +24,43 @@
             "dev-develop": "2.5-dev"
         }
     },
+    "require": {
+        "php": ">=5.3.3",
+        "laminas/laminas-stdlib": "self.version",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "1.7.*",
+        "laminas/laminas-crypt": "self.version",
+        "laminas/laminas-db": "self.version",
+        "laminas/laminas-http": "self.version",
+        "laminas/laminas-ldap": "self.version",
+        "laminas/laminas-session": "self.version",
+        "laminas/laminas-uri": "self.version",
+        "laminas/laminas-validator": "self.version",
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "laminas/laminas-crypt": "Laminas\\Crypt component",
+        "laminas/laminas-db": "Laminas\\Db component",
+        "laminas/laminas-http": "Laminas\\Http component",
+        "laminas/laminas-ldap": "Laminas\\Ldap component",
+        "laminas/laminas-session": "Laminas\\Session component",
+        "laminas/laminas-uri": "Laminas\\Uri component",
+        "laminas/laminas-validator": "Laminas\\Validator component"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Authentication\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Authentication\\": "test/"
+            "LaminasTest\\Authentication\\": "test/"
         }
+    },
+    "replace": {
+        "zendframework/zend-authentication": "self.version"
     }
 }
