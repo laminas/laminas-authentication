@@ -1,21 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Authentication
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter;
+namespace Laminas\Authentication\Adapter;
 
-use Zend\Authentication\Result as AuthenticationResult;
-use Zend\Stdlib\ErrorHandler;
+use Laminas\Authentication\Result as AuthenticationResult;
+use Laminas\Stdlib\ErrorHandler;
 
 /**
- * @category   Zend
- * @package    Zend_Authentication
+ * @category   Laminas
+ * @package    Laminas_Authentication
  * @subpackage Adapter
  */
 class Digest implements AdapterInterface
@@ -156,7 +154,7 @@ class Digest implements AdapterInterface
     }
 
     /**
-     * Defined by Zend\Authentication\Adapter\AdapterInterface
+     * Defined by Laminas\Authentication\Adapter\AdapterInterface
      *
      * @throws Exception\ExceptionInterface
      * @return AuthenticationResult

@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Authentication
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Authentication\Adapter\Exception;
+namespace Laminas\Authentication\Adapter\Exception;
 
-use Zend\Authentication\Exception;
+use Laminas\Authentication\Exception;
 
 /**
- * @category   Zend
- * @package    Zend_Authentication
+ * @category   Laminas
+ * @package    Laminas_Authentication
  * @subpackage Adapter
  */
 class UnexpectedValueException extends Exception\UnexpectedValueException implements
