@@ -1,26 +1,26 @@
 # Authentication Validator
 
-`Zend\Authentication\Validator\Authentication` provides a [zend-validator](https://github.com/zendframework/zend-validator)
+`Laminas\Authentication\Validator\Authentication` provides a [laminas-validator](https://github.com/laminas/laminas-validator)
 `ValidatorInterface` implementation, which can be used within an
-[input filter](https://github.com/zendframework/zend-inputfilter) or
-[form](https://github.com/zendframework/zend-form), or anywhere you
+[input filter](https://github.com/laminas/laminas-inputfilter) or
+[form](https://github.com/laminas/laminas-form), or anywhere you
 you simply want a true/false value to determine whether or not authentication
 credentials were provided.
 
 The available configuration options include:
 
-- `adapter`: an instance of `Zend\Authentication\Adapter\AdapterInterface`.
+- `adapter`: an instance of `Laminas\Authentication\Adapter\AdapterInterface`.
 - `identity`: the identity or name of the identity field in the provided context.
 - `credential`: credential or the name of the credential field in the provided context.
-- `service`: an instance of `Zend\Authentication\AuthenticationService`.
-- `code_map`: map of `Zend\Authentication\Result` codes to validator message identifiers.
+- `service`: an instance of `Laminas\Authentication\AuthenticationService`.
+- `code_map`: map of `Laminas\Authentication\Result` codes to validator message identifiers.
 
 ## Usage
 
 ```php
 use My\Authentication\Adapter;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Validator\Authentication as AuthenticationValidator;
+use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 
 $service   = new AuthenticationService();
 $adapter   = new Adapter();
@@ -40,14 +40,14 @@ $validator->isValid('myIdentity', [
 The authentication validator defines five failure message types; identifiers
 for them are available as constants for convenience.
 Common authentication failure codes, defined as constants in
-`Zend\Authentication\Result`, are mapped to validation messages
+`Laminas\Authentication\Result`, are mapped to validation messages
 using a map in `CODE_MAP` constant. Other authentication codes default to the
 `general` message type.
 
 ```php
-namespace Zend\Authentication\Validator;
+namespace Laminas\Authentication\Validator;
 
-use Zend\Authentication\Result;
+use Laminas\Authentication\Result;
 
 class Authentication
 {
@@ -66,24 +66,24 @@ class Authentication
 }
 ```
 
-The authentication validator extends `Zend\Validator\AbstractValidator`, providing
+The authentication validator extends `Laminas\Validator\AbstractValidator`, providing
 a way common for all framework validators to access, change or translate message templates.  
 More information is available in the
-[zend-validator documentation](https://docs.zendframework.com/zend-validator/messages/)
+[laminas-validator documentation](https://docs.laminas.dev/laminas-validator/messages/)
 
 ## Configure validation messages for custom authentication result codes
 
 The constructor configuration option `code_map` allows mapping custom codes
-from `Zend\Authentication\Result` to validation message identifiers.  
+from `Laminas\Authentication\Result` to validation message identifiers.  
 `code_map` is an array of integer code => string message identifier pairs
 
 A new custom message identifier can be specified in `code_map` which will then
 be registered as a new message type with the template value set to the `general` message.
 Once registered, the message template for the new identifier can be changed
-as described in the [zend-validator documentation](https://docs.zendframework.com/zend-validator/messages/).
+as described in the [laminas-validator documentation](https://docs.laminas.dev/laminas-validator/messages/).
 
 ```php
-use Zend\Authentication\Validator\Authentication as AuthenticationValidator;
+use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 
 $validator = new AuthenticationValidator([
     'code_map' => [

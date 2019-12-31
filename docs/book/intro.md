@@ -1,38 +1,38 @@
 # Introduction
 
-zend-authentication provides an API for authentication and includes concrete
+laminas-authentication provides an API for authentication and includes concrete
 authentication adapters for common use case scenarios.
 
-zend-authentication is concerned only with **authentication** and not with
+laminas-authentication is concerned only with **authentication** and not with
 **authorization**.  Authentication is loosely defined as determining whether an
 entity actually is what it purports to be (i.e., identification), based on some
 set of credentials. Authorization, the process of deciding whether to allow an
 entity access to, or to perform operations upon, other entities is outside the
-scope of `Zend\Authentication`. For more information about authorization and
-access control with Zend Framework, please see the
-[zend-permissions-acl](https://docs.zendframework.com/zend-permissions-acl/) or
-[zend-permissions-rbac](https://github.com/zendframework/zend-permissions-rbac)
+scope of `Laminas\Authentication`. For more information about authorization and
+access control with Laminas, please see the
+[laminas-permissions-acl](https://docs.laminas.dev/laminas-permissions-acl/) or
+[laminas-permissions-rbac](https://github.com/laminas/laminas-permissions-rbac)
 components.
 
 > ### AuthenticationService
 >
-> There is no `Zend\Authentication\Authentication` class; instead the class
-> `Zend\Authentication\AuthenticationService` is provided. This class uses the
+> There is no `Laminas\Authentication\Authentication` class; instead the class
+> `Laminas\Authentication\AuthenticationService` is provided. This class uses the
 > composed authentication adapter and persistent storage backend.
 
 ## Usage
 
-There are two approaches to using zend-authentication adapters:
+There are two approaches to using laminas-authentication adapters:
 
-- indirectly, through `Zend\Authentication\AuthenticationService::authenticate()`
+- indirectly, through `Laminas\Authentication\AuthenticationService::authenticate()`
 - directly, through the adapter's `authenticate()` method
 
 The following example illustrates how to use an adapter indirectly, through the
-use of the `Zend\Authentication\AuthenticationService` class:
+use of the `Laminas\Authentication\AuthenticationService` class:
 
 ```php
 use My\Auth\Adapter;
-use Zend\Authentication\AuthenticationService;
+use Laminas\Authentication\AuthenticationService;
 
 // Instantiate the authentication service:
 $auth = new AuthenticationService();
@@ -77,7 +77,7 @@ $auth->clearIdentity();
 
 When the automatic use of persistent storage is inappropriate for a particular
 use case, a developer may bypass the use of the
-`Zend\Authentication\AuthenticationService` class, using an adapter class
+`Laminas\Authentication\AuthenticationService` class, using an adapter class
 directly. Direct use of an adapter class involves configuring and preparing an
 adapter object and then calling its `authenticate()` method. Adapter-specific
 details are discussed in the documentation for each adapter. The following

@@ -1,16 +1,16 @@
 # Adapters Introduction
 
-zend-authentication adapters are used to authenticate against a particular type
+laminas-authentication adapters are used to authenticate against a particular type
 of authentication service, such as LDAP, RDBMS, or file-based storage. Different
 adapters are likely to have vastly different options and behaviors, but some
 basic things are common among authentication adapters. For example, accepting
 authentication credentials (including a purported identity), performing queries
 against the authentication service, and returning results are common to
-zend-authentication adapters.
+laminas-authentication adapters.
 
 ## AdapterInterface
 
-Each adapter implements `Zend\Authentication\Adapter\AdapterInterface`.  This
+Each adapter implements `Laminas\Authentication\Adapter\AdapterInterface`.  This
 interface defines one method, `authenticate()`, which provides the
 implementation for performing an authentication query. Each adapter class must
 be prepared prior to calling `authenticate()`; such adapter preparation might
@@ -26,7 +26,7 @@ authentication service is queried, have been omitted for brevity:
 <?php
 namespace My\Auth;
 
-use Zend\Authentication\Adapter\AdapterInterface;
+use Laminas\Authentication\Adapter\AdapterInterface;
 
 class Adapter implements AdapterInterface
 {
@@ -43,8 +43,8 @@ class Adapter implements AdapterInterface
     /**
      * Performs an authentication attempt
      *
-     * @return \Zend\Authentication\Result
-     * @throws \Zend\Authentication\Adapter\Exception\ExceptionInterface
+     * @return \Laminas\Authentication\Result
+     * @throws \Laminas\Authentication\Adapter\Exception\ExceptionInterface
      *     If authentication cannot be performed
      */
     public function authenticate()
@@ -55,19 +55,19 @@ class Adapter implements AdapterInterface
 ```
 
 As indicated in its docblock, `authenticate()` must return an instance of
-`Zend\Authentication\Result` (or of a class derived from
-`Zend\Authentication\Result`). If performing an authentication query is
+`Laminas\Authentication\Result` (or of a class derived from
+`Laminas\Authentication\Result`). If performing an authentication query is
 impossible, `authenticate()` should throw an exception that derives from
-`Zend\Authentication\Adapter\Exception\ExceptionInterface`.
+`Laminas\Authentication\Adapter\Exception\ExceptionInterface`.
 
 ## Results
 
-Authentication adapters return an instance of `Zend\Authentication\Result` from
+Authentication adapters return an instance of `Laminas\Authentication\Result` from
 `authenticate()` in order to represent the results of an authentication attempt.
-Adapters populate the `Zend\Authentication\Result` object upon construction:
+Adapters populate the `Laminas\Authentication\Result` object upon construction:
 
 ```php
-namespace Zend\Authentication;
+namespace Laminas\Authentication;
 
 class Result
 {
@@ -95,7 +95,7 @@ where:
 The following result codes are available:
 
 ```php
-namespace Zend\Authentication;
+namespace Laminas\Authentication;
 
 class Result
 {
@@ -114,7 +114,7 @@ Results provide the following four user-facing operations:
 
 - `isValid()` returns `TRUE` if and only if the result represents a successful
   authentication attempt.
-- `getCode()` returns the `Zend\Authentication\Result` constant identifier
+- `getCode()` returns the `Laminas\Authentication\Result` constant identifier
   associated with the specific result. This may be used in situations where the
   developer wishes to distinguish among several authentication result types.
   This allows developers to maintain detailed authentication result statistics,
