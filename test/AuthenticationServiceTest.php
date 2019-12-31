@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Authentication
+ * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Authentication;
+namespace LaminasTest\Authentication;
 
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication as Auth;
+use Laminas\Authentication as Auth;
+use Laminas\Authentication\AuthenticationService;
 
 /**
- * @category   Zend
- * @package    Zend_Auth
+ * @category   Laminas
+ * @package    Laminas_Auth
  * @subpackage UnitTests
- * @group      Zend_Auth
+ * @group      Laminas_Auth
  */
 class AuthenticationServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +25,7 @@ class AuthenticationServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that getStorage() returns Zend_Auth_Storage_Session
+     * Ensures that getStorage() returns Laminas_Auth_Storage_Session
      *
      * @return void
      */
