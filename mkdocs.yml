@@ -2,10 +2,18 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - index.md
-    - { Intro: intro.md }
-    - { Adapters: [{ Intro: adapter/intro.md }, { DbTable: [{ Intro: adapter/dbtable/intro.md }, { CredentialTreatmentAdapter: adapter/dbtable/credential-treatment.md }, { CallbackCheck: adapter/dbtable/callback-check.md }] }, { Digest: adapter/digest.md }, { HTTP: adapter/http.md }, { LDAP: adapter/ldap.md }] }
-    - { 'Identity Persistence': storage.md }
-    - { Validation: validator.md }
+    - Intro: intro.md
+    - Adapters:
+        - Intro: adapter/intro.md
+        - DbTable:
+            - Intro: adapter/dbtable/intro.md
+            - CredentialTreatmentAdapter: adapter/dbtable/credential-treatment.md
+            - CallbackCheck: adapter/dbtable/callback-check.md
+        - Digest: adapter/digest.md
+        - HTTP: adapter/http.md
+        - LDAP: adapter/ldap.md
+    - "Identity Persistence": storage.md
+    - Validation: validator.md
 site_name: laminas-authentication
 site_description: laminas-authentication
 repo_url: 'https://github.com/laminas/laminas-authentication'
