@@ -17,3 +17,6 @@ nav:
 site_name: laminas-authentication
 site_description: laminas-authentication
 repo_url: 'https://github.com/laminas/laminas-authentication'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
