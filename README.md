@@ -1,6 +1,6 @@
 # laminas-authentication
 
-[![Build Status](https://travis-ci.org/laminas/laminas-authentication.svg?branch=master)](https://travis-ci.org/laminas/laminas-authentication)
+[![Build Status](https://travis-ci.com/laminas/laminas-authentication.svg?branch=master)](https://travis-ci.com/laminas/laminas-authentication)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-authentication/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-authentication?branch=master)
 
 The `Laminas\Authentication` component provides an API for authentication and
