@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="laminas-authentication">  
-    <link rel="canonical" href="https://docs.laminas.dev/intro/">
     <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Intro - laminas-authentication - Laminas Docs</title>
+    <title>laminas-authentication - Laminas Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -59,7 +58,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-authentication</a>
+            <a href="../.">laminas-authentication</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -73,8 +72,8 @@
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Intro</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Intro</a>
                             </li>
                         
                     
@@ -235,175 +234,21 @@
         <div class="row">
             <div class="col-md-2 col-sm-12">
                 
-    
-
-    
-    
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#usage" class="toc__link">Usage</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
-
             </div>
             <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
                 
-                    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        
-            <li class="breadcrumb-item"><a href="">Overview</a></li>
 
-            
-                <li class="breadcrumb-item"><a href="..">laminas-authentication</a></li>
-
-                
-
-                <li class="breadcrumb-item active" aria-current="page">Intro</li>
-            
-        
-    </ol>
-</nav>
-
-
-
-
-
-
-    
-    
-
-    <h1 id="introduction">Introduction</h1>
-<p>laminas-authentication provides an API for authentication and includes concrete
-authentication adapters for common use case scenarios.</p>
-<p>laminas-authentication is concerned only with <strong>authentication</strong> and not with
-<strong>authorization</strong>.  Authentication is loosely defined as determining whether an
-entity actually is what it purports to be (i.e., identification), based on some
-set of credentials. Authorization, the process of deciding whether to allow an
-entity access to, or to perform operations upon, other entities is outside the
-scope of <code>Laminas\Authentication</code>. For more information about authorization and
-access control with Laminas, please see the
-<a href="https://docs.laminas.dev/laminas-permissions-acl/">laminas-permissions-acl</a> or
-<a href="https://github.com/laminas/laminas-permissions-rbac">laminas-permissions-rbac</a>
-components.</p>
+<h1 class="content__title">404</h1>
 <blockquote>
-<h3>AuthenticationService</h3>
-<p>There is no <code>Laminas\Authentication\Authentication</code> class; instead the class
-<code>Laminas\Authentication\AuthenticationService</code> is provided. This class uses the
-composed authentication adapter and persistent storage backend.</p>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
 </blockquote>
-<h2 id="usage">Usage</h2>
-<p>There are two approaches to using laminas-authentication adapters:</p>
-<ul>
-<li>indirectly, through <code>Laminas\Authentication\AuthenticationService::authenticate()</code></li>
-<li>directly, through the adapter's <code>authenticate()</code> method</li>
-</ul>
-<p>The following example illustrates how to use an adapter indirectly, through the
-use of the <code>Laminas\Authentication\AuthenticationService</code> class:</p>
-<pre class=codehilite><code class=language-php>use My\Auth\Adapter;
-use Laminas\Authentication\AuthenticationService;
 
-// Instantiate the authentication service:
-$auth = new AuthenticationService();
-
-// Instantiate the authentication adapter:
-$authAdapter = new Adapter($username, $password);
-
-// Attempt authentication, saving the result:
-$result = $auth-&gt;authenticate($authAdapter);
-
-if (! $result-&gt;isValid()) {
-    // Authentication failed; print the reasons why:
-    foreach ($result-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
-    }
-} else {
-    // Authentication succeeded; the identity ($username) is stored
-    // in the session:
-    // $result-&gt;getIdentity() === $auth-&gt;getIdentity()
-    // $result-&gt;getIdentity() === $username
-}</code></pre>
-<p>After a successful authentication attempt, subsequent requests can query the
-authentication service to determine if an identity is present, and, if so,
-retrieve it:</p>
-<pre class=codehilite><code class=language-php>if ($auth-&gt;hasIdentity()) {
-    // Identity exists; get it
-    $identity = $auth-&gt;getIdentity();
-}</code></pre>
-<p>To remove the identity from persistent storage, use the <code>clearIdentity()</code>
-method. This typically would be used for implementing an application "logout"
-operation:</p>
-<pre class=codehilite><code class=language-php>$auth-&gt;clearIdentity();</code></pre>
-<p>When the automatic use of persistent storage is inappropriate for a particular
-use case, a developer may bypass the use of the
-<code>Laminas\Authentication\AuthenticationService</code> class, using an adapter class
-directly. Direct use of an adapter class involves configuring and preparing an
-adapter object and then calling its <code>authenticate()</code> method. Adapter-specific
-details are discussed in the documentation for each adapter. The following
-example directly utilizes the fictional <code>My\Auth\Adapter</code> from the above
-examples:</p>
-<pre class=codehilite><code class=language-php>use My\Auth\Adapter;
-
-// Set up the authentication adapter:
-$authAdapter = new Adapter($username, $password);
-
-// Attempt authentication, saving the result:
-$result = $authAdapter-&gt;authenticate();
-
-if (! $result-&gt;isValid()) {
-    // Authentication failed; print the reasons why
-    foreach ($result-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
-    }
-} else {
-    // Authentication succeeded
-    // $result-&gt;getIdentity() === $username
-}</code></pre>
+<a href="../." class="btn btn-default" role="button">Go to homepage</a>
 
 
-
-
-    <nav>
-    <ul class="page-nav hidden-print">
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="..">
-                    <i class="fa fa-chevron-left"></i> Previous
-                </a>
-            
-        </li>
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../adapter/intro/">
-                    Next <i class="fa fa-chevron-right"></i>
-                </a>
-            
-        </li>
-    </ul>
-</nav>
-
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-authentication/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             </div>
             <div class="col-md-3 col-sm-12 sidebar">
                 
@@ -418,7 +263,7 @@ if (! $result-&gt;isValid()) {
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-authentication</a>
+            <a href="../.">laminas-authentication</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -432,8 +277,8 @@ if (! $result-&gt;isValid()) {
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Intro</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Intro</a>
                             </li>
                         
                     

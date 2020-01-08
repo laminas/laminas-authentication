@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -320,36 +310,35 @@ connection settings for a database table adapter.</p>
 <p>The following is an example authentication adapter that requires a username and
 password to be set for authentication. Other details, such as how the
 authentication service is queried, have been omitted for brevity:</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?php</span>
-<span class=k>namespace</span> <span class=nx>My\Auth</span><span class=p>;</span>
+<pre class=codehilite><code class=language-php>&lt;?php
+namespace My\Auth;
 
-<span class=k>use</span> <span class=nx>Laminas\Authentication\Adapter\AdapterInterface</span><span class=p>;</span>
+use Laminas\Authentication\Adapter\AdapterInterface;
 
-<span class=k>class</span> <span class=nc>Adapter</span> <span class=k>implements</span> <span class=nx>AdapterInterface</span>
-<span class=p>{</span>
-    <span class=sd>/**</span>
-<span class=sd>     * Sets username and password for authentication</span>
-<span class=sd>     *</span>
-<span class=sd>     * @return void</span>
-<span class=sd>     */</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=fm>__construct</span><span class=p>(</span><span class=nv>$username</span><span class=p>,</span> <span class=nv>$password</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=c1>// ...</span>
-    <span class=p>}</span>
+class Adapter implements AdapterInterface
+{
+    /**
+     * Sets username and password for authentication
+     *
+     * @return void
+     */
+    public function __construct($username, $password)
+    {
+        // ...
+    }
 
-    <span class=sd>/**</span>
-<span class=sd>     * Performs an authentication attempt</span>
-<span class=sd>     *</span>
-<span class=sd>     * @return \Laminas\Authentication\Result</span>
-<span class=sd>     * @throws \Laminas\Authentication\Adapter\Exception\ExceptionInterface</span>
-<span class=sd>     *     If authentication cannot be performed</span>
-<span class=sd>     */</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>authenticate</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=c1>// ...</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</pre></div></p>
+    /**
+     * Performs an authentication attempt
+     *
+     * @return \Laminas\Authentication\Result
+     * @throws \Laminas\Authentication\Adapter\Exception\ExceptionInterface
+     *     If authentication cannot be performed
+     */
+    public function authenticate()
+    {
+        // ...
+    }
+}</code></pre>
 <p>As indicated in its docblock, <code>authenticate()</code> must return an instance of
 <code>Laminas\Authentication\Result</code> (or of a class derived from
 <code>Laminas\Authentication\Result</code>). If performing an authentication query is
@@ -359,18 +348,17 @@ impossible, <code>authenticate()</code> should throw an exception that derives f
 <p>Authentication adapters return an instance of <code>Laminas\Authentication\Result</code> from
 <code>authenticate()</code> in order to represent the results of an authentication attempt.
 Adapters populate the <code>Laminas\Authentication\Result</code> object upon construction:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Authentication;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Authentication;
 
-<span class=x>class Result</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @param int $code</span>
-<span class=x>     * @param mixed $identity</span>
-<span class=x>     * @param array $messages</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct($code, $identity, array $messages = []);</span>
-<span class=x>}</span>
-</pre></div></p>
+class Result
+{
+    /**
+     * @param int $code
+     * @param mixed $identity
+     * @param array $messages
+     */
+    public function __construct($code, $identity, array $messages = []);
+}</code></pre>
 <p>where:</p>
 <ul>
 <li><code>$code</code> is an integer indicating the result status. Typically you will use one
@@ -384,18 +372,17 @@ Adapters populate the <code>Laminas\Authentication\Result</code> object upon con
 <li><code>$messages</code> is an array of authentication failure messages.</li>
 </ul>
 <p>The following result codes are available:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Authentication;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Authentication;
 
-<span class=x>class Result</span>
-<span class=x>{</span>
-<span class=x>    const SUCCESS = 1;</span>
-<span class=x>    const FAILURE = 0;</span>
-<span class=x>    const FAILURE_IDENTITY_NOT_FOUND = -1;</span>
-<span class=x>    const FAILURE_IDENTITY_AMBIGUOUS = -2;</span>
-<span class=x>    const FAILURE_CREDENTIAL_INVALID = -3;</span>
-<span class=x>    const FAILURE_UNCATEGORIZED = -4;</span>
-<span class=x>}</span>
-</pre></div></p>
+class Result
+{
+    const SUCCESS = 1;
+    const FAILURE = 0;
+    const FAILURE_IDENTITY_NOT_FOUND = -1;
+    const FAILURE_IDENTITY_AMBIGUOUS = -2;
+    const FAILURE_CREDENTIAL_INVALID = -3;
+    const FAILURE_UNCATEGORIZED = -4;
+}</code></pre>
 <p>Note that success is a truthy value, while failure of any sort is a falsy value.</p>
 <p>Results provide the following four user-facing operations:</p>
 <ul>
@@ -420,27 +407,26 @@ useful are locking accounts after too many unsuccessful password attempts,
 flagging an IP address after too many nonexistent identities are attempted, and
 providing specific, customized authentication result messages to the user.</p>
 <p>The following example illustrates how a developer may branch on the result code:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$result = $authenticationService-&gt;authenticate($adapter);</span>
+<pre class=codehilite><code class=language-php>$result = $authenticationService-&gt;authenticate($adapter);
 
-<span class=x>switch ($result-&gt;getCode()) {</span>
+switch ($result-&gt;getCode()) {
 
-<span class=x>    case Result::FAILURE_IDENTITY_NOT_FOUND:</span>
-<span class=x>        /** do stuff for nonexistent identity **/</span>
-<span class=x>        break;</span>
+    case Result::FAILURE_IDENTITY_NOT_FOUND:
+        /** do stuff for nonexistent identity **/
+        break;
 
-<span class=x>    case Result::FAILURE_CREDENTIAL_INVALID:</span>
-<span class=x>        /** do stuff for invalid credential **/</span>
-<span class=x>        break;</span>
+    case Result::FAILURE_CREDENTIAL_INVALID:
+        /** do stuff for invalid credential **/
+        break;
 
-<span class=x>    case Result::SUCCESS:</span>
-<span class=x>        /** do stuff for successful authentication **/</span>
-<span class=x>        break;</span>
+    case Result::SUCCESS:
+        /** do stuff for successful authentication **/
+        break;
 
-<span class=x>    default:</span>
-<span class=x>        /** do stuff for other failure **/</span>
-<span class=x>        break;</span>
-<span class=x>}</span>
-</pre></div></p>
+    default:
+        /** do stuff for other failure **/
+        break;
+}</code></pre>
 
 
 
@@ -501,20 +487,6 @@ providing specific, customized authentication result messages to the user.</p>
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -649,9 +621,10 @@ providing specific, customized authentication result messages to the user.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -688,7 +661,7 @@ providing specific, customized authentication result messages to the user.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -697,8 +670,8 @@ providing specific, customized authentication result messages to the user.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

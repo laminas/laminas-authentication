@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -344,8 +334,7 @@ having to transmit the password in clear text across the network.</p>
 <h2 id="requirements">Requirements</h2>
 <p>The HTTP authentication adapter requires <a href="https://github.com/laminas/laminas-http">laminas-http</a>
 in order to do its work:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-http
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-http</code></pre>
 <h2 id="design-overview">Design Overview</h2>
 <p>This adapter consists of two sub-components, the HTTP authentication class
 itself, and its "Resolvers." The HTTP authentication class encapsulates the
@@ -429,8 +418,7 @@ also provide your own implementations.</p>
 filename, which can also be passed to the constructor. Its <code>resolve()</code> method
 walks through the text file, searching for a line with a matching username and
 realm. The text file format is similar to Apache <code>htpasswd</code> files:</p>
-<p> <div class=codehilite><pre><span></span>&lt;username&gt;:&lt;realm&gt;:&lt;credentials&gt;
-</pre></div></p>
+<pre class=codehilite><code class=language-text>&lt;username&gt;:&lt;realm&gt;:&lt;credentials&gt;</code></pre>
 <p>Each line consists of three fields &mdash; username, realm, and credentials
 &mdash; each separated by a colon.  The credentials field is opaque to the file
 resolver; it simply returns that value as-is to the caller. Therefore, this
@@ -438,82 +426,74 @@ same file format serves both Basic and Digest authentication. In Basic
 authentication, the credentials field should be written in clear text. In
 Digest authentication, it should be the MD5 hash described above.</p>
 <p>There are two ways to create a file resolver:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http\FileResolver;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\Http\FileResolver;
 
-<span class=x>$path     = &#39;data/passwd.txt&#39;;</span>
-<span class=x>$resolver = new FileResolver($path);</span>
-</pre></div></p>
+$path     = 'data/passwd.txt';
+$resolver = new FileResolver($path);</code></pre>
 <p>or</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$path     = &#39;data/passwd.txt&#39;;</span>
-<span class=x>$resolver = new FileResolver();</span>
-<span class=x>$resolver-&gt;setFile($path);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$path     = 'data/passwd.txt';
+$resolver = new FileResolver();
+$resolver-&gt;setFile($path);</code></pre>
 <p>If the given path is empty or not readable, an exception is thrown.</p>
 <h3>Apache Resolver</h3>
 <p><code>Laminas\Authentication\Adapter\Http\ApacheResolver</code> operates similarly to the
 <code>FileResolver</code>, but is capable of reading files generated by Apache's <code>htpasswd</code>
 facility, as described in the <a href="http://httpd.apache.org/docs/current/misc/password_encryptions.html">Apache documentation</a>.</p>
 <p>In order to do so, you will need to also install <a href="http://docs.laminas.dev/laminas-crypt/">laminas-crypt</a>:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-crypt
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-crypt</code></pre>
 <p>In all other ways, it behaves like the <code>FileResolver</code>, meaning you instantiate
 it with a path to the <code>htpasswd</code>-generated file, or inject the path after
 instantiation:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http\ApacheResolver;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\Http\ApacheResolver;
 
-<span class=x>$path = &#39;data/htpasswd&#39;;</span>
+$path = 'data/htpasswd';
 
-<span class=x>// Inject at instantiation:</span>
-<span class=x>$resolver = new ApacheResolver($path);</span>
+// Inject at instantiation:
+$resolver = new ApacheResolver($path);
 
-<span class=x>// Or afterwards:</span>
-<span class=x>$resolver = new ApacheResolver();</span>
-<span class=x>$resolver-&gt;setFile($path);</span>
-</pre></div></p>
+// Or afterwards:
+$resolver = new ApacheResolver();
+$resolver-&gt;setFile($path);</code></pre>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>First, set up an array with the required configuration values:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$config = [</span>
-<span class=x>    &#39;accept_schemes&#39; =&gt; &#39;basic digest&#39;,</span>
-<span class=x>    &#39;realm&#39;          =&gt; &#39;My Web Site&#39;,</span>
-<span class=x>    &#39;digest_domains&#39; =&gt; &#39;/members_only /my_account&#39;,</span>
-<span class=x>    &#39;nonce_timeout&#39;  =&gt; 3600,</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$config = [
+    'accept_schemes' =&gt; 'basic digest',
+    'realm'          =&gt; 'My Web Site',
+    'digest_domains' =&gt; '/members_only /my_account',
+    'nonce_timeout'  =&gt; 3600,
+];</code></pre>
 <p>This array will cause the adapter to accept either Basic or Digest
 authentication, and will require authenticated access to all the areas of the
 site under <code>/members_only</code> and <code>/my_account</code>. The realm value is usually
 displayed by the browser in the password dialog box. The <code>nonce_timeout</code>
 behaves as described above.</p>
 <p>Next, create the <code>Laminas\Authentication\Adapter\Http</code> object:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\Http;
 
-<span class=x>$adapter = new Http($config);</span>
-</pre></div></p>
+$adapter = new Http($config);</code></pre>
 <p>Since we're supporting both Basic and Digest authentication, we need two
 different resolver objects.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\Http\FileResolver;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\Http\FileResolver;
 
-<span class=x>$basicResolver  = new FileResolver(&#39;data/basic-passwd.txt&#39;);</span>
-<span class=x>$digestResolver = new FileResolver(&#39;data/digest-passwd.txt&#39;);</span>
+$basicResolver  = new FileResolver('data/basic-passwd.txt');
+$digestResolver = new FileResolver('data/digest-passwd.txt');
 
-<span class=x>$adapter-&gt;setBasicResolver($basicResolver);</span>
-<span class=x>$adapter-&gt;setDigestResolver($digestResolver);</span>
-</pre></div></p>
+$adapter-&gt;setBasicResolver($basicResolver);
+$adapter-&gt;setDigestResolver($digestResolver);</code></pre>
 <p>Finally, we perform authentication. The adapter requires laminas-http request and
 response instances in order to lookup credentials and provide challenge responses:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\Request;</span>
-<span class=x>use Laminas\Http\Response;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Http\Request;
+use Laminas\Http\Response;
 
-<span class=x>// $request is an instance of Request</span>
-<span class=x>// $response is an instance of Response</span>
-<span class=x>$adapter-&gt;setRequest($request);</span>
-<span class=x>$adapter-&gt;setResponse($response);</span>
+// $request is an instance of Request
+// $response is an instance of Response
+$adapter-&gt;setRequest($request);
+$adapter-&gt;setResponse($response);
 
-<span class=x>$result = $adapter-&gt;authenticate();</span>
-<span class=x>if (! $result-&gt;isValid()) {</span>
-<span class=x>    // Bad username/password, or canceled password prompt</span>
-<span class=x>}</span>
-</pre></div></p>
+$result = $adapter-&gt;authenticate();
+if (! $result-&gt;isValid()) {
+    // Bad username/password, or canceled password prompt
+}</code></pre>
 
 
 
@@ -574,20 +554,6 @@ response instances in order to lookup credentials and provide challenge response
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -722,9 +688,10 @@ response instances in order to lookup credentials and provide challenge response
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -761,7 +728,7 @@ response instances in order to lookup credentials and provide challenge response
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -770,8 +737,8 @@ response instances in order to lookup credentials and provide challenge response
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

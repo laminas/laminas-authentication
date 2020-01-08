@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -371,123 +361,118 @@ database connection should be created.</p>
 simple table schema, and inserts a row against which we can perform an
 authentication query later. This example requires the PDO SQLite extension to
 be available:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Db\Adapter\Adapter as DbAdapter;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Db\Adapter\Adapter as DbAdapter;
 
-<span class=x>// Create a SQLite database connection</span>
-<span class=x>$dbAdapter = new DbAdapter([</span>
-<span class=x>    &#39;driver&#39;   =&gt; &#39;Pdo_Sqlite&#39;,</span>
-<span class=x>    &#39;database&#39; =&gt; &#39;data/users.db&#39;,</span>
-<span class=x>]);</span>
+// Create a SQLite database connection
+$dbAdapter = new DbAdapter([
+    'driver'   =&gt; 'Pdo_Sqlite',
+    'database' =&gt; 'data/users.db',
+]);
 
-<span class=x>// Build a simple table creation query</span>
-<span class=x>$sqlCreate = &#39;CREATE TABLE [users] (&#39;</span>
-<span class=x>    . &#39;[id] INTEGER  NOT NULL PRIMARY KEY, &#39;</span>
-<span class=x>    . &#39;[username] VARCHAR(50) UNIQUE NOT NULL, &#39;</span>
-<span class=x>    . &#39;[password] VARCHAR(32) NULL, &#39;</span>
-<span class=x>    . &#39;[real_name] VARCHAR(150) NULL)&#39;;</span>
+// Build a simple table creation query
+$sqlCreate = 'CREATE TABLE [users] ('
+    . '[id] INTEGER  NOT NULL PRIMARY KEY, '
+    . '[username] VARCHAR(50) UNIQUE NOT NULL, '
+    . '[password] VARCHAR(32) NULL, '
+    . '[real_name] VARCHAR(150) NULL)';
 
-<span class=x>// Create the authentication credentials table</span>
-<span class=x>$dbAdapter-&gt;query($sqlCreate);</span>
+// Create the authentication credentials table
+$dbAdapter-&gt;query($sqlCreate);
 
-<span class=x>// Build a query to insert a row for which authentication may succeed</span>
-<span class=x>$sqlInsert = &quot;INSERT INTO users (username, password, real_name) &quot;</span>
-<span class=x>    . &quot;VALUES (&#39;my_username&#39;, &#39;my_password&#39;, &#39;My Real Name&#39;)&quot;;</span>
+// Build a query to insert a row for which authentication may succeed
+$sqlInsert = &quot;INSERT INTO users (username, password, real_name) &quot;
+    . &quot;VALUES ('my_username', 'my_password', 'My Real Name')&quot;;
 
-<span class=x>// Insert the data</span>
-<span class=x>$dbAdapter-&gt;query($sqlInsert);</span>
-</pre></div></p>
+// Insert the data
+$dbAdapter-&gt;query($sqlInsert);</code></pre>
 <p>With the database connection and table data available, an instance of
 <code>Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter</code> may be
 created. Configuration option values may be passed to the constructor or
 deferred as parameters to setter methods after instantiation:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
-<span class=x>// Configure the instance with constructor parameters:</span>
-<span class=x>$authAdapter = new AuthAdapter(</span>
-<span class=x>    $dbAdapter,</span>
-<span class=x>    &#39;users&#39;,</span>
-<span class=x>    &#39;username&#39;,</span>
-<span class=x>    &#39;password&#39;</span>
-<span class=x>);</span>
+// Configure the instance with constructor parameters:
+$authAdapter = new AuthAdapter(
+    $dbAdapter,
+    'users',
+    'username',
+    'password'
+);
 
-<span class=x>// Or configure the instance with setter methods:</span>
-<span class=x>$authAdapter = new AuthAdapter($dbAdapter);</span>
+// Or configure the instance with setter methods:
+$authAdapter = new AuthAdapter($dbAdapter);
 
-<span class=x>$authAdapter</span>
-<span class=x>    -&gt;setTableName(&#39;users&#39;)</span>
-<span class=x>    -&gt;setIdentityColumn(&#39;username&#39;)</span>
-<span class=x>    -&gt;setCredentialColumn(&#39;password&#39;);</span>
-</pre></div></p>
+$authAdapter
+    -&gt;setTableName('users')
+    -&gt;setIdentityColumn('username')
+    -&gt;setCredentialColumn('password');</code></pre>
 <p>At this point, the authentication adapter instance is ready to accept
 authentication queries. In order to formulate an authentication query, the
 input credential values are passed to the adapter prior to calling the
 <code>authenticate()</code> method:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Set the input credential values (e.g., from a login form):</span>
-<span class=x>$authAdapter</span>
-<span class=x>    -&gt;setIdentity(&#39;my_username&#39;)</span>
-<span class=x>    -&gt;setCredential(&#39;my_password&#39;);</span>
+<pre class=codehilite><code class=language-php>// Set the input credential values (e.g., from a login form):
+$authAdapter
+    -&gt;setIdentity('my_username')
+    -&gt;setCredential('my_password');
 
-<span class=x>// Perform the authentication query, saving the result</span>
-<span class=x>$result = $authAdapter-&gt;authenticate();</span>
-</pre></div></p>
+// Perform the authentication query, saving the result
+$result = $authAdapter-&gt;authenticate();</code></pre>
 <p>In addition to the availability of the <code>getIdentity()</code> method upon the
 authentication result object, <code>Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter</code>
 also supports retrieving the table row upon authentication success:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Print the identity:</span>
-<span class=x>echo $result-&gt;getIdentity() . &quot;\n\n&quot;;</span>
+<pre class=codehilite><code class=language-php>// Print the identity:
+echo $result-&gt;getIdentity() . &quot;\n\n&quot;;
 
-<span class=x>// Print the result row:</span>
-<span class=x>print_r($authAdapter-&gt;getResultRowObject());</span>
+// Print the result row:
+print_r($authAdapter-&gt;getResultRowObject());
 
-<span class=x>/* Output:</span>
-<span class=x>my_username</span>
+/* Output:
+my_username
 
-<span class=x>Array</span>
-<span class=x>(</span>
-<span class=x>    [id] =&gt; 1</span>
-<span class=x>    [username] =&gt; my_username</span>
-<span class=x>    [password] =&gt; my_password</span>
-<span class=x>    [real_name] =&gt; My Real Name</span>
-<span class=x>)</span>
-<span class=x>*/</span>
-</pre></div></p>
+Array
+(
+    [id] =&gt; 1
+    [username] =&gt; my_username
+    [password] =&gt; my_password
+    [real_name] =&gt; My Real Name
+)
+*/</code></pre>
 <p>Since the table row contains the credential value, it is important to secure
 the values against unintended access.</p>
 <p>When retrieving the result object, we can either specify what columns to
 return, or what columns to omit:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Specify the columns to return:</span>
-<span class=x>$columnsToReturn = [</span>
-<span class=x>    &#39;id&#39;,</span>
-<span class=x>    &#39;username&#39;,</span>
-<span class=x>    &#39;real_name&#39;,</span>
-<span class=x>];</span>
-<span class=x>print_r($authAdapter-&gt;getResultRowObject($columnsToReturn));</span>
+<pre class=codehilite><code class=language-php>// Specify the columns to return:
+$columnsToReturn = [
+    'id',
+    'username',
+    'real_name',
+];
+print_r($authAdapter-&gt;getResultRowObject($columnsToReturn));
 
-<span class=x>/* Output:</span>
+/* Output:
 
-<span class=x>Array</span>
-<span class=x>(</span>
-<span class=x>   [id] =&gt; 1</span>
-<span class=x>   [username] =&gt; my_username</span>
-<span class=x>   [real_name] =&gt; My Real Name</span>
-<span class=x>)</span>
-<span class=x>*/</span>
+Array
+(
+   [id] =&gt; 1
+   [username] =&gt; my_username
+   [real_name] =&gt; My Real Name
+)
+*/
 
-<span class=x>// Or specify the columns to omit; when using this approach,</span>
-<span class=x>// pass a null value as the first argument to getResultRowObject():</span>
-<span class=x>$columnsToOmit = [&#39;password&#39;];</span>
-<span class=x>print_r($authAdapter-&gt;getResultRowObject(null, $columnsToOmit);</span>
+// Or specify the columns to omit; when using this approach,
+// pass a null value as the first argument to getResultRowObject():
+$columnsToOmit = ['password'];
+print_r($authAdapter-&gt;getResultRowObject(null, $columnsToOmit);
 
-<span class=x>/* Output:</span>
+/* Output:
 
-<span class=x>Array</span>
-<span class=x>(</span>
-<span class=x>   [id] =&gt; 1</span>
-<span class=x>   [username] =&gt; my_username</span>
-<span class=x>   [real_name] =&gt; My Real Name</span>
-<span class=x>)</span>
-<span class=x>*/</span>
-</pre></div></p>
+Array
+(
+   [id] =&gt; 1
+   [username] =&gt; my_username
+   [real_name] =&gt; My Real Name
+)
+*/</code></pre>
 <h2 id="advanced-usage">Advanced Usage</h2>
 <p>While the primary purpose of laminas-authentication is <strong>authentication</strong> and not
 <strong>authorization</strong>, there are a few instances and problems that toe the line
@@ -500,32 +485,30 @@ credential treatment to solve more complex problems.</p>
 <p>In this scenario, we use the credential treatment <code>PASSWORD()</code>, but also check to see
 that the user has not been flagged as "compromised", which is a potential value
 of the <code>status</code> field for the user record.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
-<span class=x>// The status field value of an account is not equal to &quot;compromised&quot;</span>
-<span class=x>$adapter = new AuthAdapter(</span>
-<span class=x>    $db,</span>
-<span class=x>    &#39;users&#39;,</span>
-<span class=x>    &#39;username&#39;,</span>
-<span class=x>    &#39;password&#39;,</span>
-<span class=x>    &#39;PASSWORD(?) AND status != &quot;compromised&quot;&#39;</span>
-<span class=x>);</span>
-</pre></div></p>
+// The status field value of an account is not equal to &quot;compromised&quot;
+$adapter = new AuthAdapter(
+    $db,
+    'users',
+    'username',
+    'password',
+    'PASSWORD(?) AND status != &quot;compromised&quot;'
+);</code></pre>
 <h3>Check for active user</h3>
 <p>In this example, we check to see if a user is active; this may be necessary
 if we require a user to login once over X days, or if we need to ensure that
 they have followed a verification process.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
-<span class=x>// The active field value of an account is equal to &quot;TRUE&quot;</span>
-<span class=x>$adapter = new AuthAdapter(</span>
-<span class=x>    $db,</span>
-<span class=x>    &#39;users&#39;,</span>
-<span class=x>    &#39;username&#39;,</span>
-<span class=x>    &#39;password&#39;,</span>
-<span class=x>    &#39;PASSWORD(?) AND active = &quot;TRUE&quot;&#39;</span>
-<span class=x>);</span>
-</pre></div></p>
+// The active field value of an account is equal to &quot;TRUE&quot;
+$adapter = new AuthAdapter(
+    $db,
+    'users',
+    'username',
+    'password',
+    'PASSWORD(?) AND active = &quot;TRUE&quot;'
+);</code></pre>
 <h3>Salting</h3>
 <p>Another scenario can be the implementation of a salting mechanism. Salting
 refers to a technique for improving application security; it's based on the
@@ -533,34 +516,30 @@ idea that concatenating a random string to every password makes it impossible
 to accomplish a successful brute force attack on the database using
 pre-computed hash values from a dictionary.</p>
 <p>Let's modify our table to store our salt string:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$sqlAlter = &quot;ALTER TABLE [users] &quot;</span>
-<span class=x>    . &quot;ADD COLUMN [password_salt] &quot;</span>
-<span class=x>    . &quot;AFTER [password]&quot;;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$sqlAlter = &quot;ALTER TABLE [users] &quot;
+    . &quot;ADD COLUMN [password_salt] &quot;
+    . &quot;AFTER [password]&quot;;</code></pre>
 <p>Salts should be created <em>for each user</em> using a cryptographically sound pseudo-random number generator (CSPRNG).
 PHP 7 provides an implementation via <code>random_bytes()</code> (and
 the <a href="https://github.com/paragonie/random_compat">random_compat package provides them for older, supported versions of PHP</a>):</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$salt = random_bytes(32);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$salt = random_bytes(32);</code></pre>
 <p>For earlier versions of PHP, use <a href="https://github.com/laminas/laminas-math">laminas-math</a>'s <code>Laminas\Math\Rand</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Math\Rand;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Math\Rand;
 
-<span class=x>$salt = Rand::getBytes(32, true);</span>
-</pre></div></p>
+$salt = Rand::getBytes(32, true);</code></pre>
 <p>(As of laminas-math 2.7.0, <code>Rand::getBytes()</code> will proxy to <code>random_bytes()</code> when
 running under PHP 7, making it a good, forwards-compatible solution for your
 application.)</p>
 <p>Do this each time you create a user or update their password, and store it in the
 <code>password_salt</code> column you created.</p>
 <p>Now let's build the adapter:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$adapter = new AuthAdapter(</span>
-<span class=x>$db,</span>
-<span class=x>    &#39;users&#39;,</span>
-<span class=x>    &#39;username&#39;,</span>
-<span class=x>    &#39;password&#39;,</span>
-<span class=x>    &quot;PASSWORD(CONCAT(&#39;staticSalt&#39;, ?, password_salt))&quot;</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$adapter = new AuthAdapter(
+$db,
+    'users',
+    'username',
+    'password',
+    &quot;PASSWORD(CONCAT('staticSalt', ?, password_salt))&quot;
+);</code></pre>
 <blockquote>
 <h4>Salt security</h4>
 <p>You can improve security even more by using a static salt value hard coded
@@ -587,22 +566,21 @@ instance as placeholders.</p>
 criteria later, potentially based on specific paths through the application.</p>
 <p>The following uses the second example in this section, adding another <code>WHERE</code>
 clause to determine if the user is active in the system.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Create a basic adapter, with only an PASSWORD() credential treatment:</span>
-<span class=x>$adapter = new AuthAdapter(</span>
-<span class=x>    $db,</span>
-<span class=x>    &#39;users&#39;,</span>
-<span class=x>    &#39;username&#39;,</span>
-<span class=x>    &#39;password&#39;,</span>
-<span class=x>    &#39;PASSWORD(?)&#39;</span>
-<span class=x>);</span>
+<pre class=codehilite><code class=language-php>// Create a basic adapter, with only an PASSWORD() credential treatment:
+$adapter = new AuthAdapter(
+    $db,
+    'users',
+    'username',
+    'password',
+    'PASSWORD(?)'
+);
 
-<span class=x>// Now retrieve the Select instance and modify it:</span>
-<span class=x>$select = $adapter-&gt;getDbSelect();</span>
-<span class=x>$select-&gt;where(&#39;active = &quot;TRUE&quot;&#39;);</span>
+// Now retrieve the Select instance and modify it:
+$select = $adapter-&gt;getDbSelect();
+$select-&gt;where('active = &quot;TRUE&quot;');
 
-<span class=x>// Authenticate; this will include &quot;users.active = TRUE&quot; in the WHERE clause:</span>
-<span class=x>$adapter-&gt;authenticate();</span>
-</pre></div></p>
+// Authenticate; this will include &quot;users.active = TRUE&quot; in the WHERE clause:
+$adapter-&gt;authenticate();</code></pre>
 
 
 
@@ -663,20 +641,6 @@ clause to determine if the user is active in the system.</p>
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -811,9 +775,10 @@ clause to determine if the user is active in the system.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -850,7 +815,7 @@ clause to determine if the user is active in the system.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -859,8 +824,8 @@ clause to determine if the user is active in the system.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

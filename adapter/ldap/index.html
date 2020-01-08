@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -328,50 +318,49 @@ options for both Active Directory and OpenLDAP servers.</p>
 <p>The following example demonstrates creating and configuring the <code>Ldap</code>
 authentication adapter, and also illustrates how to work with the
 authentication messages returned in the authentication result.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\AuthenticationService;</span>
-<span class=x>use Laminas\Authentication\Adapter\Ldap as LdapAdapter;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Adapter\Ldap as LdapAdapter;
 
-<span class=x>// Retrieve the username and pasword from the request somehow.</span>
-<span class=x>$username = /* ... */;</span>
-<span class=x>$password = /* ... */;</span>
+// Retrieve the username and pasword from the request somehow.
+$username = /* ... */;
+$password = /* ... */;
 
-<span class=x>$auth = new AuthenticationService();</span>
+$auth = new AuthenticationService();
 
-<span class=x>$config = [</span>
-<span class=x>    &#39;server1&#39; =&gt; [</span>
-<span class=x>        &#39;host&#39;                   =&gt; &#39;s0.foo.net&#39;,</span>
-<span class=x>        &#39;accountDomainName&#39;      =&gt; &#39;foo.net&#39;,</span>
-<span class=x>        &#39;accountDomainNameShort&#39; =&gt; &#39;FOO&#39;,</span>
-<span class=x>        &#39;accountCanonicalForm&#39;   =&gt; 3,</span>
-<span class=x>        &#39;username&#39;               =&gt; &#39;CN=user1,DC=foo,DC=net&#39;,</span>
-<span class=x>        &#39;password&#39;               =&gt; &#39;pass1&#39;,</span>
-<span class=x>        &#39;baseDn&#39;                 =&gt; &#39;OU=Sales,DC=foo,DC=net&#39;,</span>
-<span class=x>        &#39;bindRequiresDn&#39;         =&gt; true,</span>
-<span class=x>    ],</span>
-<span class=x>    &#39;server2&#39; =&gt; [</span>
-<span class=x>        &#39;host&#39;                   =&gt; &#39;dc1.w.net&#39;,</span>
-<span class=x>        &#39;useStartTls&#39;            =&gt; true,</span>
-<span class=x>        &#39;accountDomainName&#39;      =&gt; &#39;w.net&#39;,</span>
-<span class=x>        &#39;accountDomainNameShort&#39; =&gt; &#39;W&#39;,</span>
-<span class=x>        &#39;accountCanonicalForm&#39;   =&gt; 3,</span>
-<span class=x>        &#39;baseDn&#39;                 =&gt; &#39;CN=Users,DC=w,DC=net&#39;,</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
+$config = [
+    'server1' =&gt; [
+        'host'                   =&gt; 's0.foo.net',
+        'accountDomainName'      =&gt; 'foo.net',
+        'accountDomainNameShort' =&gt; 'FOO',
+        'accountCanonicalForm'   =&gt; 3,
+        'username'               =&gt; 'CN=user1,DC=foo,DC=net',
+        'password'               =&gt; 'pass1',
+        'baseDn'                 =&gt; 'OU=Sales,DC=foo,DC=net',
+        'bindRequiresDn'         =&gt; true,
+    ],
+    'server2' =&gt; [
+        'host'                   =&gt; 'dc1.w.net',
+        'useStartTls'            =&gt; true,
+        'accountDomainName'      =&gt; 'w.net',
+        'accountDomainNameShort' =&gt; 'W',
+        'accountCanonicalForm'   =&gt; 3,
+        'baseDn'                 =&gt; 'CN=Users,DC=w,DC=net',
+    ],
+];
 
-<span class=x>$adapter = new LdapAdapter($config, $username, $password);</span>
+$adapter = new LdapAdapter($config, $username, $password);
 
-<span class=x>$result = $auth-&gt;authenticate($adapter);</span>
+$result = $auth-&gt;authenticate($adapter);
 
-<span class=x>// Messages from position 2 and up are informational messages from the LDAP</span>
-<span class=x>// server:</span>
-<span class=x>foreach ($result-&gt;getMessages() as $i =&gt; $message) {</span>
-<span class=x>    if ($i &lt; 2) {</span>
-<span class=x>        continue;</span>
-<span class=x>    }</span>
+// Messages from position 2 and up are informational messages from the LDAP
+// server:
+foreach ($result-&gt;getMessages() as $i =&gt; $message) {
+    if ($i &lt; 2) {
+        continue;
+    }
 
-<span class=x>    // Potentially log the $message</span>
-<span class=x>}</span>
-</pre></div></p>
+    // Potentially log the $message
+}</code></pre>
 <p>As noted in the above example, the returned authentication result contains
 messages even on success.  LDAP has some notoriety for difficulty in debugging,
 and the <code>Ldap</code> adapter attempts to assist you with this by providing
@@ -731,20 +720,6 @@ schema, the following options are noteworthy:</p>
                     
                         
                             <li class="subnavigation__list-item ">
-                                <a href="../.." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
                                 <a href="../../intro/" class="subnavigation__link">Intro</a>
                             </li>
                         
@@ -870,9 +845,10 @@ schema, the following options are noteworthy:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -909,7 +885,7 @@ schema, the following options are noteworthy:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -918,8 +894,8 @@ schema, the following options are noteworthy:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

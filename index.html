@@ -9,7 +9,7 @@
     <link rel="canonical" href="https://docs.laminas.dev/">
     <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>laminas-authentication - laminas-authentication - Laminas Docs</title>
+    <title>laminas-authentication - Laminas Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -259,11 +249,7 @@
             <li class="breadcrumb-item"><a href="">Overview</a></li>
 
             
-                <li class="breadcrumb-item"><a href=".">laminas-authentication</a></li>
-
-                
-
-                <li class="breadcrumb-item active" aria-current="page">laminas-authentication</li>
+                <li class="breadcrumb-item">laminas-authentication</li>
             
         
     </ol>
@@ -279,15 +265,15 @@
 
     <h2>Installation</h2>
     <h3>Using Composer</h3>
-    <pre><code class="language-bash">$ composer require zendframework/laminas-authentication</code></pre>
+    <pre><code class="language-bash">$ composer require laminas/laminas-authentication</code></pre>
 
 
 <h2>Support</h2>
 <ul>
-    <li>Issues: <a href="https://github.com/zendframework/laminas-authentication/issues/">github.com/zendframework/laminas-authentication/issues</a></li>
-    <li>Source: <a href="https://github.com/zendframework/laminas-authentication/">github.com/zendframework/laminas-authentication</a></li>
-    <li>Chat: <a href="https://zendframework-slack.herokuapp.com">zendframework-slack.herokuapp.com</a></li>
-    <li>Forum: <a href="https://discourse.zendframework.com/">discourse.zendframework.com</a></li>
+    <li>Issues: <a href="https://github.com/laminas/laminas-authentication/issues">github.com/laminas/laminas-authentication/issues</a></li>
+    <li>Source: <a href="https://github.com/laminas/laminas-authentication/">github.com/laminas/laminas-authentication/</a></li>
+    <li>Chat: <a href="https://laminas.dev/chat">laminas.dev/chat</a></li>
+    <li>Forum: <a href="https://discourse.laminas.dev/">discourse.laminas.dev</a></li>
 </ul>
 
 
@@ -336,20 +322,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -484,9 +456,10 @@
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -523,7 +496,7 @@
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -532,8 +505,8 @@
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
@@ -577,5 +550,5 @@
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-12-31 20:07:58
+Build Date UTC : 2020-01-08 11:56:16
 -->

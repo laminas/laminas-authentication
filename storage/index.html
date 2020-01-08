@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -331,30 +321,28 @@ along to the constructor of <a href="https://github.com/laminas/laminas-session"
 This should occur before authentication is attempted, since
 <code>Laminas\Authentication\AuthenticationService::authenticate()</code> injects the
 authenticated identity into the configured storage.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Authentication\AuthenticationService;</span>
-<span class=x>use Laminas\Authentication\Storage\Session as SessionStorage;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Storage\Session as SessionStorage;
 
-<span class=x>$auth = new AuthenticationService();</span>
+$auth = new AuthenticationService();
 
-<span class=x>// Use &#39;someNamespace&#39; instead of &#39;Laminas_Auth&#39;</span>
-<span class=x>$auth-&gt;setStorage(new SessionStorage(&#39;someNamespace&#39;));</span>
+// Use 'someNamespace' instead of 'Laminas_Auth'
+$auth-&gt;setStorage(new SessionStorage('someNamespace'));
 
-<span class=x>// Set up the auth adapter, $authAdapter</span>
-<span class=x>$authAdapter = /* ... */;</span>
+// Set up the auth adapter, $authAdapter
+$authAdapter = /* ... */;
 
-<span class=x>// Authenticate, saving the result, and persisting the identity on success:</span>
-<span class=x>$result = $auth-&gt;authenticate($authAdapter);</span>
-</pre></div></p>
+// Authenticate, saving the result, and persisting the identity on success:
+$result = $auth-&gt;authenticate($authAdapter);</code></pre>
 <h2 id="chain-storage">Chain Storage</h2>
 <p>A website might use multiple storage strategies for identity persistence; the
 <code>Chain</code> Storage can be used to glue these together.</p>
 <p>For example, the <code>Chain</code> can be configured to first use <code>Session</code> storage and
 then use an <code>OAuth</code> storage adapter. One could configure this in the following
 way:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$storage = new Chain;</span>
-<span class=x>$storage-&gt;add(new Session);</span>
-<span class=x>$storage-&gt;add(new OAuth);   // Note: imaginary storage, not part of laminas-authentication</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$storage = new Chain;
+$storage-&gt;add(new Session);
+$storage-&gt;add(new OAuth);   // Note: imaginary storage, not part of laminas-authentication</code></pre>
 <p>When the <code>Chain</code> Storage is used, its underlying storage adapters will be
 consulted in the order in which they were added to the chain. Using our scenario
 above, the <code>Session</code> storage adapter will be consulted first. When that happens:</p>
@@ -374,9 +362,8 @@ above, the <code>Session</code> storage adapter will be consulted first. When th
 <code>Chain::add</code> method, which accepts a second argument indicating the priority.
 (Per standard priority queue usage, higher values have higher priority, and
 lower or negative values have lower priority.)</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$chain-&gt;add(new A, 2);</span>
-<span class=x>$chain-&gt;add(new B, 10); // B will be used first</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$chain-&gt;add(new A, 2);
+$chain-&gt;add(new B, 10); // B will be used first</code></pre>
 <h2 id="implementing-custom-storage">Implementing Custom Storage</h2>
 <p>Sometimes developers may need to use a different identity storage mechanism than
 that provided by <code>Laminas\Authentication\Storage\Session</code>. To do so, implement
@@ -384,93 +371,91 @@ that provided by <code>Laminas\Authentication\Storage\Session</code>. To do so, 
 implementation to <code>Laminas\Authentication\AuthenticationService::setStorage()</code>.</p>
 <p>The following examples demonstrate the process.</p>
 <p>First, implement <code>Laminas\Authentication\Storage\StorageInterface</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?php</span>
-<span class=k>namespace</span> <span class=nx>My</span><span class=p>;</span>
+<pre class=codehilite><code class=language-php>&lt;?php
+namespace My;
 
-<span class=k>use</span> <span class=nx>Laminas\Authentication\Storage\StorageInterface</span><span class=p>;</span>
+use Laminas\Authentication\Storage\StorageInterface;
 
-<span class=k>class</span> <span class=nc>Storage</span> <span class=k>implements</span> <span class=nx>StorageInterface</span>
-<span class=p>{</span>
-    <span class=sd>/**</span>
-<span class=sd>     * Returns true if and only if storage is empty.</span>
-<span class=sd>     *</span>
-<span class=sd>     * @return boolean</span>
-<span class=sd>     * @throws \Laminas\Authentication\Exception\ExceptionInterface If it is</span>
-<span class=sd>     *     impossible to determine whether storage is empty.</span>
-<span class=sd>     */</span>
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>isEmpty</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=sd>/**</span>
-<span class=sd>         * @todo implementation</span>
-<span class=sd>         */</span>
-    <span class=p>}</span>
+class Storage implements StorageInterface
+{
+    /**
+     * Returns true if and only if storage is empty.
+     *
+     * @return boolean
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If it is
+     *     impossible to determine whether storage is empty.
+     */
+    public function isEmpty()
+    {
+        /**
+         * @todo implementation
+         */
+    }
 
-    <span class=sd>/**</span>
-<span class=sd>     * Returns the contents of storage.</span>
-<span class=sd>     *</span>
-<span class=sd>     * Behavior is undefined when storage is empty.</span>
-<span class=sd>     *</span>
-<span class=sd>     * @return mixed</span>
-<span class=sd>     * @throws \Laminas\Authentication\Exception\ExceptionInterface If reading</span>
-<span class=sd>     *     contents from storage is impossible</span>
-<span class=sd>     */</span>
+    /**
+     * Returns the contents of storage.
+     *
+     * Behavior is undefined when storage is empty.
+     *
+     * @return mixed
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If reading
+     *     contents from storage is impossible
+     */
 
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>read</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=sd>/**</span>
-<span class=sd>         * @todo implementation</span>
-<span class=sd>         */</span>
-    <span class=p>}</span>
+    public function read()
+    {
+        /**
+         * @todo implementation
+         */
+    }
 
-    <span class=sd>/**</span>
-<span class=sd>     * Writes $contents to storage.</span>
-<span class=sd>     *</span>
-<span class=sd>     * @param  mixed $contents</span>
-<span class=sd>     * @return void</span>
-<span class=sd>     * @throws \Laminas\Authentication\Exception\ExceptionInterface If writing</span>
-<span class=sd>     *     $contents to storage is impossible</span>
-<span class=sd>     */</span>
+    /**
+     * Writes $contents to storage.
+     *
+     * @param  mixed $contents
+     * @return void
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If writing
+     *     $contents to storage is impossible
+     */
 
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>write</span><span class=p>(</span><span class=nv>$contents</span><span class=p>)</span>
-    <span class=p>{</span>
-        <span class=sd>/**</span>
-<span class=sd>         * @todo implementation</span>
-<span class=sd>         */</span>
-    <span class=p>}</span>
+    public function write($contents)
+    {
+        /**
+         * @todo implementation
+         */
+    }
 
-    <span class=sd>/**</span>
-<span class=sd>     * Clears contents from storage.</span>
-<span class=sd>     *</span>
-<span class=sd>     * @return void</span>
-<span class=sd>     * @throws \Laminas\Authentication\Exception\ExceptionInterface If clearing</span>
-<span class=sd>     *     contents from storage is impossible.</span>
-<span class=sd>     */</span>
+    /**
+     * Clears contents from storage.
+     *
+     * @return void
+     * @throws \Laminas\Authentication\Exception\ExceptionInterface If clearing
+     *     contents from storage is impossible.
+     */
 
-    <span class=k>public</span> <span class=k>function</span> <span class=nf>clear</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=sd>/**</span>
-<span class=sd>         * @todo implementation</span>
-<span class=sd>         */</span>
-    <span class=p>}</span>
-<span class=p>}</span>
-</pre></div></p>
+    public function clear()
+    {
+        /**
+         * @todo implementation
+         */
+    }
+}</code></pre>
 <p>In order to use this custom storage class, <code>Laminas\Authentication\AuthenticationService::setStorage()</code>
 is invoked before an authentication query is attempted:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use My\Storage;</span>
-<span class=x>use Laminas\Authentication\AuthenticationService;</span>
+<pre class=codehilite><code class=language-php>use My\Storage;
+use Laminas\Authentication\AuthenticationService;
 
-<span class=x>// Create the authentication service instance:</span>
-<span class=x>$auth = new AuthenticationService();</span>
+// Create the authentication service instance:
+$auth = new AuthenticationService();
 
-<span class=x>// Instruct the authentication service to use the custom storage class:</span>
-<span class=x>$auth-&gt;setStorage(new Storage());</span>
+// Instruct the authentication service to use the custom storage class:
+$auth-&gt;setStorage(new Storage());
 
-<span class=x>// Create the authentication adapter:</span>
-<span class=x>$adapter = /* ... */;</span>
+// Create the authentication adapter:
+$adapter = /* ... */;
 
-<span class=x>// Authenticate, saving the result, and persisting the identity on success:</span>
-<span class=x>$result = $auth-&gt;authenticate($adapter);</span>
-</pre></div></p>
+// Authenticate, saving the result, and persisting the identity on success:
+$result = $auth-&gt;authenticate($adapter);</code></pre>
 
 
 
@@ -531,20 +516,6 @@ is invoked before an authentication query is attempted:</p>
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-authentication</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -679,9 +650,10 @@ is invoked before an authentication query is attempted:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -718,7 +690,7 @@ is invoked before an authentication query is attempted:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-authentication//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -727,8 +699,8 @@ is invoked before an authentication query is attempted:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-authentication//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
