@@ -1,7 +1,7 @@
 docs_dir: docs/book
 site_dir: docs/html
 nav:
-    - index.md
+    - Home: index.md
     - Intro: intro.md
     - Adapters:
         - Intro: adapter/intro.md
@@ -19,4 +19,3 @@ site_description: laminas-authentication
 repo_url: 'https://github.com/laminas/laminas-authentication'
 extra:
     project: Components
-    project_url: 'https://docs.laminas.dev'
