@@ -71,7 +71,8 @@ class OnlineTest extends TestCase
             }
             if (getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')) {
                 $this->names[Ldap\Ldap::ACCTNAME_FORM_BACKSLASH] =
-                    getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT') . '\\' . getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME');
+                    getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')
+                    . '\\' . getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME');
             }
         }
     }
