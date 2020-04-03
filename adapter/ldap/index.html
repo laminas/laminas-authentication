@@ -377,7 +377,7 @@ options for both Active Directory and OpenLDAP servers.</p>
 <p>The following example demonstrates creating and configuring the <code>Ldap</code>
 authentication adapter, and also illustrates how to work with the
 authentication messages returned in the authentication result.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Authentication\AuthenticationService;
+<pre class="highlight"><code class="language-php">use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Adapter\Ldap as LdapAdapter;
 
 // Retrieve the username and pasword from the request somehow.
@@ -420,6 +420,7 @@ foreach ($result-&gt;getMessages() as $i =&gt; $message) {
 
     // Potentially log the $message
 }</code></pre>
+
 <p>As noted in the above example, the returned authentication result contains
 messages even on success.  LDAP has some notoriety for difficulty in debugging,
 and the <code>Ldap</code> adapter attempts to assist you with this by providing

@@ -380,7 +380,7 @@ along to the constructor of <a href="https://github.com/laminas/laminas-session"
 This should occur before authentication is attempted, since
 <code>Laminas\Authentication\AuthenticationService::authenticate()</code> injects the
 authenticated identity into the configured storage.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Authentication\AuthenticationService;
+<pre class="highlight"><code class="language-php">use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Storage\Session as SessionStorage;
 
 $auth = new AuthenticationService();
@@ -393,15 +393,17 @@ $authAdapter = /* ... */;
 
 // Authenticate, saving the result, and persisting the identity on success:
 $result = $auth-&gt;authenticate($authAdapter);</code></pre>
+
 <h2 id="chain-storage">Chain Storage</h2>
 <p>A website might use multiple storage strategies for identity persistence; the
 <code>Chain</code> Storage can be used to glue these together.</p>
 <p>For example, the <code>Chain</code> can be configured to first use <code>Session</code> storage and
 then use an <code>OAuth</code> storage adapter. One could configure this in the following
 way:</p>
-<pre class=codehilite><code class=language-php>$storage = new Chain;
+<pre class="highlight"><code class="language-php">$storage = new Chain;
 $storage-&gt;add(new Session);
 $storage-&gt;add(new OAuth);   // Note: imaginary storage, not part of laminas-authentication</code></pre>
+
 <p>When the <code>Chain</code> Storage is used, its underlying storage adapters will be
 consulted in the order in which they were added to the chain. Using our scenario
 above, the <code>Session</code> storage adapter will be consulted first. When that happens:</p>
@@ -421,8 +423,9 @@ above, the <code>Session</code> storage adapter will be consulted first. When th
 <code>Chain::add</code> method, which accepts a second argument indicating the priority.
 (Per standard priority queue usage, higher values have higher priority, and
 lower or negative values have lower priority.)</p>
-<pre class=codehilite><code class=language-php>$chain-&gt;add(new A, 2);
+<pre class="highlight"><code class="language-php">$chain-&gt;add(new A, 2);
 $chain-&gt;add(new B, 10); // B will be used first</code></pre>
+
 <h2 id="implementing-custom-storage">Implementing Custom Storage</h2>
 <p>Sometimes developers may need to use a different identity storage mechanism than
 that provided by <code>Laminas\Authentication\Storage\Session</code>. To do so, implement
@@ -430,7 +433,7 @@ that provided by <code>Laminas\Authentication\Storage\Session</code>. To do so, 
 implementation to <code>Laminas\Authentication\AuthenticationService::setStorage()</code>.</p>
 <p>The following examples demonstrate the process.</p>
 <p>First, implement <code>Laminas\Authentication\Storage\StorageInterface</code>:</p>
-<pre class=codehilite><code class=language-php>&lt;?php
+<pre class="highlight"><code class="language-php">&lt;?php
 namespace My;
 
 use Laminas\Authentication\Storage\StorageInterface;
@@ -499,9 +502,10 @@ class Storage implements StorageInterface
          */
     }
 }</code></pre>
+
 <p>In order to use this custom storage class, <code>Laminas\Authentication\AuthenticationService::setStorage()</code>
 is invoked before an authentication query is attempted:</p>
-<pre class=codehilite><code class=language-php>use My\Storage;
+<pre class="highlight"><code class="language-php">use My\Storage;
 use Laminas\Authentication\AuthenticationService;
 
 // Create the authentication service instance:

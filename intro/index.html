@@ -364,7 +364,7 @@ composed authentication adapter and persistent storage backend.</p>
 </ul>
 <p>The following example illustrates how to use an adapter indirectly, through the
 use of the <code>Laminas\Authentication\AuthenticationService</code> class:</p>
-<pre class=codehilite><code class=language-php>use My\Auth\Adapter;
+<pre class="highlight"><code class="language-php">use My\Auth\Adapter;
 use Laminas\Authentication\AuthenticationService;
 
 // Instantiate the authentication service:
@@ -379,7 +379,7 @@ $result = $auth-&gt;authenticate($authAdapter);
 if (! $result-&gt;isValid()) {
     // Authentication failed; print the reasons why:
     foreach ($result-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 } else {
     // Authentication succeeded; the identity ($username) is stored
@@ -387,17 +387,20 @@ if (! $result-&gt;isValid()) {
     // $result-&gt;getIdentity() === $auth-&gt;getIdentity()
     // $result-&gt;getIdentity() === $username
 }</code></pre>
+
 <p>After a successful authentication attempt, subsequent requests can query the
 authentication service to determine if an identity is present, and, if so,
 retrieve it:</p>
-<pre class=codehilite><code class=language-php>if ($auth-&gt;hasIdentity()) {
+<pre class="highlight"><code class="language-php">if ($auth-&gt;hasIdentity()) {
     // Identity exists; get it
     $identity = $auth-&gt;getIdentity();
 }</code></pre>
+
 <p>To remove the identity from persistent storage, use the <code>clearIdentity()</code>
 method. This typically would be used for implementing an application "logout"
 operation:</p>
-<pre class=codehilite><code class=language-php>$auth-&gt;clearIdentity();</code></pre>
+<pre class="highlight"><code class="language-php">$auth-&gt;clearIdentity();</code></pre>
+
 <p>When the automatic use of persistent storage is inappropriate for a particular
 use case, a developer may bypass the use of the
 <code>Laminas\Authentication\AuthenticationService</code> class, using an adapter class
@@ -406,7 +409,7 @@ adapter object and then calling its <code>authenticate()</code> method. Adapter-
 details are discussed in the documentation for each adapter. The following
 example directly utilizes the fictional <code>My\Auth\Adapter</code> from the above
 examples:</p>
-<pre class=codehilite><code class=language-php>use My\Auth\Adapter;
+<pre class="highlight"><code class="language-php">use My\Auth\Adapter;
 
 // Set up the authentication adapter:
 $authAdapter = new Adapter($username, $password);
@@ -417,7 +420,7 @@ $result = $authAdapter-&gt;authenticate();
 if (! $result-&gt;isValid()) {
     // Authentication failed; print the reasons why
     foreach ($result-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 } else {
     // Authentication succeeded

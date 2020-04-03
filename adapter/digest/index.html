@@ -365,7 +365,8 @@ the basic elements of Digest authentication:</p>
 </ul>
 <p>The above elements are separated by colons, as in the following example (in
 which the password is "somePassword"):</p>
-<pre class=codehilite><code class=language-text>someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8</code></pre>
+<pre class="highlight"><code class="language-text">someUser:Some Realm:fde17b91c3a510ecbaf7dbd37f59d4f8</code></pre>
+
 <h2 id="specifics">Specifics</h2>
 <p>The digest authentication adapter, <code>Laminas\Authentication\Adapter\Digest</code>,
 requires several input parameters:</p>
@@ -381,7 +382,7 @@ requires several input parameters:</p>
 populated with the identity as an array containing the keys <code>realm</code> and
 <code>username</code>. The respective array values associated with these keys correspond
 to the values set before <code>authenticate()</code> is called.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Authentication\Adapter\Digest as AuthAdapter;
+<pre class="highlight"><code class="language-php">use Laminas\Authentication\Adapter\Digest as AuthAdapter;
 
 $adapter = new AuthAdapter(
     $filename,

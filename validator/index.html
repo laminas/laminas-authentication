@@ -361,7 +361,7 @@ credentials were provided.</p>
 <li><code>code_map</code>: map of <code>Laminas\Authentication\Result</code> codes to validator message identifiers.</li>
 </ul>
 <h2 id="usage">Usage</h2>
-<pre class=codehilite><code class=language-php>use My\Authentication\Adapter;
+<pre class="highlight"><code class="language-php">use My\Authentication\Adapter;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 
@@ -376,6 +376,7 @@ $validator-&gt;setCredential('myCredentialContext');
 $validator-&gt;isValid('myIdentity', [
      'myCredentialContext' =&gt; 'myCredential',
 ]);</code></pre>
+
 <h2 id="validation-messages">Validation messages</h2>
 <p>The authentication validator defines five failure message types; identifiers
 for them are available as constants for convenience.
@@ -383,7 +384,7 @@ Common authentication failure codes, defined as constants in
 <code>Laminas\Authentication\Result</code>, are mapped to validation messages
 using a map in <code>CODE_MAP</code> constant. Other authentication codes default to the
 <code>general</code> message type.</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Authentication\Validator;
+<pre class="highlight"><code class="language-php">namespace Laminas\Authentication\Validator;
 
 use Laminas\Authentication\Result;
 
@@ -402,6 +403,7 @@ class Authentication
         Result::FAILURE_UNCATEGORIZED      =&gt; self::UNCATEGORIZED,
     ];
 }</code></pre>
+
 <p>The authentication validator extends <code>Laminas\Validator\AbstractValidator</code>, providing
 a way common for all framework validators to access, change or translate message templates.<br />
 More information is available in the
@@ -414,7 +416,7 @@ from <code>Laminas\Authentication\Result</code> to validation message identifier
 be registered as a new message type with the template value set to the <code>general</code> message.
 Once registered, the message template for the new identifier can be changed
 as described in the <a href="https://docs.laminas.dev/laminas-validator/messages/">laminas-validator documentation</a>.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
+<pre class="highlight"><code class="language-php">use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 
 $validator = new AuthenticationValidator([
     'code_map' =&gt; [
