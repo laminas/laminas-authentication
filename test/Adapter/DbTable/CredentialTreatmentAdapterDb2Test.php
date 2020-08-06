@@ -8,7 +8,8 @@
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
-use Laminas\Authentication\Adapter;
+use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
+use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use PHPUnit\Framework\TestCase;
 
@@ -109,7 +110,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testAuthenticateSuccessWithTreatment()
     {
-        $this->authAdapter = new Adapter\DbTable($this->db, $this->tableName, 'username', 'password', '?');
+        $this->authAdapter = new CredentialTreatmentAdapter($this->db, $this->tableName, 'username', 'password', '?');
         $this->authAdapter->setIdentity('my_username');
         $this->authAdapter->setCredential('my_password');
         $result = $this->authAdapter->authenticate();
@@ -251,9 +252,9 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testCatchExceptionNoTable()
     {
-        $this->expectException(Adapter\DbTable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A table must be supplied for');
-        $adapter = new Adapter\DbTable($this->db);
+        $adapter = new CredentialTreatmentAdapter($this->db);
         $adapter->authenticate();
     }
 
@@ -262,9 +263,9 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testCatchExceptionNoIdentityColumn()
     {
-        $this->expectException(Adapter\DbTable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('An identity column must be supplied for the');
-        $adapter = new Adapter\DbTable($this->db, 'users');
+        $adapter = new CredentialTreatmentAdapter($this->db, 'users');
         $adapter->authenticate();
     }
 
@@ -273,9 +274,9 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testCatchExceptionNoCredentialColumn()
     {
-        $this->expectException(Adapter\DbTable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential column must be supplied');
-        $adapter = new Adapter\DbTable($this->db, 'users', 'username');
+        $adapter = new CredentialTreatmentAdapter($this->db, 'users', 'username');
         $adapter->authenticate();
     }
 
@@ -284,7 +285,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testCatchExceptionNoIdentity()
     {
-        $this->expectException(Adapter\DbTable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A value for the identity was not provided prior');
         $this->authAdapter->authenticate();
     }
@@ -294,7 +295,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testCatchExceptionNoCredential()
     {
-        $this->expectException(Adapter\DbTable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential value was not provided prior');
         $this->authAdapter->setIdentity('my_username');
         $this->authAdapter->authenticate();
@@ -305,7 +306,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     public function testCatchExceptionBadSql()
     {
-        $this->expectException(Adapter\DbTable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The supplied parameters to');
         $this->authAdapter->setTableName('bad_table_name');
         $this->authAdapter->setIdentity('value');
@@ -398,7 +399,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     protected function setupAuthAdapter()
     {
-        $this->authAdapter = new Adapter\DbTable\CredentialTreatmentAdapter(
+        $this->authAdapter = new CredentialTreatmentAdapter(
             $this->db,
             $this->tableName,
             'username',
