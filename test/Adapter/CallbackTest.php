@@ -26,12 +26,12 @@ class CallbackTest extends TestCase
     /**
      * Set up test configuration
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->setupAuthAdapter();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->adapter = null;
     }

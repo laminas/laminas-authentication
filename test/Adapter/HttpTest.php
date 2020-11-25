@@ -8,7 +8,6 @@
 
 namespace LaminasTest\Authentication\Adapter;
 
-use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 
 class HttpTest extends TestCase
@@ -18,7 +17,7 @@ class HttpTest extends TestCase
      */
     private $wrapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $config = [
             'accept_schemes' => 'basic',
@@ -28,14 +27,14 @@ class HttpTest extends TestCase
         $this->wrapper = new TestAsset\Wrapper($config);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->wrapper);
     }
 
     public function testProtectedMethodChallengeClientTriggersErrorDeprecated()
     {
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->wrapper->_challengeClient();
     }
 }

@@ -47,7 +47,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Set up test configuration
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')) {
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
@@ -73,7 +73,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->setupAuthAdapter();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->authAdapter = null;
         if ($this->db instanceof DbAdapter) {

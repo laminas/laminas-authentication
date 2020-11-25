@@ -70,7 +70,7 @@ class ObjectTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filesPath      = __DIR__ . '/TestAsset';
         $this->_basicResolver  = new Http\FileResolver("$this->_filesPath/htbasic.1");

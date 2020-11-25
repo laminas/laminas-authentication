@@ -30,7 +30,7 @@ class OnlineTest extends TestCase
      */
     protected $names = [];
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_LDAP_ONLINE_ENABLED')) {
             $this->markTestSkipped('LDAP online tests are not enabled');

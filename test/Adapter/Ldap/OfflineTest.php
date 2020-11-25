@@ -31,7 +31,7 @@ class OfflineTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = new Adapter\Ldap();
     }

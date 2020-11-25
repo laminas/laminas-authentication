@@ -31,7 +31,7 @@ class DigestTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filesPath = __DIR__ . '/TestAsset/Digest';
     }
@@ -50,7 +50,7 @@ class DigestTest extends TestCase
             $this->fail('Expected Laminas_Auth_Adapter_Exception not thrown upon authentication attempt before setting '
                       . 'a required option');
         } catch (Adapter\Exception\ExceptionInterface $e) {
-            $this->assertContains('must be set before authentication', $e->getMessage());
+            $this->assertStringContainsString('must be set before authentication', $e->getMessage());
         }
     }
 
@@ -67,7 +67,7 @@ class DigestTest extends TestCase
             $this->fail('Expected Laminas_Auth_Adapter_Exception not thrown upon authenticating against nonexistent '
                       . 'file');
         } catch (Adapter\Exception\ExceptionInterface $e) {
-            $this->assertContains('Cannot open', $e->getMessage());
+            $this->assertStringContainsString('Cannot open', $e->getMessage());
         }
     }
 
@@ -92,7 +92,7 @@ class DigestTest extends TestCase
         $messages = $result->getMessages();
         $this->assertEquals(1, count($messages));
         $this->assertEquals($result->getCode(), Authentication\Result::FAILURE_IDENTITY_NOT_FOUND);
-        $this->assertContains('combination not found', $messages[0]);
+        $this->assertStringContainsString('combination not found', $messages[0]);
 
         $identity = $result->getIdentity();
         $this->assertEquals($identity['realm'], $realm);
@@ -120,7 +120,7 @@ class DigestTest extends TestCase
 
         $messages = $result->getMessages();
         $this->assertEquals(1, count($messages));
-        $this->assertContains('combination not found', $messages[0]);
+        $this->assertStringContainsString('combination not found', $messages[0]);
 
         $identity = $result->getIdentity();
         $this->assertEquals($identity['realm'], $realm);
@@ -148,7 +148,7 @@ class DigestTest extends TestCase
 
         $messages = $result->getMessages();
         $this->assertEquals(1, count($messages));
-        $this->assertContains('Password incorrect', $messages[0]);
+        $this->assertStringContainsString('Password incorrect', $messages[0]);
 
         $identity = $result->getIdentity();
         $this->assertEquals($identity['realm'], $realm);

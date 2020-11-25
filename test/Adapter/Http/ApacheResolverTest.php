@@ -51,7 +51,7 @@ class ApacheResolverTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_path      = __DIR__ . '/TestAsset';
         $this->_validPath = $this->_path . '/htbasic.plaintext';
