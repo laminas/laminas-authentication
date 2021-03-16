@@ -15,6 +15,7 @@ use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 use LaminasTest\Authentication as AuthTest;
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 class AuthenticationTest extends TestCase
 {
@@ -33,7 +34,7 @@ class AuthenticationTest extends TestCase
      */
     protected $authAdapter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = new AuthenticationValidator();
         $this->authService = new AuthenticationService();
@@ -211,12 +212,9 @@ class AuthenticationTest extends TestCase
 
     public function testEqualsMessageTemplates()
     {
-        $validator = $this->validator;
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $r = new ReflectionProperty($this->validator, 'messageTemplates');
+        $r->setAccessible(true);
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $r->getValue($this->validator));
     }
 
     public function testWithoutContext()

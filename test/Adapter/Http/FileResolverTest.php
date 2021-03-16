@@ -52,7 +52,7 @@ class FileResolverTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filesPath = __DIR__ . '/TestAsset';
         $this->_validPath = "$this->_filesPath/htdigest.3";
@@ -141,13 +141,13 @@ class FileResolverTest extends TestCase
             $this->_resolver->resolve('bad:name', 'realm');
             $this->fail('Accepted malformed username with colon');
         } catch (Http\Exception\ExceptionInterface $e) {
-            $this->assertContains('Username must consist', $e->getMessage());
+            $this->assertStringContainsString('Username must consist', $e->getMessage());
         }
         try {
             $this->_resolver->resolve("badname\n", 'realm');
             $this->fail('Accepted malformed username with newline');
         } catch (Http\Exception\ExceptionInterface $e) {
-            $this->assertContains('Username must consist', $e->getMessage());
+            $this->assertStringContainsString('Username must consist', $e->getMessage());
         }
     }
 
@@ -162,13 +162,13 @@ class FileResolverTest extends TestCase
             $this->_resolver->resolve('username', 'bad:realm');
             $this->fail('Accepted malformed realm with colon');
         } catch (Http\Exception\ExceptionInterface $e) {
-            $this->assertContains('Realm must consist', $e->getMessage());
+            $this->assertStringContainsString('Realm must consist', $e->getMessage());
         }
         try {
             $this->_resolver->resolve('username', "badrealm\n");
             $this->fail('Accepted malformed realm with newline');
         } catch (Http\Exception\ExceptionInterface $e) {
-            $this->assertContains('Realm must consist', $e->getMessage());
+            $this->assertStringContainsString('Realm must consist', $e->getMessage());
         }
     }
 
@@ -184,7 +184,7 @@ class FileResolverTest extends TestCase
                 $this->_resolver->resolve('username', 'realm');
                 $this->fail('Expected thrown exception upon resolve() after moving valid file');
             } catch (Http\Exception\ExceptionInterface $e) {
-                $this->assertContains('Unable to open password file', $e->getMessage());
+                $this->assertStringContainsString('Unable to open password file', $e->getMessage());
             }
             rename("$this->_filesPath/htdigest.3.renamed", "$this->_filesPath/htdigest.3");
         }

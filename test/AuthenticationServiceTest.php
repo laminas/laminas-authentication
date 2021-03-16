@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class AuthenticationServiceTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->auth = new AuthenticationService();
     }

@@ -68,7 +68,7 @@ class ProxyTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->_filesPath      = __DIR__ . '/TestAsset';
         $this->_basicResolver  = new Http\FileResolver("{$this->_filesPath}/htbasic.1");
@@ -428,14 +428,14 @@ class ProxyTest extends TestCase
         $this->assertInstanceOf('ArrayIterator', $headers);
         $this->assertEquals(1, count($headers));
         $header = $headers[0]->getFieldValue();
-        $this->assertContains($expected['type'], $header, $header);
-        $this->assertContains($expected['realm'], $header, $header);
+        $this->assertStringContainsString($expected['type'], $header, $header);
+        $this->assertStringContainsString($expected['realm'], $header, $header);
         if (isset($expected['domain'])) {
-            $this->assertContains($expected['domain'], $header, $header);
-            $this->assertContains('algorithm="MD5"', $header, $header);
-            $this->assertContains('qop="auth"', $header, $header);
-            $this->assertRegExp('/nonce="[a-fA-F0-9]{32}"/', $header, $header);
-            $this->assertRegExp('/opaque="[a-fA-F0-9]{32}"/', $header, $header);
+            $this->assertStringContainsString($expected['domain'], $header, $header);
+            $this->assertStringContainsString('algorithm="MD5"', $header, $header);
+            $this->assertStringContainsString('qop="auth"', $header, $header);
+            $this->assertMatchesRegularExpression('/nonce="[a-fA-F0-9]{32}"/', $header, $header);
+            $this->assertMatchesRegularExpression('/opaque="[a-fA-F0-9]{32}"/', $header, $header);
         }
     }
 

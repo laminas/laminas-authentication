@@ -9,11 +9,11 @@
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    <coverage includeUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 
     <php>
         <env name="TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED" value="false" />

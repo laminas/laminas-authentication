@@ -30,7 +30,7 @@ class OnlineTest extends TestCase
      */
     protected $names = [];
 
-    public function setUp()
+    public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_LDAP_ONLINE_ENABLED')) {
             $this->markTestSkipped('LDAP online tests are not enabled');
@@ -160,7 +160,7 @@ class OnlineTest extends TestCase
         $this->assertFalse($result->isValid());
         $this->assertThat($result->getCode(), $this->lessThanOrEqual(Authentication\Result::FAILURE));
         $messages = $result->getMessages();
-        $this->assertContains('not found', $messages[0]);
+        $this->assertStringContainsString('not found', $messages[0]);
     }
 
     public function testAccountObjectRetrieval()
@@ -175,7 +175,7 @@ class OnlineTest extends TestCase
         $account = $adapter->getAccountObject();
 
         //$this->assertTrue($result->isValid());
-        $this->assertInternalType('object', $account);
+        $this->assertIsObject($account);
         $this->assertEquals(getenv('TESTS_LAMINAS_LDAP_ALT_DN'), $account->dn);
     }
 
@@ -190,7 +190,7 @@ class OnlineTest extends TestCase
         $result = $adapter->authenticate();
         $account = $adapter->getAccountObject([], ['userPassword']);
 
-        $this->assertInternalType('object', $account);
+        $this->assertIsObject('object', $account);
         $this->assertFalse(isset($account->userpassword));
     }
 }
