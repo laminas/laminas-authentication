@@ -9,7 +9,10 @@
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
-use Laminas\Authentication\Adapter;
+use Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter;
+use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
+use Laminas\Authentication\Adapter\DbTable\Exception\InvalidArgumentException;
+use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use PHPUnit\Framework\TestCase;
 
@@ -81,9 +84,16 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateSuccessWithCallback()
     {
-        $this->_adapter = new Adapter\DbTable($this->_db, 'users', 'username', 'password', null, function ($a, $b) {
-            return $a === $b;
-        });
+        $this->_adapter = new CredentialTreatmentAdapter(
+            $this->_db,
+            'users',
+            'username',
+            'password',
+            null,
+            function ($a, $b) {
+                return $a === $b;
+            }
+        );
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
         $result = $this->_adapter->authenticate();
@@ -96,7 +106,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateCallbackThrowsException()
     {
-        $this->expectException(Adapter\Dbtable\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
         $this->_adapter->setCredentialValidationCallback('This is not a valid callback');
     }
@@ -232,9 +242,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoTable()
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A table must be supplied for');
-        $adapter = new Adapter\DbTable($this->_db);
+        $adapter = new CredentialTreatmentAdapter($this->_db);
         $adapter->authenticate();
     }
 
@@ -243,9 +253,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoIdentityColumn()
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('An identity column must be supplied for the');
-        $adapter = new Adapter\DbTable($this->_db, 'users');
+        $adapter = new CredentialTreatmentAdapter($this->_db, 'users');
         $adapter->authenticate();
     }
 
@@ -254,9 +264,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoCredentialColumn()
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential column must be supplied');
-        $adapter = new Adapter\DbTable($this->_db, 'users', 'username');
+        $adapter = new CredentialTreatmentAdapter($this->_db, 'users', 'username');
         $adapter->authenticate();
     }
 
@@ -265,7 +275,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoIdentity()
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A value for the identity was not provided prior');
         $this->_adapter->authenticate();
     }
@@ -275,7 +285,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoCredential()
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential value was not provided prior');
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->authenticate();
@@ -286,7 +296,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionBadSql()
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The supplied parameters to');
         $this->_adapter->setTableName('bad_table_name');
         $this->_adapter->setIdentity('value');
@@ -392,6 +402,6 @@ class CallbackCheckAdapterTest extends TestCase
     protected function _setupAuthAdapter()
     {
         // @codingStandardsIgnoreEnd
-        $this->_adapter = new Adapter\DbTable\CallbackCheckAdapter($this->_db, 'users', 'username', 'password');
+        $this->_adapter = new CallbackCheckAdapter($this->_db, 'users', 'username', 'password');
     }
 }
