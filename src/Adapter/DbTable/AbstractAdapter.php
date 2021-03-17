@@ -224,6 +224,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * attempt to find a record matching the provided identity.
      *
      * @throws Exception\RuntimeException if answering the authentication query is impossible
+     *
      * @return AuthenticationResult
      */
     public function authenticate()

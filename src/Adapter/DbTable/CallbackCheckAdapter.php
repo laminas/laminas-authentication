@@ -8,6 +8,7 @@
 
 namespace Laminas\Authentication\Adapter\DbTable;
 
+use Laminas\Authentication\Adapter\DbTable\Exception\InvalidArgumentException;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
@@ -56,12 +57,12 @@ class CallbackCheckAdapter extends AbstractAdapter
      *
      * @param callable $validationCallback
      * @return self Provides a fluent interface
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setCredentialValidationCallback($validationCallback)
     {
         if (! is_callable($validationCallback)) {
-            throw new Exception\InvalidArgumentException('Invalid callback provided');
+            throw new InvalidArgumentException('Invalid callback provided');
         }
         $this->credentialValidationCallback = $validationCallback;
         return $this;

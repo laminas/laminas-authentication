@@ -93,7 +93,7 @@ class ObjectTest extends TestCase
         ];
     }
 
-    public function testValidConfigs()
+    public function testValidConfigs(): void
     {
         $configs = [
             $this->_basicConfig,
@@ -147,14 +147,16 @@ class ObjectTest extends TestCase
 
     /**
      * @dataProvider invalidConfigs
+     *
+     * @return void
      */
-    public function testInvalidConfigs($cfg)
+    public function testInvalidConfigs($cfg): void
     {
         $this->expectException(Adapter\Exception\ExceptionInterface::class);
         new Adapter\Http($cfg);
     }
 
-    public function testAuthenticateArgs()
+    public function testAuthenticateArgs(): void
     {
         $a = new Adapter\Http($this->_basicConfig);
 
@@ -176,7 +178,12 @@ class ObjectTest extends TestCase
         $this->assertInstanceOf(Authentication\Result::class, $response);
     }
 
-    public function noResolvers()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{basic: array{0: string, 1: string}, digest: array{0: string, 1: string}}
+     */
+    public function noResolvers(): array
     {
         return [
             'basic' => [
@@ -192,8 +199,10 @@ class ObjectTest extends TestCase
 
     /**
      * @dataProvider noResolvers
+     *
+     * @return void
      */
-    public function testNoResolvers($authHeader, $cfgProperty)
+    public function testNoResolvers($authHeader, $cfgProperty): void
     {
         // Stub request for Basic auth
         $headers  = new Headers;
@@ -217,7 +226,7 @@ class ObjectTest extends TestCase
         $a->authenticate();
     }
 
-    public function testWrongResolverUsed()
+    public function testWrongResolverUsed(): void
     {
         $response = new Response();
         $headers  = new Headers();
@@ -236,7 +245,7 @@ class ObjectTest extends TestCase
         $this->assertEquals($result->getCode(), Authentication\Result::FAILURE_CREDENTIAL_INVALID);
     }
 
-    public function testUnsupportedScheme()
+    public function testUnsupportedScheme(): void
     {
         $response = new Response();
         $headers  = new Headers();

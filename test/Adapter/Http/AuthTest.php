@@ -88,7 +88,7 @@ class AuthTest extends TestCase
         ];
     }
 
-    public function testBasicChallenge()
+    public function testBasicChallenge(): void
     {
         // Trying to authenticate without sending an Authorization header
         // should result in a 401 reply with a Www-Authenticate header, and a
@@ -100,36 +100,36 @@ class AuthTest extends TestCase
             'realm'  => 'realm="' . $this->_bothConfig['realm'] . '"',
         ];
 
-        $data = $this->_doAuth('', 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $data = $this->doAuth('', 'basic');
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testDigestChallenge()
+    public function testDigestChallenge(): void
     {
         // Trying to authenticate without sending an Authorization header
         // should result in a 401 reply with a Www-Authenticate header, and a
         // false result.
 
         // The expected Digest Www-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
-        $data = $this->_doAuth('', 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $data = $this->doAuth('', 'digest');
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testBothChallenges()
+    public function testBothChallenges(): void
     {
         // Trying to authenticate without sending an Authorization header
         // should result in a 401 reply with at least one Www-Authenticate
         // header, and a false result.
 
         $result = $status = $headers = null;
-        $data = $this->_doAuth('', 'both');
+        $data = $this->doAuth('', 'both');
         extract($data); // $result, $status, $headers
 
         // The expected Www-Authenticate header values
         $basic  = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
         // Make sure the result is false
         $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
@@ -156,22 +156,22 @@ class AuthTest extends TestCase
         $this->assertTrue($digestFound);
     }
 
-    public function testBasicAuthValidCreds()
+    public function testBasicAuthValidCreds(): void
     {
         // Attempt Basic Authentication with a valid username and password
 
-        $data = $this->_doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
-        $this->_checkOK($data);
+        $data = $this->doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
+        $this->checkOK($data);
     }
 
-    public function testBasicAuthCanValidateCredentialsThatContainAColon()
+    public function testBasicAuthCanValidateCredentialsThatContainAColon(): void
     {
         // Attempt Basic Authentication with a valid username and a password that contains a colon
-        $data = $this->_doAuth('Basic ' . base64_encode('Colon:PasswordWith:Colon'), 'basic');
-        $this->_checkOK($data);
+        $data = $this->doAuth('Basic ' . base64_encode('Colon:PasswordWith:Colon'), 'basic');
+        $this->checkOK($data);
     }
 
-    public function testBasicAuthBadCreds()
+    public function testBasicAuthBadCreds(): void
     {
         // Ensure that credentials containing invalid characters are treated as
         // a bad username or password.
@@ -182,11 +182,11 @@ class AuthTest extends TestCase
             'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
-        $data = $this->_doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $data = $this->doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testBasicAuthBadUser()
+    public function testBasicAuthBadUser(): void
     {
         // Attempt Basic Authentication with a nonexistent username and
         // password
@@ -197,11 +197,11 @@ class AuthTest extends TestCase
             'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
-        $data = $this->_doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $data = $this->doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testBasicAuthBadPassword()
+    public function testBasicAuthBadPassword(): void
     {
         // Attempt Basic Authentication with a valid username, but invalid
         // password
@@ -212,11 +212,11 @@ class AuthTest extends TestCase
             'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
-        $data = $this->_doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $data = $this->doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testBasicAuthTokenIsNotBase64()
+    public function testBasicAuthTokenIsNotBase64(): void
     {
         // Attempt Basic Authentication with a valid username, but invalid
         // password
@@ -227,69 +227,69 @@ class AuthTest extends TestCase
             'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
-        $data = $this->_doAuth('Basic', 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $data = $this->doAuth('Basic', 'basic');
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testDigestAuthValidCreds()
+    public function testDigestAuthValidCreds(): void
     {
         // Attempt Digest Authentication with a valid username and password
 
-        $data = $this->_doAuth($this->_digestReply('Bryce', 'ThisIsNotMyPassword'), 'digest');
-        $this->_checkOK($data);
+        $data = $this->doAuth($this->digestReply('Bryce', 'ThisIsNotMyPassword'), 'digest');
+        $this->checkOK($data);
     }
 
-    public function testDigestAuthDefaultAlgo()
+    public function testDigestAuthDefaultAlgo(): void
     {
         // If the client omits the aglorithm argument, it should default to MD5,
         // and work just as above
 
-        $cauth = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $cauth = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $cauth = preg_replace('/algorithm="MD5", /', '', $cauth);
 
-        $data = $this->_doAuth($cauth, 'digest');
-        $this->_checkOK($data);
+        $data = $this->doAuth($cauth, 'digest');
+        $this->checkOK($data);
     }
 
-    public function testDigestAuthQuotedNC()
+    public function testDigestAuthQuotedNC(): void
     {
         // The nonce count isn't supposed to be quoted, but apparently some
         // clients do anyway.
 
-        $cauth = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $cauth = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $cauth = preg_replace('/nc=00000001/', 'nc="00000001"', $cauth);
 
-        $data = $this->_doAuth($cauth, 'digest');
-        $this->_checkOK($data);
+        $data = $this->doAuth($cauth, 'digest');
+        $this->checkOK($data);
     }
 
-    public function testDigestAuthBadCreds()
+    public function testDigestAuthBadCreds(): void
     {
         // Attempt Digest Authentication with a bad username and password
 
         // The expected Digest Www-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
-        $data = $this->_doAuth($this->_digestReply('Nobody', 'NotValid'), 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $data = $this->doAuth($this->digestReply('Nobody', 'NotValid'), 'digest');
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testDigestAuthBadCreds2()
+    public function testDigestAuthBadCreds2(): void
     {
         // Formerly, a username with invalid characters would result in a 400
         // response, but now should result in 401 response.
 
         // The expected Digest Www-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
-        $data = $this->_doAuth($this->_digestReply('Bad:chars', 'NotValid'), 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $data = $this->doAuth($this->digestReply('Bad:chars', 'NotValid'), 'digest');
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testDigestTampered()
+    public function testDigestTampered(): void
     {
         // Create the tampered header value
-        $tampered = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $tampered = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $tampered = preg_replace(
             '/ nonce="[a-fA-F0-9]{32}", /',
             ' nonce="'.str_repeat('0', 32).'", ',
@@ -297,52 +297,55 @@ class AuthTest extends TestCase
         );
 
         // The expected Digest Www-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
-        $data = $this->_doAuth($tampered, 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $data = $this->doAuth($tampered, 'digest');
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testBadSchemeRequest()
+    public function testBadSchemeRequest(): void
     {
         // Sending a request for an invalid authentication scheme should result
         // in a 400 Bad Request response.
 
-        $data = $this->_doAuth('Invalid ' . base64_encode('Nobody:NotValid'), 'basic');
-        $this->_checkBadRequest($data);
+        $data = $this->doAuth('Invalid ' . base64_encode('Nobody:NotValid'), 'basic');
+        $this->checkBadRequest($data);
     }
 
-    public function testBadDigestRequest()
+    public function testBadDigestRequest(): void
     {
         // If any of the individual parts of the Digest Authorization header
         // are bad, it results in a 400 Bad Request. But that's a lot of
         // possibilities, so we're just going to pick one for now.
-        $bad = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $bad = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $bad = preg_replace(
             '/realm="([^"]+)"/',  // cut out the realm
             '',
             $bad
         );
 
-        $data = $this->_doAuth($bad, 'digest');
-        $this->_checkBadRequest($data);
+        $data = $this->doAuth($bad, 'digest');
+        $this->checkBadRequest($data);
     }
 
     /**
      * check if response is validated
+     *
      * @group PR6983
+     *
+     * @return void
      */
-    public function testBadDigestResponse()
+    public function testBadDigestResponse(): void
     {
-        $bad = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $bad = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $bad = preg_replace(
             '/response="([^"]+)"/',  // cut out the realm
             'response="foobar"',
             $bad
         );
 
-        $data = $this->_doAuth($bad, 'both');
-        $this->_checkBadRequest($data);
+        $data = $this->doAuth($bad, 'both');
+        $this->checkBadRequest($data);
     }
 
     /**
@@ -352,10 +355,8 @@ class AuthTest extends TestCase
      * @param  string $scheme       Which authentication scheme to use
      * @return array Containing the result, response headers, and the status
      */
-    // @codingStandardsIgnoreStart
-    protected function _doAuth($clientHeader, $scheme)
+    protected function doAuth($clientHeader, $scheme)
     {
-        // @codingStandardsIgnoreEnd
         // Set up stub request and response objects
         $request  = new Request;
         $response = new Response;
@@ -403,12 +404,12 @@ class AuthTest extends TestCase
     /**
      * Constructs a local version of the digest challenge we expect to receive
      *
-     * @return string
+     * @return string[]
+     *
+     * @psalm-return array{type: string, realm: string, domain: string}
      */
-    // @codingStandardsIgnoreStart
-    protected function _digestChallenge()
+    protected function digestChallenge(): array
     {
-        // @codingStandardsIgnoreEnd
         return [
             'type'   => 'Digest ',
             'realm'  => 'realm="' . $this->_digestConfig['realm'] . '"',
@@ -421,10 +422,8 @@ class AuthTest extends TestCase
      *
      * @return string
      */
-    // @codingStandardsIgnoreStart
-    protected function _digestReply($user, $pass)
+    protected function digestReply(string $user, string $pass)
     {
-        // @codingStandardsIgnoreEnd
         $nc       = '00000001';
         $timeout  = ceil(time() / 300) * 300;
         $nonce    = md5($timeout . ':PHPUnit:Laminas\Authentication\Adapter\Http');
@@ -451,13 +450,13 @@ class AuthTest extends TestCase
      * Checks for an expected 401 Unauthorized response
      *
      * @param  array  $data     Authentication results
-     * @param  string $expected Expected Www-Authenticate header value
+     * @param  array  $expected Expected Www-Authenticate header value
      * @return void
+     *
+     * @psalm-param array<string, string> $expected
      */
-    // @codingStandardsIgnoreStart
-    protected function _checkUnauthorized($data, $expected)
+    protected function checkUnauthorized($data, $expected)
     {
-        // @codingStandardsIgnoreEnd
         $result = $status = $headers = null;
         extract($data); // $result, $status, $headers
 
@@ -491,10 +490,8 @@ class AuthTest extends TestCase
      * @param  array $data Authentication results
      * @return void
      */
-    // @codingStandardsIgnoreStart
-    protected function _checkOK($data)
+    protected function checkOK($data)
     {
-        // @codingStandardsIgnoreEnd
         $result = $status = $headers = null;
         extract($data); // $result, $status, $headers
 
@@ -512,10 +509,8 @@ class AuthTest extends TestCase
      * @param  array $data Authentication results
      * @return void
      */
-    // @codingStandardsIgnoreStart
-    protected function _checkBadRequest($data)
+    protected function checkBadRequest($data)
     {
-        // @codingStandardsIgnoreEnd
         $result = $status = $headers = null;
         extract($data); // $result, $status, $headers
 
@@ -527,27 +522,27 @@ class AuthTest extends TestCase
         $this->assertEquals(400, $status);
     }
 
-    public function testBasicAuthValidCredsWithCustomIdentityObjectResolverReturnsAuthResult()
+    public function testBasicAuthValidCredsWithCustomIdentityObjectResolverReturnsAuthResult(): void
     {
         $this->_basicResolver  = new TestAsset\BasicAuthObjectResolver();
 
-        $result = $this->_doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
+        $result = $this->doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
         $result = $result['result'];
 
         $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
         $this->assertTrue($result->isValid());
     }
 
-    public function testBasicAuthInvalidCredsWithCustomIdentityObjectResolverReturnsUnauthorizedResponse()
+    public function testBasicAuthInvalidCredsWithCustomIdentityObjectResolverReturnsUnauthorizedResponse(): void
     {
         $this->_basicResolver  = new TestAsset\BasicAuthObjectResolver();
-        $data = $this->_doAuth('Basic ' . base64_encode('David:ThisIsNotMyPassword'), 'basic');
+        $data = $this->doAuth('Basic ' . base64_encode('David:ThisIsNotMyPassword'), 'basic');
 
         $expected = [
             'type'   => 'Basic ',
             'realm'  => 'realm="' . $this->_bothConfig['realm'] . '"',
         ];
 
-        $this->_checkUnauthorized($data, $expected);
+        $this->checkUnauthorized($data, $expected);
     }
 }
