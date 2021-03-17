@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class HttpTest extends TestCase
 {
     /**
-     * @var TestAsset\Wrapper
+     * @var Http
      */
     private $wrapper;
 

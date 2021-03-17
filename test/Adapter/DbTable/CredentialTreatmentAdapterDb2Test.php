@@ -8,6 +8,7 @@
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
+use Laminas\Authentication\Adapter\DbTable\AbstractAdapter;
 use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
 use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
@@ -22,19 +23,21 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * IbmDb2 database connection
      *
-     * @var \Laminas\Db\Adapter\Adapter
+     * @var DbAdapter
      */
-    protected $db = null;
+    protected $db;
 
     /**
      * Database table authentication adapter
      *
-     * @var \Laminas\Authentication\Adapter\DbTable
+     * @var AbstractAdapter
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * Database adapter configuration
+     *
+     * @var array
      */
     protected $dbAdapterParams;
 
@@ -77,20 +80,20 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     public function tearDown(): void
     {
         $this->authAdapter = null;
-        if ($this->db instanceof DbAdapter) {
-            // BIND, REBIND or DROP operations fail when the package is in use
-            // by the same application process
-            $this->db->getDriver()
-                ->getConnection()
-                ->disconnect();
 
-            $this->db = new DbAdapter($this->dbAdapterParams);
+        // BIND, REBIND or DROP operations fail when the package is in use
+        // by the same application process
+        $this->db->getDriver()
+            ->getConnection()
+            ->disconnect();
 
-            $this->db->query("DROP TABLE {$this->tableName}", DbAdapter::QUERY_MODE_EXECUTE);
-            $this->db->getDriver()
-                ->getConnection()
-                ->disconnect();
-        }
+        $this->db = new DbAdapter($this->dbAdapterParams);
+
+        $this->db->query("DROP TABLE {$this->tableName}", DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->getDriver()
+            ->getConnection()
+            ->disconnect();
+
         $this->db = null;
     }
 
