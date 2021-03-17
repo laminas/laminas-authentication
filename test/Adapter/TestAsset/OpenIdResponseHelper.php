@@ -27,7 +27,7 @@ class OpenIdResponseHelper extends Response
         return $this->_canSendHeaders;
     }
 
-    public function sendResponse()
+    public function sendResponse(): void
     {
     }
 }

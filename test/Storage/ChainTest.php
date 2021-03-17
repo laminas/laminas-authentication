@@ -22,8 +22,10 @@ class ChainTest extends TestCase
 
     /**
      * Ensure chain without storage behavious as empty storage.
+     *
+     * @return void
      */
-    public function testEmptyChain()
+    public function testEmptyChain(): void
     {
         $chain = new Chain;
 
@@ -32,8 +34,10 @@ class ChainTest extends TestCase
 
     /**
      * Ensure chain with single empty storage behavious as expected.
+     *
+     * @return void
      */
-    public function testSingularChainEmpty()
+    public function testSingularChainEmpty(): void
     {
         $chain = new Chain;
         $chain->add($this->storageFactory());
@@ -43,8 +47,10 @@ class ChainTest extends TestCase
 
     /**
      * Ensure chain with single non-empty storage behavious as expected.
+     *
+     * @return void
      */
-    public function testSingularChainNonEmpty()
+    public function testSingularChainNonEmpty(): void
     {
         $chain = new Chain;
         $chain->add($this->storageFactory(self::ID));
@@ -55,8 +61,10 @@ class ChainTest extends TestCase
 
     /**
      * Ensure the priority of storage engines is correctly used.
+     *
+     * @return void
      */
-    public function testChainPriority()
+    public function testChainPriority(): void
     {
         $storageA = $this->storageFactory();
         $storageB = $this->storageFactory(self::ID);
@@ -74,8 +82,10 @@ class ChainTest extends TestCase
     /**
      * Ensure that a chain with empty storages is considered empty and
      * won't populated any of its underlying storages.
+     *
+     * @return void
      */
-    public function testEmptyChainIsEmpty()
+    public function testEmptyChainIsEmpty(): void
     {
         $emptyStorageA = $this->storageFactory();
         $emptyStorageB = $this->storageFactory();
@@ -97,8 +107,10 @@ class ChainTest extends TestCase
      *
      * Make sure that storage engines with higher priority then the first non-empty
      * storage engine get populated with that same content.
+     *
+     * @return void
      */
-    public function testSuccessfullReadWillPopulateStoragesWithHigherPriority()
+    public function testSuccessfullReadWillPopulateStoragesWithHigherPriority(): void
     {
         $emptyStorageA = $this->storageFactory();
         $emptyStorageB = $this->storageFactory();
