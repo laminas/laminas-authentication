@@ -34,7 +34,9 @@
         "laminas/laminas-session": "^2.8",
         "laminas/laminas-uri": "^2.5.2",
         "laminas/laminas-validator": "^2.10.1",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "psalm/plugin-phpunit": "^0.15.1",
+        "vimeo/psalm": "^4.6"
     },
     "suggest": {
         "laminas/laminas-crypt": "Laminas\\Crypt component",

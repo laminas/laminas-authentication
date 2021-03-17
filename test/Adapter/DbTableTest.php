@@ -17,6 +17,9 @@ use Laminas\Authentication\Adapter;
 class DbTableTest extends DbTable\CredentialTreatmentAdapterTest
 {
     // @codingStandardsIgnoreStart
+    /**
+     * @return void
+     */
     protected function _setupAuthAdapter()
     {
         // @codingStandardsIgnoreEnd

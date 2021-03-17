@@ -77,7 +77,7 @@ class OnlineTest extends TestCase
         }
     }
 
-    public function testSimpleAuth()
+    public function testSimpleAuth(): void
     {
         $adapter = new Adapter\Ldap(
             [$this->options],
@@ -92,7 +92,7 @@ class OnlineTest extends TestCase
         $this->assertEquals(Authentication\Result::SUCCESS, $result->getCode());
     }
 
-    public function testCanonAuth()
+    public function testCanonAuth(): void
     {
         /* This test authenticates with each of the account name forms
          * (uname, uname@example.com, EXAMPLE\uname) AND it does so with
@@ -116,7 +116,7 @@ class OnlineTest extends TestCase
         }
     }
 
-    public function testInvalidPassAuth()
+    public function testInvalidPassAuth(): void
     {
         $adapter = new Adapter\Ldap(
             [$this->options],
@@ -130,7 +130,7 @@ class OnlineTest extends TestCase
         $this->assertEquals(Authentication\Result::FAILURE_CREDENTIAL_INVALID, $result->getCode());
     }
 
-    public function testInvalidUserAuth()
+    public function testInvalidUserAuth(): void
     {
         $adapter = new Adapter\Ldap(
             [$this->options],
@@ -147,7 +147,7 @@ class OnlineTest extends TestCase
         );
     }
 
-    public function testMismatchDomainAuth()
+    public function testMismatchDomainAuth(): void
     {
         $adapter = new Adapter\Ldap(
             [$this->options],
@@ -163,7 +163,7 @@ class OnlineTest extends TestCase
         $this->assertStringContainsString('not found', $messages[0]);
     }
 
-    public function testAccountObjectRetrieval()
+    public function testAccountObjectRetrieval(): void
     {
         $adapter = new Adapter\Ldap(
             [$this->options],
@@ -179,7 +179,7 @@ class OnlineTest extends TestCase
         $this->assertEquals(getenv('TESTS_LAMINAS_LDAP_ALT_DN'), $account->dn);
     }
 
-    public function testAccountObjectRetrievalWithOmittedAttributes()
+    public function testAccountObjectRetrievalWithOmittedAttributes(): void
     {
         $adapter = new Adapter\Ldap(
             [$this->options],

@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.6.4@97fe86c4e158b5a57c5150aa5055c38b5a809aab">
+  <file src="src/Adapter/AdapterInterface.php">
+    <InvalidThrow occurrences="1">
+      <code>\Laminas\Authentication\Adapter\Exception\ExceptionInterface</code>
+    </InvalidThrow>
+  </file>
+  <file src="src/Adapter/Callback.php">
+    <MissingReturnType occurrences="1">
+      <code>setCallback</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="1">
+      <code>$identity</code>
+    </MixedAssignment>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$callback</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Adapter/DbTable/AbstractAdapter.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>$this-&gt;dbSelect === null</code>
+    </DocblockTypeContradiction>
+    <InvalidReturnStatement occurrences="1">
+      <code>$authResult</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>AuthenticationResult</code>
+    </InvalidReturnType>
+    <MixedArgument occurrences="3">
+      <code>$identity</code>
+      <code>$this-&gt;authenticateResultInfo['code']</code>
+      <code>$this-&gt;authenticateResultInfo['messages']</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="2">
+      <code>$row['LAMINAS_AUTH_CREDENTIAL_MATCH']</code>
+      <code>$row['LAMINAS_AUTH_CREDENTIAL_MATCH']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="3">
+      <code>$row['laminas_auth_credential_match']</code>
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;resultRow[$returnColumn]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="7">
+      <code>$identity</code>
+      <code>$resultIdentities[]</code>
+      <code>$resultValue</code>
+      <code>$resultValue</code>
+      <code>$returnColumn</code>
+      <code>$row</code>
+      <code>$row['laminas_auth_credential_match']</code>
+    </MixedAssignment>
+    <PossiblyNullPropertyAssignmentValue occurrences="7">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_bool($flag)</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Adapter/DbTable/CallbackCheckAdapter.php">
+    <MissingClosureParamType occurrences="2">
+      <code>$a</code>
+      <code>$b</code>
+    </MissingClosureParamType>
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;identity</code>
+    </MixedArgument>
+    <MixedArrayAssignment occurrences="3">
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+    </MixedArrayAssignment>
+    <PossiblyNullPropertyAssignmentValue occurrences="1">
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+  </file>
+  <file src="src/Adapter/DbTable/CredentialTreatmentAdapter.php">
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;identity</code>
+    </MixedArgument>
+    <MixedArrayAssignment occurrences="2">
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+    </MixedArrayAssignment>
+    <PossiblyNullPropertyAssignmentValue occurrences="1">
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+  </file>
+  <file src="src/Adapter/Digest.php">
+    <InvalidThrow occurrences="1">
+      <code>Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$this-&gt;setCredential($password)</code>
+      <code>$this-&gt;setIdentity($username)</code>
+    </LessSpecificReturnStatement>
+    <MixedInferredReturnType occurrences="2">
+      <code>string|null</code>
+      <code>string|null</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;getCredential()</code>
+      <code>$this-&gt;getIdentity()</code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType occurrences="2">
+      <code>self</code>
+      <code>self</code>
+    </MoreSpecificReturnType>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>$filename</code>
+      <code>$realm</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Adapter/Http.php">
+    <DocblockTypeContradiction occurrences="4">
+      <code>$result instanceof Authentication\Result</code>
+      <code>empty($this-&gt;basicResolver)</code>
+      <code>empty($this-&gt;digestResolver)</code>
+      <code>empty($this-&gt;response)</code>
+    </DocblockTypeContradiction>
+    <InvalidThrow occurrences="2">
+      <code>Exception\ExceptionInterface</code>
+      <code>Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <MixedArgument occurrences="13">
+      <code>$authHeader</code>
+      <code>$authHeader</code>
+      <code>$authHeader</code>
+      <code>$config['accept_schemes']</code>
+      <code>$config['digest_domains']</code>
+      <code>$config['digest_domains']</code>
+      <code>$config['realm']</code>
+      <code>$config['realm']</code>
+      <code>$config['realm']</code>
+      <code>$data['realm']</code>
+      <code>$data['response']</code>
+      <code>$data['username']</code>
+      <code>$userAgent</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="7">
+      <code>$authHeader</code>
+      <code>$this-&gt;domains</code>
+      <code>$this-&gt;realm</code>
+      <code>$userAgent</code>
+      <code>$userAgent</code>
+      <code>$userAgent</code>
+      <code>$userAgentHeader</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="8">
+      <code>$data['cnonce']</code>
+      <code>$data['cnonce']</code>
+      <code>$data['nc']</code>
+      <code>$data['nonce']</code>
+      <code>$data['nonce']</code>
+      <code>$data['qop']</code>
+      <code>$data['uri']</code>
+      <code>$userAgent</code>
+    </MixedOperand>
+    <PossiblyFalseArgument occurrences="1">
+      <code>$result</code>
+    </PossiblyFalseArgument>
+    <PossiblyInvalidArrayAccess occurrences="12">
+      <code>$data['cnonce']</code>
+      <code>$data['cnonce']</code>
+      <code>$data['nc']</code>
+      <code>$data['nonce']</code>
+      <code>$data['nonce']</code>
+      <code>$data['nonce']</code>
+      <code>$data['opaque']</code>
+      <code>$data['qop']</code>
+      <code>$data['realm']</code>
+      <code>$data['response']</code>
+      <code>$data['uri']</code>
+      <code>$data['username']</code>
+    </PossiblyInvalidArrayAccess>
+    <PossiblyInvalidMethodCall occurrences="5">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyInvalidOperand occurrences="2">
+      <code>$ha1</code>
+      <code>$ha1</code>
+    </PossiblyInvalidOperand>
+    <PossiblyUndefinedMethod occurrences="5">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+    </PossiblyUndefinedMethod>
+    <PropertyNotSetInConstructor occurrences="8">
+      <code>$algo</code>
+      <code>$basicResolver</code>
+      <code>$digestResolver</code>
+      <code>$domains</code>
+      <code>$nonceTimeout</code>
+      <code>$request</code>
+      <code>$response</code>
+      <code>$useOpaque</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>$result instanceof Authentication\Result</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Adapter/Http/ApacheResolver.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>empty($this-&gt;apachePassword)</code>
+    </DocblockTypeContradiction>
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>AuthResult</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidThrow occurrences="1">
+      <code>Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <MixedArgument occurrences="1">
+      <code>$matchedHash</code>
+    </MixedArgument>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>$apachePassword</code>
+      <code>$file</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Adapter/Http/FileResolver.php">
+    <InvalidThrow occurrences="1">
+      <code>Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <MissingParamType occurrences="1">
+      <code>$password</code>
+    </MissingParamType>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>$file</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Adapter/Ldap.php">
+    <DocblockTypeContradiction occurrences="2">
+      <code>$this-&gt;ldap === null</code>
+      <code>[]</code>
+    </DocblockTypeContradiction>
+    <InvalidThrow occurrences="1">
+      <code>Exception\ExceptionInterface</code>
+    </InvalidThrow>
+    <LessSpecificReturnStatement occurrences="2">
+      <code>$this-&gt;setCredential($password)</code>
+      <code>$this-&gt;setIdentity($username)</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument occurrences="13">
+      <code>$adapterOptions['group']</code>
+      <code>$adapterOptions['groupAttr']</code>
+      <code>$adapterOptions['groupDn']</code>
+      <code>$adapterOptions['groupScope']</code>
+      <code>$adapterOptions['memberAttr']</code>
+      <code>$omitAttribs</code>
+      <code>$password</code>
+      <code>$password</code>
+      <code>$password</code>
+      <code>$returnAttribs</code>
+      <code>$username</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="8">
+      <code>$groupFilter</code>
+      <code>$name</code>
+      <code>$name</code>
+      <code>$password</code>
+      <code>$username</code>
+      <code>$val</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>string</code>
+      <code>string|null</code>
+      <code>string|null</code>
+    </MixedInferredReturnType>
+    <MixedOperand occurrences="1">
+      <code>$val</code>
+    </MixedOperand>
+    <MixedReturnStatement occurrences="3">
+      <code>$name ? $name : ''</code>
+      <code>$this-&gt;getCredential()</code>
+      <code>$this-&gt;getIdentity()</code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType occurrences="2">
+      <code>self</code>
+      <code>self</code>
+    </MoreSpecificReturnType>
+    <PossiblyNullPropertyAssignmentValue occurrences="3">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_array($options)</code>
+    </RedundantConditionGivenDocblockType>
+    <TooManyArguments occurrences="1">
+      <code>LaminasLdap\Filter::andFilter($groupName, $membership)</code>
+    </TooManyArguments>
+  </file>
+  <file src="src/AuthenticationService.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>null === $this-&gt;storage</code>
+    </DocblockTypeContradiction>
+    <PossiblyNullPropertyAssignmentValue occurrences="2">
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+  </file>
+  <file src="src/Result.php">
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(int) $code</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Storage/Chain.php">
+    <MissingReturnType occurrences="1">
+      <code>add</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="6">
+      <code>$higherPriorityStorage</code>
+      <code>$storage</code>
+      <code>$storage</code>
+      <code>$storage</code>
+      <code>$storageValue</code>
+      <code>$storageWithHigherPriority[]</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="6">
+      <code>clear</code>
+      <code>isEmpty</code>
+      <code>read</code>
+      <code>read</code>
+      <code>write</code>
+      <code>write</code>
+    </MixedMethodCall>
+  </file>
+  <file src="src/Storage/NonPersistent.php">
+    <MissingPropertyType occurrences="1">
+      <code>$data</code>
+    </MissingPropertyType>
+  </file>
+  <file src="src/Storage/Session.php">
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;namespace</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="2">
+      <code>string</code>
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;member</code>
+      <code>$this-&gt;namespace</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Storage/StorageInterface.php">
+    <InvalidThrow occurrences="4">
+      <code>\Laminas\Authentication\Exception\ExceptionInterface</code>
+      <code>\Laminas\Authentication\Exception\ExceptionInterface</code>
+      <code>\Laminas\Authentication\Exception\ExceptionInterface</code>
+      <code>\Laminas\Authentication\Exception\ExceptionInterface</code>
+    </InvalidThrow>
+  </file>
+  <file src="src/Validator/Authentication.php">
+    <DocblockTypeContradiction occurrences="5">
+      <code>$this-&gt;credential === null</code>
+      <code>$this-&gt;getAdapterFromAuthenticationService()</code>
+      <code>$this-&gt;identity === null</code>
+      <code>$this-&gt;service</code>
+      <code>gettype($adapter)</code>
+    </DocblockTypeContradiction>
+    <MixedArgument occurrences="3">
+      <code>$options['adapter']</code>
+      <code>$options['service']</code>
+      <code>static::CODE_MAP</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>static::CODE_MAP[$code]</code>
+    </MixedArrayAccess>
+    <MixedArrayOffset occurrences="1">
+      <code>$this-&gt;messageTemplates[static::GENERAL]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="5">
+      <code>$code</code>
+      <code>$credential</code>
+      <code>$identity</code>
+      <code>$this-&gt;credential</code>
+      <code>$this-&gt;identity</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>static::CODE_MAP[$code]</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>$adapter</code>
+      <code>$credential</code>
+      <code>$identity</code>
+      <code>$service</code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>$this-&gt;adapter</code>
+      <code>is_object($adapter)</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/Adapter/CallbackTest.php">
+    <MissingClosureParamType occurrences="2">
+      <code>$credential</code>
+      <code>$identity</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType occurrences="6">
+      <code>function ($identity, $credential) use ($that, $adapter) {</code>
+      <code>function () use ($exception) {</code>
+      <code>function () use ($falsy) {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+      <code>function () {</code>
+    </MissingClosureReturnType>
+    <MissingReturnType occurrences="9">
+      <code>setupAuthAdapter</code>
+      <code>testAuthenticateProvidesCallbackWithIdentityAndCredentials</code>
+      <code>testAuthenticateResultIfCallbackReturnsFalsy</code>
+      <code>testAuthenticateResultIfCallbackReturnsIdentity</code>
+      <code>testAuthenticateResultIfCallbackThrows</code>
+      <code>testAuthenticateThrowsException</code>
+      <code>testCallbackSetGetMethods</code>
+      <code>testClassConstructorSetCallback</code>
+      <code>testSetCallbackThrowsException</code>
+    </MissingReturnType>
+    <PossiblyNullPropertyAssignmentValue occurrences="2">
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+  </file>
+  <file src="test/Adapter/DbTable/CallbackCheckAdapterTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Db\Sql\Select'</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedClass occurrences="6">
+      <code>\Laminas\Authentication\Adapter\DbTable</code>
+      <code>new Adapter\DbTable($this-&gt;_db)</code>
+      <code>new Adapter\DbTable($this-&gt;_db, 'users')</code>
+      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username')</code>
+      <code>protected $_adapter = null;</code>
+    </DeprecatedClass>
+    <InvalidClass occurrences="7">
+      <code>Adapter\Dbtable\Exception\InvalidArgumentException</code>
+      <code>Adapter\Dbtable\Exception\RuntimeException</code>
+      <code>Adapter\Dbtable\Exception\RuntimeException</code>
+      <code>Adapter\Dbtable\Exception\RuntimeException</code>
+      <code>Adapter\Dbtable\Exception\RuntimeException</code>
+      <code>Adapter\Dbtable\Exception\RuntimeException</code>
+      <code>Adapter\Dbtable\Exception\RuntimeException</code>
+    </InvalidClass>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>new Adapter\DbTable\CallbackCheckAdapter($this-&gt;_db, 'users', 'username', 'password')</code>
+    </InvalidPropertyAssignmentValue>
+    <MissingClosureParamType occurrences="2">
+      <code>$a</code>
+      <code>$b</code>
+    </MissingClosureParamType>
+    <MissingParamType occurrences="1">
+      <code>$optionalParams</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="22">
+      <code>_setupAuthAdapter</code>
+      <code>_setupDbAdapter</code>
+      <code>testAdapterCanReturnDbSelectObject</code>
+      <code>testAdapterCanUseModifiedDbSelectObject</code>
+      <code>testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth</code>
+      <code>testAuthenticateCallbackThrowsException</code>
+      <code>testAuthenticateFailureIdentityAmbiguous</code>
+      <code>testAuthenticateFailureIdentityNotFound</code>
+      <code>testAuthenticateFailureInvalidCredential</code>
+      <code>testAuthenticateSuccess</code>
+      <code>testAuthenticateSuccessWithCallback</code>
+      <code>testCatchExceptionBadSql</code>
+      <code>testCatchExceptionNoCredential</code>
+      <code>testCatchExceptionNoCredentialColumn</code>
+      <code>testCatchExceptionNoIdentity</code>
+      <code>testCatchExceptionNoIdentityColumn</code>
+      <code>testCatchExceptionNoTable</code>
+      <code>testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet</code>
+      <code>testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet</code>
+      <code>testGetOmittedResultRow</code>
+      <code>testGetResultRow</code>
+      <code>testGetSpecificResultRow</code>
+    </MissingReturnType>
+    <MixedArrayAccess occurrences="1">
+      <code>$expressionData[0]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$expressionData</code>
+      <code>$params['options']</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getExpressionData</code>
+    </MixedMethodCall>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$resultRow-&gt;username</code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyAssignmentValue occurrences="5">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>$this-&gt;_db instanceof DbAdapter</code>
+    </RedundantConditionGivenDocblockType>
+    <TooManyArguments occurrences="1"/>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>$lastWherePart</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedMethod occurrences="3">
+      <code>setAmbiguityIdentity</code>
+      <code>setAmbiguityIdentity</code>
+      <code>setCredentialValidationCallback</code>
+    </UndefinedMethod>
+  </file>
+  <file src="test/Adapter/DbTable/CredentialTreatmentAdapterDb2Test.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Db\Sql\Select'</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedClass occurrences="6">
+      <code>\Laminas\Authentication\Adapter\DbTable</code>
+      <code>new Adapter\DbTable($this-&gt;db)</code>
+      <code>new Adapter\DbTable($this-&gt;db, $this-&gt;tableName, 'username', 'password', '?')</code>
+      <code>new Adapter\DbTable($this-&gt;db, 'users')</code>
+      <code>new Adapter\DbTable($this-&gt;db, 'users', 'username')</code>
+      <code>protected $adapter = null;</code>
+    </DeprecatedClass>
+    <MissingParamType occurrences="2">
+      <code>$optionalParams</code>
+      <code>$optionalParams</code>
+    </MissingParamType>
+    <MissingPropertyType occurrences="1">
+      <code>$dbAdapterParams</code>
+    </MissingPropertyType>
+    <MissingReturnType occurrences="22">
+      <code>createDbAdapter</code>
+      <code>setupAuthAdapter</code>
+      <code>setupDbAdapter</code>
+      <code>testAdapterCanReturnDbSelectObject</code>
+      <code>testAdapterCanUseModifiedDbSelectObject</code>
+      <code>testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth</code>
+      <code>testAuthenticateFailureIdentityAmbiguous</code>
+      <code>testAuthenticateFailureIdentityNotFound</code>
+      <code>testAuthenticateFailureInvalidCredential</code>
+      <code>testAuthenticateSuccess</code>
+      <code>testAuthenticateSuccessWithTreatment</code>
+      <code>testCatchExceptionBadSql</code>
+      <code>testCatchExceptionNoCredential</code>
+      <code>testCatchExceptionNoCredentialColumn</code>
+      <code>testCatchExceptionNoIdentity</code>
+      <code>testCatchExceptionNoIdentityColumn</code>
+      <code>testCatchExceptionNoTable</code>
+      <code>testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet</code>
+      <code>testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet</code>
+      <code>testGetOmittedResultRow</code>
+      <code>testGetResultRow</code>
+      <code>testGetSpecificResultRow</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="7">
+      <code>$result-&gt;getMessages()</code>
+      <code>$result-&gt;getMessages()</code>
+      <code>$result-&gt;getMessages()</code>
+      <code>$this-&gt;dbAdapterParams</code>
+      <code>$this-&gt;dbAdapterParams</code>
+      <code>$whereParts</code>
+      <code>$whereParts</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="2">
+      <code>$expressionData[0]</code>
+      <code>$lastWherePart[1]</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;dbAdapterParams['options']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="17">
+      <code>$expressionData</code>
+      <code>$lastWherePart</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result2</code>
+      <code>$resultRow</code>
+      <code>$resultRow</code>
+      <code>$resultRow</code>
+      <code>$select</code>
+      <code>$select</code>
+      <code>$selectAfterAuth</code>
+      <code>$whereParts</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="69">
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>authenticate</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getDbSelect</code>
+      <code>getDbSelect</code>
+      <code>getDbSelect</code>
+      <code>getDbSelect</code>
+      <code>getExpressionData</code>
+      <code>getIdentity</code>
+      <code>getIdentity</code>
+      <code>getMessages</code>
+      <code>getMessages</code>
+      <code>getMessages</code>
+      <code>getPredicates</code>
+      <code>getResultRowObject</code>
+      <code>getResultRowObject</code>
+      <code>getResultRowObject</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>setAmbiguityIdentity</code>
+      <code>setAmbiguityIdentity</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setCredential</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setIdentity</code>
+      <code>setTableName</code>
+      <code>where</code>
+      <code>where</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch occurrences="2">
+      <code>$resultRow-&gt;USERNAME</code>
+      <code>$selectAfterAuth-&gt;where</code>
+    </MixedPropertyFetch>
+    <PossiblyFalsePropertyAssignmentValue occurrences="1">
+      <code>getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE')</code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyNullPropertyAssignmentValue occurrences="3">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>$this-&gt;db instanceof DbAdapter</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedThisPropertyAssignment occurrences="4">
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="15">
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+      <code>$this-&gt;authAdapter</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/Adapter/DbTable/CredentialTreatmentAdapterTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Db\Sql\Select'</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedClass occurrences="6">
+      <code>\Laminas\Authentication\Adapter\DbTable</code>
+      <code>new Adapter\DbTable($this-&gt;_db)</code>
+      <code>new Adapter\DbTable($this-&gt;_db, 'users')</code>
+      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username')</code>
+      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username', 'password', '?')</code>
+      <code>protected $_adapter = null;</code>
+    </DeprecatedClass>
+    <MissingParamType occurrences="1">
+      <code>$optionalParams</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="21">
+      <code>_setupAuthAdapter</code>
+      <code>_setupDbAdapter</code>
+      <code>testAdapterCanReturnDbSelectObject</code>
+      <code>testAdapterCanUseModifiedDbSelectObject</code>
+      <code>testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth</code>
+      <code>testAuthenticateFailureIdentityAmbiguous</code>
+      <code>testAuthenticateFailureIdentityNotFound</code>
+      <code>testAuthenticateFailureInvalidCredential</code>
+      <code>testAuthenticateSuccess</code>
+      <code>testAuthenticateSuccessWithTreatment</code>
+      <code>testCatchExceptionBadSql</code>
+      <code>testCatchExceptionNoCredential</code>
+      <code>testCatchExceptionNoCredentialColumn</code>
+      <code>testCatchExceptionNoIdentity</code>
+      <code>testCatchExceptionNoIdentityColumn</code>
+      <code>testCatchExceptionNoTable</code>
+      <code>testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet</code>
+      <code>testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet</code>
+      <code>testGetOmittedResultRow</code>
+      <code>testGetResultRow</code>
+      <code>testGetSpecificResultRow</code>
+    </MissingReturnType>
+    <MixedArrayAccess occurrences="1">
+      <code>$expressionData[0]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$expressionData</code>
+      <code>$params['options']</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getExpressionData</code>
+    </MixedMethodCall>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$resultRow-&gt;username</code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullPropertyAssignmentValue occurrences="5">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <PropertyTypeCoercion occurrences="1">
+      <code>new Adapter\DbTable\CredentialTreatmentAdapter($this-&gt;_db, 'users', 'username', 'password')</code>
+    </PropertyTypeCoercion>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>$this-&gt;_db instanceof DbAdapter</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>$lastWherePart</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedMethod occurrences="2">
+      <code>setAmbiguityIdentity</code>
+      <code>setAmbiguityIdentity</code>
+    </UndefinedMethod>
+  </file>
+  <file src="test/Adapter/DbTableTest.php">
+    <DeprecatedClass occurrences="1">
+      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username', 'password')</code>
+    </DeprecatedClass>
+    <MissingReturnType occurrences="1">
+      <code>_setupAuthAdapter</code>
+    </MissingReturnType>
+  </file>
+  <file src="test/Adapter/DigestTest.php">
+    <InvalidCatch occurrences="2"/>
+    <MixedArgument occurrences="3">
+      <code>$messages[0]</code>
+      <code>$messages[0]</code>
+      <code>$messages[0]</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="8">
+      <code>$identity['realm']</code>
+      <code>$identity['realm']</code>
+      <code>$identity['realm']</code>
+      <code>$identity['realm']</code>
+      <code>$identity['username']</code>
+      <code>$identity['username']</code>
+      <code>$identity['username']</code>
+      <code>$identity['username']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="4">
+      <code>$identity</code>
+      <code>$identity</code>
+      <code>$identity</code>
+      <code>$identity</code>
+    </MixedAssignment>
+  </file>
+  <file src="test/Adapter/Http/ApacheResolverTest.php">
+    <ArgumentTypeCoercion occurrences="5">
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="2">
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+    </InvalidArgument>
+    <MissingParamType occurrences="4">
+      <code>$file</code>
+      <code>$file</code>
+      <code>$file</code>
+      <code>$file</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="6">
+      <code>providePasswordFiles</code>
+      <code>testResolveNoUsers</code>
+      <code>testResolveNoValidPassword</code>
+      <code>testResolveValidBasic</code>
+      <code>testResolveValidBasicWithRealm</code>
+      <code>testResolveValidDigest</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="5">
+      <code>$file</code>
+      <code>$file</code>
+      <code>$file</code>
+      <code>$file</code>
+      <code>$this-&gt;_digest</code>
+    </MixedArgument>
+    <NullArgument occurrences="3">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </NullArgument>
+    <UndefinedThisPropertyAssignment occurrences="2">
+      <code>$this-&gt;_digest</code>
+      <code>$this-&gt;_path</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="1">
+      <code>$this-&gt;_digest</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/Adapter/Http/AuthTest.php">
+    <ArgumentTypeCoercion occurrences="6">
+      <code>'ArrayIterator'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="6">
+      <code>$basic</code>
+      <code>$basic</code>
+      <code>$basic</code>
+      <code>$basic</code>
+      <code>$basic</code>
+      <code>$expected</code>
+    </InvalidArgument>
+    <InvalidPropertyAssignmentValue occurrences="2">
+      <code>new TestAsset\BasicAuthObjectResolver()</code>
+      <code>new TestAsset\BasicAuthObjectResolver()</code>
+    </InvalidPropertyAssignmentValue>
+    <InvalidReturnStatement occurrences="1"/>
+    <InvalidReturnType occurrences="1">
+      <code>string</code>
+    </InvalidReturnType>
+    <InvalidScalarArgument occurrences="1">
+      <code>1</code>
+    </InvalidScalarArgument>
+    <MissingParamType occurrences="2">
+      <code>$pass</code>
+      <code>$user</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="20">
+      <code>testBadDigestRequest</code>
+      <code>testBadDigestResponse</code>
+      <code>testBadSchemeRequest</code>
+      <code>testBasicAuthBadCreds</code>
+      <code>testBasicAuthBadPassword</code>
+      <code>testBasicAuthBadUser</code>
+      <code>testBasicAuthCanValidateCredentialsThatContainAColon</code>
+      <code>testBasicAuthInvalidCredsWithCustomIdentityObjectResolverReturnsUnauthorizedResponse</code>
+      <code>testBasicAuthTokenIsNotBase64</code>
+      <code>testBasicAuthValidCreds</code>
+      <code>testBasicAuthValidCredsWithCustomIdentityObjectResolverReturnsAuthResult</code>
+      <code>testBasicChallenge</code>
+      <code>testBothChallenges</code>
+      <code>testDigestAuthBadCreds</code>
+      <code>testDigestAuthBadCreds2</code>
+      <code>testDigestAuthDefaultAlgo</code>
+      <code>testDigestAuthQuotedNC</code>
+      <code>testDigestAuthValidCreds</code>
+      <code>testDigestChallenge</code>
+      <code>testDigestTampered</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="9">
+      <code>$expected['domain']</code>
+      <code>$expected['realm']</code>
+      <code>$expected['type']</code>
+      <code>$header</code>
+      <code>$header</code>
+      <code>$headers</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$wwwAuthenticate</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="4">
+      <code>$expected['domain']</code>
+      <code>$expected['realm']</code>
+      <code>$expected['type']</code>
+      <code>$headers[0]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="6">
+      <code>$header</code>
+      <code>$header</code>
+      <code>$headers</code>
+      <code>$result</code>
+      <code>$value</code>
+      <code>$wwwAuthenticate</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="11">
+      <code>get</code>
+      <code>get</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>has</code>
+      <code>has</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="13">
+      <code>$pass</code>
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_bothConfig['digest_domains']</code>
+      <code>$this-&gt;_bothConfig['realm']</code>
+      <code>$this-&gt;_bothConfig['realm']</code>
+      <code>$this-&gt;_bothConfig['realm']</code>
+      <code>$this-&gt;_digestConfig['realm']</code>
+      <code>$this-&gt;_digestConfig['realm']</code>
+      <code>$this-&gt;_digestConfig['realm']</code>
+      <code>$user</code>
+    </MixedOperand>
+    <PossiblyInvalidMethodCall occurrences="2">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="1">
+      <code>var_export($result, 1)</code>
+    </PossiblyNullArgument>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+    </PossiblyUndefinedMethod>
+  </file>
+  <file src="test/Adapter/Http/FileResolverTest.php">
+    <InvalidArgument occurrences="4">
+      <code>Http\Exception\ExceptionInterface::class</code>
+      <code>Http\Exception\ExceptionInterface::class</code>
+      <code>Http\Exception\ExceptionInterface::class</code>
+      <code>Http\Exception\ExceptionInterface::class</code>
+    </InvalidArgument>
+    <InvalidCatch occurrences="5"/>
+  </file>
+  <file src="test/Adapter/Http/ObjectTest.php">
+    <InternalMethod occurrences="1">
+      <code>addToAssertionCount</code>
+    </InternalMethod>
+    <InvalidArgument occurrences="2">
+      <code>Adapter\Exception\ExceptionInterface::class</code>
+      <code>Adapter\Exception\ExceptionInterface::class</code>
+    </InvalidArgument>
+    <InvalidCatch occurrences="1"/>
+    <MissingParamType occurrences="3">
+      <code>$authHeader</code>
+      <code>$cfg</code>
+      <code>$cfgProperty</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="7">
+      <code>noResolvers</code>
+      <code>testAuthenticateArgs</code>
+      <code>testInvalidConfigs</code>
+      <code>testNoResolvers</code>
+      <code>testUnsupportedScheme</code>
+      <code>testValidConfigs</code>
+      <code>testWrongResolverUsed</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="3">
+      <code>$authHeader</code>
+      <code>$cfg</code>
+      <code>$this-&gt;$cfgProperty</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+  </file>
+  <file src="test/Adapter/Http/ProxyTest.php">
+    <ArgumentTypeCoercion occurrences="5">
+      <code>'ArrayIterator'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+      <code>'Laminas\\Authentication\\Result'</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="4">
+      <code>$basic</code>
+      <code>$basic</code>
+      <code>$basic</code>
+      <code>$basic</code>
+    </InvalidArgument>
+    <InvalidReturnStatement occurrences="1"/>
+    <InvalidReturnType occurrences="1">
+      <code>string</code>
+    </InvalidReturnType>
+    <InvalidScalarArgument occurrences="2">
+      <code>1</code>
+      <code>1</code>
+    </InvalidScalarArgument>
+    <MissingReturnType occurrences="14">
+      <code>testBadDigestRequest</code>
+      <code>testBadSchemeRequest</code>
+      <code>testBasicAuthBadCreds</code>
+      <code>testBasicAuthBadPassword</code>
+      <code>testBasicAuthBadUser</code>
+      <code>testBasicAuthValidCreds</code>
+      <code>testBasicChallenge</code>
+      <code>testBothChallenges</code>
+      <code>testDigestAuthBadCreds</code>
+      <code>testDigestAuthDefaultAlgo</code>
+      <code>testDigestAuthQuotedNC</code>
+      <code>testDigestAuthValidCreds</code>
+      <code>testDigestChallenge</code>
+      <code>testDigestTampered</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="9">
+      <code>$authHeader</code>
+      <code>$expected['domain']</code>
+      <code>$expected['realm']</code>
+      <code>$expected['type']</code>
+      <code>$header</code>
+      <code>$header</code>
+      <code>$headers</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="4">
+      <code>$expected['domain']</code>
+      <code>$expected['realm']</code>
+      <code>$expected['type']</code>
+      <code>$headers[0]</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="5">
+      <code>$authHeader</code>
+      <code>$header</code>
+      <code>$header</code>
+      <code>$headers</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="11">
+      <code>get</code>
+      <code>get</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getMessages</code>
+      <code>has</code>
+      <code>has</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+      <code>isValid</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="9">
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_basicConfig['realm']</code>
+      <code>$this-&gt;_bothConfig['digest_domains']</code>
+      <code>$this-&gt;_bothConfig['realm']</code>
+      <code>$this-&gt;_bothConfig['realm']</code>
+      <code>$this-&gt;_digestConfig['realm']</code>
+      <code>$this-&gt;_digestConfig['realm']</code>
+      <code>$this-&gt;_digestConfig['realm']</code>
+    </MixedOperand>
+    <PossiblyNullArgument occurrences="2">
+      <code>var_export($authHeader, 1)</code>
+      <code>var_export($result-&gt;getMessages(), 1)</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/Adapter/Http/TestAsset/BasicAuthObjectResolver.php">
+    <InvalidReturnStatement occurrences="2"/>
+    <InvalidReturnType occurrences="1">
+      <code>resolve</code>
+    </InvalidReturnType>
+  </file>
+  <file src="test/Adapter/HttpTest.php">
+    <MissingReturnType occurrences="1">
+      <code>testProtectedMethodChallengeClientTriggersErrorDeprecated</code>
+    </MissingReturnType>
+  </file>
+  <file src="test/Adapter/Ldap/OfflineTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Ldap\Ldap'</code>
+    </ArgumentTypeCoercion>
+    <MissingReturnType occurrences="7">
+      <code>testGetSetLdap</code>
+      <code>testPasswordIsNullIfNotSet</code>
+      <code>testSetAndGetPassword</code>
+      <code>testSetAndGetUsername</code>
+      <code>testSetCredentialProxiesToSetPassword</code>
+      <code>testSetIdentityProxiesToSetUsername</code>
+      <code>testUsernameIsNullIfNotSet</code>
+    </MissingReturnType>
+    <PossiblyNullPropertyAssignmentValue occurrences="1">
+      <code>null</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <UndefinedMethod occurrences="2">
+      <code>getPassword</code>
+      <code>getUsername</code>
+    </UndefinedMethod>
+  </file>
+  <file src="test/Adapter/Ldap/OnlineTest.php">
+    <ArgumentTypeCoercion occurrences="5">
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+    </ArgumentTypeCoercion>
+    <InvalidScalarArgument occurrences="1">
+      <code>$account</code>
+    </InvalidScalarArgument>
+    <MissingReturnType occurrences="7">
+      <code>testAccountObjectRetrieval</code>
+      <code>testAccountObjectRetrievalWithOmittedAttributes</code>
+      <code>testCanonAuth</code>
+      <code>testInvalidPassAuth</code>
+      <code>testInvalidUserAuth</code>
+      <code>testMismatchDomainAuth</code>
+      <code>testSimpleAuth</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="2">
+      <code>$messages[0]</code>
+      <code>$username</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$formName</code>
+      <code>$username</code>
+    </MixedAssignment>
+    <PossiblyFalseArgument occurrences="8">
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+    </PossiblyFalseArgument>
+    <PossiblyFalseOperand occurrences="4">
+      <code>getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+    </PossiblyFalseOperand>
+    <PossiblyInvalidPropertyFetch occurrences="1">
+      <code>$account-&gt;userpassword</code>
+    </PossiblyInvalidPropertyFetch>
+  </file>
+  <file src="test/Adapter/TestAsset/OpenIdResponseHelper.php">
+    <MissingParamType occurrences="2">
+      <code>$canSendHeaders</code>
+      <code>$throw</code>
+    </MissingParamType>
+    <MissingPropertyType occurrences="1">
+      <code>$_canSendHeaders</code>
+    </MissingPropertyType>
+    <MissingReturnType occurrences="2">
+      <code>canSendHeaders</code>
+      <code>sendResponse</code>
+    </MissingReturnType>
+    <UndefinedClass occurrences="1">
+      <code>OpenId</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/Adapter/TestAsset/Wrapper.php">
+    <MissingParamType occurrences="2">
+      <code>$args</code>
+      <code>$method</code>
+    </MissingParamType>
+    <PropertyNotSetInConstructor occurrences="8">
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="test/AuthenticationServiceTest.php">
+    <ArgumentTypeCoercion occurrences="3">
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Result'</code>
+      <code>'Laminas\Authentication\Storage\Session'</code>
+    </ArgumentTypeCoercion>
+    <MissingParamType occurrences="1">
+      <code>$adapter</code>
+    </MissingParamType>
+    <MissingReturnType occurrences="3">
+      <code>authenticate</code>
+      <code>testAdapter</code>
+      <code>testAuthenticateSetAdapter</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="4">
+      <code>$result</code>
+      <code>$result</code>
+      <code>$ret</code>
+      <code>$storage</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="12">
+      <code>authenticate</code>
+      <code>clearIdentity</code>
+      <code>getAdapter</code>
+      <code>getAdapter</code>
+      <code>getIdentity</code>
+      <code>getIdentity</code>
+      <code>getIdentity</code>
+      <code>getStorage</code>
+      <code>hasIdentity</code>
+      <code>hasIdentity</code>
+      <code>hasIdentity</code>
+      <code>setAdapter</code>
+    </MixedMethodCall>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;auth</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="6">
+      <code>$this-&gt;auth</code>
+      <code>$this-&gt;auth</code>
+      <code>$this-&gt;auth</code>
+      <code>$this-&gt;auth</code>
+      <code>$this-&gt;auth</code>
+      <code>$this-&gt;auth</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/Storage/ChainTest.php">
+    <MissingReturnType occurrences="6">
+      <code>testChainPriority</code>
+      <code>testEmptyChain</code>
+      <code>testEmptyChainIsEmpty</code>
+      <code>testSingularChainEmpty</code>
+      <code>testSingularChainNonEmpty</code>
+      <code>testSuccessfullReadWillPopulateStoragesWithHigherPriority</code>
+    </MissingReturnType>
+  </file>
+  <file src="test/TestAsset/Wrapper.php">
+    <MissingParamType occurrences="2">
+      <code>$args</code>
+      <code>$method</code>
+    </MissingParamType>
+    <PropertyNotSetInConstructor occurrences="8">
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+      <code>Wrapper</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="test/Validator/AuthenticationTest.php">
+    <MissingReturnType occurrences="19">
+      <code>errorMessagesProvider</code>
+      <code>testCodeMapAllowsToAddCustomMessageTemplates</code>
+      <code>testCodeMapAllowsToSpecifyCustomCodes</code>
+      <code>testCodeMapCustomMessageTemplateValueDefaultsToGeneralMessageTemplate</code>
+      <code>testCodeMapOptionRequiresMessageKeyToBeString</code>
+      <code>testConstructorOptionCodeMapOverridesDefaultMap</code>
+      <code>testConstructorOptionCodeMapUsesDefaultMapForOmittedCodes</code>
+      <code>testCustomMessageTemplateValueCanBeProvidedAsOption</code>
+      <code>testEqualsMessageTemplates</code>
+      <code>testErrorMessages</code>
+      <code>testNoAdapterThrowsRuntimeException</code>
+      <code>testNoIdentityThrowsRuntimeException</code>
+      <code>testNoServiceThrowsRuntimeException</code>
+      <code>testOptions</code>
+      <code>testSetters</code>
+      <code>testUsingAdapterFromService</code>
+      <code>testUsingNonValidatableAdapterFromServiceThrowsRuntimeException</code>
+      <code>testWithContext</code>
+      <code>testWithoutContext</code>
+    </MissingReturnType>
+  </file>
+  <file src="test/autoload.php">
+    <MixedArgument occurrences="1">
+      <code>\PHPUnit_Framework_Error_Deprecated::class</code>
+    </MixedArgument>
+    <UndefinedClass occurrences="1">
+      <code>\PHPUnit_Framework_Error_Deprecated</code>
+    </UndefinedClass>
+  </file>
+</files>

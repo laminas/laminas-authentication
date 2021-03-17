@@ -13,7 +13,7 @@ use Laminas\Authentication\Adapter\Http\ResolverInterface;
 
 class BasicAuthObjectResolver implements ResolverInterface
 {
-    public function resolve($username, $realm, $password = null)
+    public function resolve($username, $realm, $password = null): AuthenticationResult
     {
         if ($username == 'Bryce' && $password == 'ThisIsNotMyPassword') {
             $identity = new \stdClass();

@@ -32,7 +32,7 @@ class HttpTest extends TestCase
         unset($this->wrapper);
     }
 
-    public function testProtectedMethodChallengeClientTriggersErrorDeprecated()
+    public function testProtectedMethodChallengeClientTriggersErrorDeprecated(): void
     {
         $this->expectDeprecation();
         $this->wrapper->_challengeClient();

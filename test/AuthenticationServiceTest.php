@@ -29,7 +29,7 @@ class AuthenticationServiceTest extends TestCase
         $this->assertInstanceOf('Laminas\Authentication\Storage\Session', $storage);
     }
 
-    public function testAdapter()
+    public function testAdapter(): void
     {
         $this->assertNull($this->auth->getAdapter());
         $successAdapter = new TestAsset\ValidatableAdapter();
@@ -51,7 +51,7 @@ class AuthenticationServiceTest extends TestCase
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }
 
-    public function testAuthenticateSetAdapter()
+    public function testAuthenticateSetAdapter(): void
     {
         $result = $this->authenticate(new TestAsset\ValidatableAdapter());
         $this->assertInstanceOf('Laminas\Authentication\Result', $result);
@@ -72,7 +72,10 @@ class AuthenticationServiceTest extends TestCase
         $this->assertEquals(null, $this->auth->getIdentity());
     }
 
-    protected function authenticate($adapter = null)
+    /**
+     * @param TestAsset\ValidatableAdapter|null $adapter
+     */
+    protected function authenticate(?TestAsset\ValidatableAdapter $adapter = null)
     {
         if ($adapter === null) {
             $adapter = new TestAsset\ValidatableAdapter();
