@@ -106,7 +106,12 @@ class ApacheResolverTest extends TestCase
         new Apache($this->_badPath);
     }
 
-    public function providePasswordFiles()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array<array-key, array{0: string}>
+     */
+    public function providePasswordFiles(): array
     {
         $path = __DIR__ . '/TestAsset';
         return [
@@ -122,8 +127,10 @@ class ApacheResolverTest extends TestCase
      * Ensure that resolve() works fine with the specified password format
      *
      * @dataProvider providePasswordFiles
+     *
+     * @return void
      */
-    public function testResolveValidBasic($file)
+    public function testResolveValidBasic($file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('test', null, 'password');
@@ -136,8 +143,10 @@ class ApacheResolverTest extends TestCase
      * even if we pass a realm fake string for a basic authentication
      *
      * @dataProvider providePasswordFiles
+     *
+     * @return void
      */
-    public function testResolveValidBasicWithRealm($file)
+    public function testResolveValidBasicWithRealm($file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('test', 'realm', 'password');
@@ -149,8 +158,10 @@ class ApacheResolverTest extends TestCase
      * Ensure that resolve() failed for not valid users
      *
      * @dataProvider providePasswordFiles
+     *
+     * @return void
      */
-    public function testResolveNoUsers($file)
+    public function testResolveNoUsers($file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('foo', null, 'password');
@@ -162,8 +173,10 @@ class ApacheResolverTest extends TestCase
      * Ensure that resolve() failed for not valid password
      *
      * @dataProvider providePasswordFiles
+     *
+     * @return void
      */
-    public function testResolveNoValidPassword($file)
+    public function testResolveNoValidPassword($file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('test', null, 'bar');
@@ -172,9 +185,11 @@ class ApacheResolverTest extends TestCase
     }
 
     /**
-     *  Ensure that resolve() works fine with the digest password format
+     * Ensure that resolve() works fine with the digest password format
+     *
+     * @return void
      */
-    public function testResolveValidDigest()
+    public function testResolveValidDigest(): void
     {
         $this->_apache->setFile($this->_digest);
         $result = $this->_apache->resolve('test', 'auth', 'password');

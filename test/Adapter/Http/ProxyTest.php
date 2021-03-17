@@ -94,7 +94,7 @@ class ProxyTest extends TestCase
         ];
     }
 
-    public function testBasicChallenge()
+    public function testBasicChallenge(): void
     {
         // Trying to authenticate without sending a Proxy-Authorization header
         // should result in a 407 reply with a Proxy-Authenticate header, and a
@@ -107,23 +107,23 @@ class ProxyTest extends TestCase
         ];
 
         $data = $this->_doAuth('', 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testDigestChallenge()
+    public function testDigestChallenge(): void
     {
         // Trying to authenticate without sending a Proxy-Authorization header
         // should result in a 407 reply with a Proxy-Authenticate header, and a
         // false result.
 
         // The expected Digest Proxy-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
         $data = $this->_doAuth('', 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testBothChallenges()
+    public function testBothChallenges(): void
     {
         // Trying to authenticate without sending a Proxy-Authorization header
         // should result in a 407 reply with at least one Proxy-Authenticate
@@ -134,7 +134,7 @@ class ProxyTest extends TestCase
 
         // The expected Proxy-Authenticate header values
         $basic  = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
         // Make sure the result is false
         $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
@@ -161,15 +161,15 @@ class ProxyTest extends TestCase
         $this->assertTrue($digestFound);
     }
 
-    public function testBasicAuthValidCreds()
+    public function testBasicAuthValidCreds(): void
     {
         // Attempt Basic Authentication with a valid username and password
 
         $data = $this->_doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
-        $this->_checkOK($data);
+        $this->checkOK($data);
     }
 
-    public function testBasicAuthBadCreds()
+    public function testBasicAuthBadCreds(): void
     {
         // Ensure that credentials containing invalid characters are treated as
         // a bad username or password.
@@ -181,10 +181,10 @@ class ProxyTest extends TestCase
         ];
 
         $data = $this->_doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testBasicAuthBadUser()
+    public function testBasicAuthBadUser(): void
     {
         // Attempt Basic Authentication with a bad username and password
 
@@ -195,10 +195,10 @@ class ProxyTest extends TestCase
         ];
 
         $data = $this->_doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testBasicAuthBadPassword()
+    public function testBasicAuthBadPassword(): void
     {
         // Attempt Basic Authentication with a valid username, but invalid
         // password
@@ -210,56 +210,56 @@ class ProxyTest extends TestCase
         ];
 
         $data = $this->_doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
-        $this->_checkUnauthorized($data, $basic);
+        $this->checkUnauthorized($data, $basic);
     }
 
-    public function testDigestAuthValidCreds()
+    public function testDigestAuthValidCreds(): void
     {
         // Attempt Digest Authentication with a valid username and password
 
-        $data = $this->_doAuth($this->_digestReply('Bryce', 'ThisIsNotMyPassword'), 'digest');
-        $this->_checkOK($data);
+        $data = $this->_doAuth($this->digestReply('Bryce', 'ThisIsNotMyPassword'), 'digest');
+        $this->checkOK($data);
     }
 
-    public function testDigestAuthDefaultAlgo()
+    public function testDigestAuthDefaultAlgo(): void
     {
         // If the client omits the aglorithm argument, it should default to MD5,
         // and work just as above
 
-        $cauth = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $cauth = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $cauth = preg_replace('/algorithm="MD5", /', '', $cauth);
 
         $data = $this->_doAuth($cauth, 'digest');
-        $this->_checkOK($data);
+        $this->checkOK($data);
     }
 
-    public function testDigestAuthQuotedNC()
+    public function testDigestAuthQuotedNC(): void
     {
         // The nonce count isn't supposed to be quoted, but apparently some
         // clients do anyway.
 
-        $cauth = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $cauth = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $cauth = preg_replace('/nc=00000001/', 'nc="00000001"', $cauth);
 
         $data = $this->_doAuth($cauth, 'digest');
-        $this->_checkOK($data);
+        $this->checkOK($data);
     }
 
-    public function testDigestAuthBadCreds()
+    public function testDigestAuthBadCreds(): void
     {
         // Attempt Digest Authentication with a bad username and password
 
         // The expected Digest Proxy-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
-        $data = $this->_doAuth($this->_digestReply('Nobody', 'NotValid'), 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $data = $this->_doAuth($this->digestReply('Nobody', 'NotValid'), 'digest');
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testDigestTampered()
+    public function testDigestTampered(): void
     {
         // Create the tampered header value
-        $tampered = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $tampered = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $tampered = preg_replace(
             '/ nonce="[a-fA-F0-9]{32}", /',
             ' nonce="' . str_repeat('0', 32).'", ',
@@ -267,27 +267,27 @@ class ProxyTest extends TestCase
         );
 
         // The expected Digest Proxy-Authenticate header value
-        $digest = $this->_digestChallenge();
+        $digest = $this->digestChallenge();
 
         $data = $this->_doAuth($tampered, 'digest');
-        $this->_checkUnauthorized($data, $digest);
+        $this->checkUnauthorized($data, $digest);
     }
 
-    public function testBadSchemeRequest()
+    public function testBadSchemeRequest(): void
     {
         // Sending a request for an invalid authentication scheme should result
         // in a 400 Bad Request response.
 
         $data = $this->_doAuth('Invalid ' . base64_encode('Nobody:NotValid'), 'basic');
-        $this->_checkBadRequest($data);
+        $this->checkBadRequest($data);
     }
 
-    public function testBadDigestRequest()
+    public function testBadDigestRequest(): void
     {
         // If any of the individual parts of the Digest Proxy-Authorization header
         // are bad, it results in a 400 Bad Request. But that's a lot of
         // possibilities, so we're just going to pick one for now.
-        $bad = $this->_digestReply('Bryce', 'ThisIsNotMyPassword');
+        $bad = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $bad = preg_replace(
             '/realm="([^"]+)"/',  // cut out the realm
             '',
@@ -295,7 +295,7 @@ class ProxyTest extends TestCase
         );
 
         $data = $this->_doAuth($bad, 'digest');
-        $this->_checkBadRequest($data);
+        $this->checkBadRequest($data);
     }
 
     /**
@@ -356,12 +356,12 @@ class ProxyTest extends TestCase
     /**
      * Constructs a local version of the digest challenge we expect to receive
      *
-     * @return string
+     * @return string[]
+     *
+     * @psalm-return array{type: string, realm: string, domain: string}
      */
-    // @codingStandardsIgnoreStart
-    protected function _digestChallenge()
+    protected function digestChallenge(): array
     {
-        // @codingStandardsIgnoreEnd
         return [
             'type'   => 'Digest ',
             'realm'  => 'realm="' . $this->_digestConfig['realm'] . '"',
@@ -376,10 +376,8 @@ class ProxyTest extends TestCase
      * @param  string $pass
      * @return string
      */
-    // @codingStandardsIgnoreStart
-    protected function _digestReply($user, $pass)
+    protected function digestReply($user, $pass)
     {
-        // @codingStandardsIgnoreEnd
         $nc       = '00000001';
         $timeout  = ceil(time() / 300) * 300;
         $nonce    = md5($timeout . ':PHPUnit:Laminas\\Authentication\\Adapter\\Http');
@@ -406,13 +404,13 @@ class ProxyTest extends TestCase
      * Checks for an expected 407 Proxy-Unauthorized response
      *
      * @param  array  $data     Authentication results
-     * @param  string $expected Expected Proxy-Authenticate header value
+     * @param  array  $expected Expected Proxy-Authenticate header value
      * @return void
+     *
+     * @psalm-param array<string, string> $expected
      */
-    // @codingStandardsIgnoreStart
-    protected function _checkUnauthorized($data, $expected)
+    protected function checkUnauthorized($data, $expected)
     {
-        // @codingStandardsIgnoreEnd
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
@@ -445,10 +443,8 @@ class ProxyTest extends TestCase
      * @param  array $data Authentication results
      * @return void
      */
-    // @codingStandardsIgnoreStart
-    protected function _checkOK($data)
+    protected function checkOK($data)
     {
-        // @codingStandardsIgnoreEnd
         extract($data); // $result, $status, $headers
 
         // Make sure the result is true
@@ -465,10 +461,8 @@ class ProxyTest extends TestCase
      * @param  array $data Authentication results
      * @return void
      */
-    // @codingStandardsIgnoreStart
-    protected function _checkBadRequest($data)
+    protected function checkBadRequest($data)
     {
-        // @codingStandardsIgnoreEnd
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false

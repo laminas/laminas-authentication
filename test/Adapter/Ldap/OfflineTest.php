@@ -36,7 +36,7 @@ class OfflineTest extends TestCase
         $this->adapter = new Adapter\Ldap();
     }
 
-    public function testGetSetLdap()
+    public function testGetSetLdap(): void
     {
         if (! extension_loaded('ldap')) {
             $this->markTestSkipped('LDAP is not enabled');
@@ -45,17 +45,17 @@ class OfflineTest extends TestCase
         $this->assertInstanceOf('Laminas\Ldap\Ldap', $this->adapter->getLdap());
     }
 
-    public function testUsernameIsNullIfNotSet()
+    public function testUsernameIsNullIfNotSet(): void
     {
         $this->assertNull($this->adapter->getUsername());
     }
 
-    public function testPasswordIsNullIfNotSet()
+    public function testPasswordIsNullIfNotSet(): void
     {
         $this->assertNull($this->adapter->getPassword());
     }
 
-    public function testSetAndGetUsername()
+    public function testSetAndGetUsername(): void
     {
         $usernameExpected = 'someUsername';
         $usernameActual = $this->adapter->setUsername($usernameExpected)
@@ -63,7 +63,7 @@ class OfflineTest extends TestCase
         $this->assertSame($usernameExpected, $usernameActual);
     }
 
-    public function testSetAndGetPassword()
+    public function testSetAndGetPassword(): void
     {
         $passwordExpected = 'somePassword';
         $passwordActual = $this->adapter->setPassword($passwordExpected)
@@ -71,7 +71,7 @@ class OfflineTest extends TestCase
         $this->assertSame($passwordExpected, $passwordActual);
     }
 
-    public function testSetIdentityProxiesToSetUsername()
+    public function testSetIdentityProxiesToSetUsername(): void
     {
         $usernameExpected = 'someUsername';
         $usernameActual = $this->adapter->setIdentity($usernameExpected)
@@ -79,7 +79,7 @@ class OfflineTest extends TestCase
         $this->assertSame($usernameExpected, $usernameActual);
     }
 
-    public function testSetCredentialProxiesToSetPassword()
+    public function testSetCredentialProxiesToSetPassword(): void
     {
         $passwordExpected = 'somePassword';
         $passwordActual = $this->adapter->setCredential($passwordExpected)

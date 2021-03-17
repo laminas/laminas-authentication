@@ -34,7 +34,7 @@ class HttpTest extends TestCase
         unset($this->wrapper);
     }
 
-    public function testChallengeClient()
+    public function testChallengeClient(): void
     {
         $this->wrapper->setResponse(new Response());
         $this->wrapper->challengeClient();

@@ -75,8 +75,11 @@ class Callback extends AbstractAdapter
     /**
      * Sets the value of callback.
      *
-     * @param  callable $callback the callback
+     * @param callable $callback the callback
+     *
      * @throws InvalidArgumentException
+     *
+     * @return void
      */
     public function setCallback($callback)
     {

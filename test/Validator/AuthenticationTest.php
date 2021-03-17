@@ -41,7 +41,7 @@ class AuthenticationTest extends TestCase
         $this->authAdapter = new AuthTest\TestAsset\ValidatableAdapter();
     }
 
-    public function testOptions()
+    public function testOptions(): void
     {
         $auth = new AuthenticationValidator([
             'adapter' => $this->authAdapter,
@@ -55,7 +55,7 @@ class AuthenticationTest extends TestCase
         $this->assertSame($auth->getCredential(), 'password');
     }
 
-    public function testConstructorOptionCodeMapOverridesDefaultMap()
+    public function testConstructorOptionCodeMapOverridesDefaultMap(): void
     {
         $authAdapter = new AuthTest\TestAsset\ValidatableAdapter(AuthenticationResult::FAILURE_UNCATEGORIZED);
         $auth = new AuthenticationValidator([
@@ -75,7 +75,7 @@ class AuthenticationTest extends TestCase
         );
     }
 
-    public function testConstructorOptionCodeMapUsesDefaultMapForOmittedCodes()
+    public function testConstructorOptionCodeMapUsesDefaultMapForOmittedCodes(): void
     {
         $authAdapter = new AuthTest\TestAsset\ValidatableAdapter(AuthenticationResult::FAILURE_IDENTITY_AMBIGUOUS);
         $auth = new AuthenticationValidator([
@@ -95,7 +95,7 @@ class AuthenticationTest extends TestCase
         );
     }
 
-    public function testCodeMapAllowsToSpecifyCustomCodes()
+    public function testCodeMapAllowsToSpecifyCustomCodes(): void
     {
         $authAdapter = new AuthTest\TestAsset\ValidatableAdapter(-999);
         $auth = new AuthenticationValidator([
@@ -115,7 +115,7 @@ class AuthenticationTest extends TestCase
         );
     }
 
-    public function testCodeMapAllowsToAddCustomMessageTemplates()
+    public function testCodeMapAllowsToAddCustomMessageTemplates(): void
     {
         $auth = new AuthenticationValidator([
             'code_map' => [
@@ -132,8 +132,10 @@ class AuthenticationTest extends TestCase
 
     /**
      * @depends testCodeMapAllowsToAddCustomMessageTemplates
+     *
+     * @return void
      */
-    public function testCodeMapCustomMessageTemplateValueDefaultsToGeneralMessageTemplate()
+    public function testCodeMapCustomMessageTemplateValueDefaultsToGeneralMessageTemplate(): void
     {
         $auth = new AuthenticationValidator([
             'code_map' => [
@@ -146,8 +148,10 @@ class AuthenticationTest extends TestCase
 
     /**
      * @depends testCodeMapAllowsToAddCustomMessageTemplates
+     *
+     * @return void
      */
-    public function testCustomMessageTemplateValueCanBeProvidedAsOption()
+    public function testCustomMessageTemplateValueCanBeProvidedAsOption(): void
     {
         $auth = new AuthenticationValidator([
             'code_map' => [
@@ -162,7 +166,7 @@ class AuthenticationTest extends TestCase
         $this->assertEquals('Custom Error', $templates['custom_error']);
     }
 
-    public function testCodeMapOptionRequiresMessageKeyToBeString()
+    public function testCodeMapOptionRequiresMessageKeyToBeString(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Message key in code_map option must be a non-empty string');
@@ -173,7 +177,7 @@ class AuthenticationTest extends TestCase
         ]);
     }
 
-    public function testSetters()
+    public function testSetters(): void
     {
         $this->validator->setAdapter($this->authAdapter);
         $this->validator->setService($this->authService);
@@ -185,14 +189,14 @@ class AuthenticationTest extends TestCase
         $this->assertSame($this->validator->getCredential(), 'credential');
     }
 
-    public function testNoIdentityThrowsRuntimeException()
+    public function testNoIdentityThrowsRuntimeException(): void
     {
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('Identity must be set prior to validation');
         $this->validator->isValid('password');
     }
 
-    public function testNoAdapterThrowsRuntimeException()
+    public function testNoAdapterThrowsRuntimeException(): void
     {
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('Adapter must be set prior to validation');
@@ -201,7 +205,7 @@ class AuthenticationTest extends TestCase
         $this->validator->isValid('password');
     }
 
-    public function testNoServiceThrowsRuntimeException()
+    public function testNoServiceThrowsRuntimeException(): void
     {
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage('AuthenticationService must be set prior to validation');
@@ -210,14 +214,14 @@ class AuthenticationTest extends TestCase
         $this->validator->isValid('password');
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $r = new ReflectionProperty($this->validator, 'messageTemplates');
         $r->setAccessible(true);
         $this->assertEquals($this->validator->getOption('messageTemplates'), $r->getValue($this->validator));
     }
 
-    public function testWithoutContext()
+    public function testWithoutContext(): void
     {
         $this->validator->setAdapter($this->authAdapter);
         $this->validator->setService($this->authService);
@@ -229,7 +233,7 @@ class AuthenticationTest extends TestCase
         $this->assertTrue($this->validator->isValid());
     }
 
-    public function testWithContext()
+    public function testWithContext(): void
     {
         $this->validator->setAdapter($this->authAdapter);
         $this->validator->setService($this->authService);
@@ -243,7 +247,16 @@ class AuthenticationTest extends TestCase
         $this->assertEquals('mypassword', $adapter->getCredential());
     }
 
-    public function errorMessagesProvider()
+    /**
+     * @return (bool|int|string[])[][]
+     *
+     * @psalm-return array<string, array{
+     *     0: int,
+     *     1: bool,
+     *     2: array<string, string>
+     * }>
+     */
+    public function errorMessagesProvider(): array
     {
         return [
             'failure' => [
@@ -281,11 +294,14 @@ class AuthenticationTest extends TestCase
 
     /**
      * @dataProvider errorMessagesProvider
+     *
      * @param int   $code
      * @param bool  $valid
      * @param array $messages
+     *
+     * @return void
      */
-    public function testErrorMessages($code, $valid, $messages)
+    public function testErrorMessages($code, $valid, $messages): void
     {
         $adapter = new AuthTest\TestAsset\ValidatableAdapter($code);
 
@@ -300,8 +316,10 @@ class AuthenticationTest extends TestCase
 
     /**
      * Test using Authentication Service's adapter
+     *
+     * @return void
      */
-    public function testUsingAdapterFromService()
+    public function testUsingAdapterFromService(): void
     {
         $this->authService->setAdapter($this->authAdapter);
 
@@ -320,8 +338,10 @@ class AuthenticationTest extends TestCase
     /**
      * Ensures that isValid() throws an exception when Authentication Service's
      * adapter is not an instance of ValidatableAdapterInterface
+     *
+     * @return void
      */
-    public function testUsingNonValidatableAdapterFromServiceThrowsRuntimeException()
+    public function testUsingNonValidatableAdapterFromServiceThrowsRuntimeException(): void
     {
         $this->expectException(Exception\RuntimeException::class);
         $this->expectExceptionMessage(sprintf(

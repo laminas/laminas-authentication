@@ -36,15 +36,17 @@ class CallbackTest extends TestCase
         $this->adapter = null;
     }
 
-    protected function setupAuthAdapter()
+    protected function setupAuthAdapter(): void
     {
         $this->adapter = new Callback();
     }
 
     /**
      * Ensures expected behavior for an invalid callback
+     *
+     * @return void
      */
-    public function testSetCallbackThrowsException()
+    public function testSetCallbackThrowsException(): void
     {
         $this->expectException(AuthenticationException\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
@@ -53,10 +55,12 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures setter/getter behaviour for callback
+     *
+     * @return void
      */
-    public function testCallbackSetGetMethods()
+    public function testCallbackSetGetMethods(): void
     {
-        $callback = function () {
+        $callback = function (): void {
         };
         $this->adapter->setCallback($callback);
         $this->assertEquals($callback, $this->adapter->getCallback());
@@ -64,10 +68,12 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures constructor sets callback if provided
+     *
+     * @return void
      */
-    public function testClassConstructorSetCallback()
+    public function testClassConstructorSetCallback(): void
     {
-        $callback = function () {
+        $callback = function (): void {
         };
         $adapter  = new Callback($callback);
         $this->assertEquals($callback, $adapter->getCallback());
@@ -75,8 +81,10 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authenticate throws Exception if no callback is defined
+     *
+     * @return void
      */
-    public function testAuthenticateThrowsException()
+    public function testAuthenticateThrowsException(): void
     {
         $this->expectException(AuthenticationException\RuntimeException::class);
         $this->expectExceptionMessage('No callback provided');
@@ -85,14 +93,16 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures identity and credential are provided as arguments to callback
+     *
+     * @return void
      */
-    public function testAuthenticateProvidesCallbackWithIdentityAndCredentials()
+    public function testAuthenticateProvidesCallbackWithIdentityAndCredentials(): void
     {
         $adapter = $this->adapter;
         $adapter->setIdentity('testIdentity');
         $adapter->setCredential('testCredential');
         $that = $this;
-        $callback = function ($identity, $credential) use ($that, $adapter) {
+        $callback = function ($identity, $credential) use ($that, $adapter): void {
             $that->assertEquals($identity, $adapter->getIdentity());
             $that->assertEquals($credential, $adapter->getCredential());
         };
@@ -102,12 +112,14 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authentication result is invalid when callback throws exception
+     *
+     * @return void
      */
-    public function testAuthenticateResultIfCallbackThrows()
+    public function testAuthenticateResultIfCallbackThrows(): void
     {
         $adapter   = $this->adapter;
         $exception = new Exception('Callback Exception');
-        $callback  = function () use ($exception) {
+        $callback  = function () use ($exception): void {
             throw $exception;
         };
         $adapter->setCallback($callback);
@@ -119,14 +131,21 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authentication result is invalid when callback returns falsy value
+     *
+     * @return void
      */
-    public function testAuthenticateResultIfCallbackReturnsFalsy()
+    public function testAuthenticateResultIfCallbackReturnsFalsy(): void
     {
         $that    = $this;
         $adapter = $this->adapter;
         $falsyValues = [false, null, '', '0', [], 0, 0.0];
         array_map(function ($falsy) use ($that, $adapter) {
-            $callback = function () use ($falsy) {
+            $callback = /**
+             * @return array|false|float|int|null|string
+             *
+             * @psalm-return array<empty, empty>|false|float|int|null|string
+             */
+            function () use ($falsy) {
                 return $falsy;
             };
             $adapter->setCallback($callback);
@@ -139,11 +158,13 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authentication result is valid when callback returns truthy value
+     *
+     * @return void
      */
-    public function testAuthenticateResultIfCallbackReturnsIdentity()
+    public function testAuthenticateResultIfCallbackReturnsIdentity(): void
     {
         $adapter  = $this->adapter;
-        $callback = function () {
+        $callback = function (): string {
             return 'identity';
         };
         $adapter->setCallback($callback);

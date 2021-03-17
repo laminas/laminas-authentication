@@ -69,8 +69,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
+     *
+     * @return void
      */
-    public function testAuthenticateSuccess()
+    public function testAuthenticateSuccess(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
@@ -81,8 +83,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
+     *
+     * @return void
      */
-    public function testAuthenticateSuccessWithCallback()
+    public function testAuthenticateSuccessWithCallback(): void
     {
         $this->_adapter = new CredentialTreatmentAdapter(
             $this->_db,
@@ -103,8 +107,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for an invalid callback
+     *
+     * @return void
      */
-    public function testAuthenticateCallbackThrowsException()
+    public function testAuthenticateCallbackThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
@@ -114,8 +120,10 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
+     *
+     * @return void
      */
-    public function testAuthenticateFailureIdentityNotFound()
+    public function testAuthenticateFailureIdentityNotFound(): void
     {
         $this->_adapter->setIdentity('non_existent_username');
         $this->_adapter->setCredential('my_password');
@@ -127,8 +135,10 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
+     *
+     * @return void
      */
-    public function testAuthenticateFailureIdentityAmbiguous()
+    public function testAuthenticateFailureIdentityAmbiguous(): void
     {
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
             . 'VALUES ("my_username", "my_password", "My Real Name")';
@@ -143,8 +153,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication failure because of a bad password
+     *
+     * @return void
      */
-    public function testAuthenticateFailureInvalidCredential()
+    public function testAuthenticateFailureInvalidCredential(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password_bad');
@@ -154,8 +166,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures that getResultRowObject() works for successful authentication
+     *
+     * @return void
      */
-    public function testGetResultRow()
+    public function testGetResultRow(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
@@ -166,8 +180,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that ResultRowObject returns only what told to be included
+     *
+     * @return void
      */
-    public function testGetSpecificResultRow()
+    public function testGetSpecificResultRow(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
@@ -181,8 +197,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that ResultRowObject returns an object has specific omissions
+     *
+     * @return void
      */
-    public function testGetOmittedResultRow()
+    public function testGetOmittedResultRow(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
@@ -198,16 +216,20 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * @group Laminas-5957
+     *
+     * @return void
      */
-    public function testAdapterCanReturnDbSelectObject()
+    public function testAdapterCanReturnDbSelectObject(): void
     {
         $this->assertInstanceOf('Laminas\Db\Sql\Select', $this->_adapter->getDbSelect());
     }
 
     /**
      * @group Laminas-5957
+     *
+     * @return void
      */
-    public function testAdapterCanUseModifiedDbSelectObject()
+    public function testAdapterCanUseModifiedDbSelectObject(): void
     {
         $select = $this->_adapter->getDbSelect();
         $select->where('1 = 0');
@@ -220,8 +242,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * @group Laminas-5957
+     *
+     * @return void
      */
-    public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth()
+    public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
         $select = $this->_adapter->getDbSelect();
         $select->where('1 = 1');
@@ -239,8 +263,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
+     *
+     * @return void
      */
-    public function testCatchExceptionNoTable()
+    public function testCatchExceptionNoTable(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A table must be supplied for');
@@ -250,8 +276,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
+     *
+     * @return void
      */
-    public function testCatchExceptionNoIdentityColumn()
+    public function testCatchExceptionNoIdentityColumn(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('An identity column must be supplied for the');
@@ -261,8 +289,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
+     *
+     * @return void
      */
-    public function testCatchExceptionNoCredentialColumn()
+    public function testCatchExceptionNoCredentialColumn(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential column must be supplied');
@@ -272,8 +302,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
+     *
+     * @return void
      */
-    public function testCatchExceptionNoIdentity()
+    public function testCatchExceptionNoIdentity(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A value for the identity was not provided prior');
@@ -282,8 +314,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
+     *
+     * @return void
      */
-    public function testCatchExceptionNoCredential()
+    public function testCatchExceptionNoCredential(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential value was not provided prior');
@@ -293,8 +327,10 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
+     *
+     * @return void
      */
-    public function testCatchExceptionBadSql()
+    public function testCatchExceptionBadSql(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The supplied parameters to');
@@ -309,9 +345,11 @@ class CallbackCheckAdapterTest extends TestCase
      * when flag is not set. This is the current state of
      * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
-     * @group   Laminas-7289
+     * @group Laminas-7289
+     *
+     * @return void
      */
-    public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet()
+    public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
                    . 'VALUES ("my_username", "my_otherpass", "Test user 2")';
@@ -332,9 +370,11 @@ class CallbackCheckAdapterTest extends TestCase
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
      *
-     * @group   Laminas-7289
+     * @group Laminas-7289
+     *
+     * @return void
      */
-    public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet()
+    public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
                    . 'VALUES ("my_username", "my_otherpass", "Test user 2")';
@@ -369,7 +409,7 @@ class CallbackCheckAdapterTest extends TestCase
     }
 
     // @codingStandardsIgnoreStart
-    protected function _setupDbAdapter($optionalParams = [])
+    protected function _setupDbAdapter($optionalParams = []): void
     {
         // @codingStandardsIgnoreEnd
         $params = [
@@ -399,7 +439,7 @@ class CallbackCheckAdapterTest extends TestCase
     }
 
     // @codingStandardsIgnoreStart
-    protected function _setupAuthAdapter()
+    protected function _setupAuthAdapter(): void
     {
         // @codingStandardsIgnoreEnd
         $this->_adapter = new CallbackCheckAdapter($this->_db, 'users', 'username', 'password');
