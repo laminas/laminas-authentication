@@ -270,7 +270,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -351,7 +351,7 @@ access control with Laminas, please see the
 <a href="https://github.com/laminas/laminas-permissions-rbac">laminas-permissions-rbac</a>
 components.</p>
 <blockquote>
-<h3>AuthenticationService</h3>
+<h3 id="authenticationservice">AuthenticationService</h3>
 <p>There is no <code>Laminas\Authentication\Authentication</code> class; instead the class
 <code>Laminas\Authentication\AuthenticationService</code> is provided. This class uses the
 composed authentication adapter and persistent storage backend.</p>
@@ -387,7 +387,6 @@ if (! $result-&gt;isValid()) {
     // $result-&gt;getIdentity() === $auth-&gt;getIdentity()
     // $result-&gt;getIdentity() === $username
 }</code></pre>
-
 <p>After a successful authentication attempt, subsequent requests can query the
 authentication service to determine if an identity is present, and, if so,
 retrieve it:</p>
@@ -395,12 +394,10 @@ retrieve it:</p>
     // Identity exists; get it
     $identity = $auth-&gt;getIdentity();
 }</code></pre>
-
 <p>To remove the identity from persistent storage, use the <code>clearIdentity()</code>
 method. This typically would be used for implementing an application "logout"
 operation:</p>
 <pre class="highlight"><code class="language-php">$auth-&gt;clearIdentity();</code></pre>
-
 <p>When the automatic use of persistent storage is inappropriate for a particular
 use case, a developer may bypass the use of the
 <code>Laminas\Authentication\AuthenticationService</code> class, using an adapter class
@@ -608,6 +605,7 @@ if (! $result-&gt;isValid()) {
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -680,7 +678,7 @@ if (! $result-&gt;isValid()) {
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
