@@ -1,29 +1,19 @@
 {
     "name": "laminas/laminas-authentication",
     "description": "provides an API for authentication and includes concrete authentication adapters for common use case scenarios",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "authentication"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-authentication/",
-        "issues": "https://github.com/laminas/laminas-authentication/issues",
-        "source": "https://github.com/laminas/laminas-authentication",
-        "rss": "https://github.com/laminas/laminas-authentication/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-stdlib": "^3.2.1",
         "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "replace": {
+        "zendframework/zend-authentication": "^2.7.0"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
@@ -47,18 +37,22 @@
         "laminas/laminas-uri": "Laminas\\Uri component",
         "laminas/laminas-validator": "Laminas\\Validator component"
     },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {},
     "autoload": {
         "psr-4": {
             "Laminas\\Authentication\\": "src/"
         }
     },
     "autoload-dev": {
-        "files": [
-            "test/autoload.php"
-        ],
         "psr-4": {
             "LaminasTest\\Authentication\\": "test/"
-        }
+        },
+        "files": [
+            "test/autoload.php"
+        ]
     },
     "scripts": {
         "check": [
@@ -70,7 +64,12 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-authentication": "^2.7.0"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-authentication/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-authentication",
+        "docs": "https://docs.laminas.dev/laminas-authentication/",
+        "rss": "https://github.com/laminas/laminas-authentication/releases.atom"
     }
 }
