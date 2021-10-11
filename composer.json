@@ -53,9 +53,6 @@
         }
     },
     "autoload-dev": {
-        "files": [
-            "test/autoload.php"
-        ],
         "psr-4": {
             "LaminasTest\\Authentication\\": "test/"
         }
