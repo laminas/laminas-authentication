@@ -6,6 +6,7 @@ namespace Laminas\Authentication\Adapter\DbTable;
 
 use Exception;
 use Laminas\Authentication\Adapter\AbstractAdapter as BaseAdapter;
+use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
@@ -223,7 +224,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * necessary information to successfully connect to a database table and
      * attempt to find a record matching the provided identity.
      *
-     * @throws Exception\RuntimeException If answering the authentication query is impossible.
+     * @throws RuntimeException If answering the authentication query is impossible.
      * @return AuthenticationResult
      */
     public function authenticate()
@@ -270,7 +271,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * making sure that this adapter was indeed setup properly with all
      * required pieces of information.
      *
-     * @throws Exception\RuntimeException In the event that setup was not done properly.
+     * @throws RuntimeException In the event that setup was not done properly.
      * @return bool
      */
     protected function authenticateSetup()
@@ -290,7 +291,7 @@ abstract class AbstractAdapter extends BaseAdapter
         }
 
         if (null !== $exception) {
-            throw new Exception\RuntimeException($exception);
+            throw new RuntimeException($exception);
         }
 
         $this->authenticateResultInfo = [
@@ -306,7 +307,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * _authenticateQuerySelect() - This method accepts a Laminas\Db\Sql\Select object and
      * performs a query against the database with that object.
      *
-     * @throws Exception\RuntimeException When an invalid select object is encountered.
+     * @throws RuntimeException When an invalid select object is encountered.
      * @return array
      */
     protected function authenticateQuerySelect(Sql\Select $dbSelect)
@@ -326,7 +327,7 @@ abstract class AbstractAdapter extends BaseAdapter
                 $resultIdentities[] = $row;
             }
         } catch (Exception $e) {
-            throw new Exception\RuntimeException(
+            throw new RuntimeException(
                 'The supplied parameters to DbTable failed to '
                 . 'produce a valid sql statement, please check table and column names '
                 . 'for validity.',
