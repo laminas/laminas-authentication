@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use function base64_encode;
 use function ceil;
 use function count;
-use function extract;
 use function md5;
 use function preg_match;
 use function preg_replace;
@@ -135,8 +134,10 @@ class ProxyTest extends TestCase
         // should result in a 407 reply with at least one Proxy-Authenticate
         // header, and a false result.
 
-        $data = $this->_doAuth('', 'both');
-        extract($data); // $result, $status, $headers
+        $data    = $this->_doAuth('', 'both');
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // The expected Proxy-Authenticate header values
         $basic  = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
@@ -150,7 +151,7 @@ class ProxyTest extends TestCase
         $this->assertEquals(407, $status);
         $this->assertTrue($headers->has('Proxy-Authenticate'));
         $authHeader = $headers->get('Proxy-Authenticate');
-        $this->assertEquals(2, count($authHeader), var_export($authHeader, 1));
+        $this->assertEquals(2, count($authHeader), var_export($authHeader, true));
 
         // Check to see if the expected challenges match the actual
         $basicFound = $digestFound = false;
@@ -412,7 +413,9 @@ class ProxyTest extends TestCase
      */
     protected function checkUnauthorized($data, $expected)
     {
-        extract($data); // $result, $status, $headers
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // Make sure the result is false
         $this->assertInstanceOf(Result::class, $result);
@@ -446,11 +449,12 @@ class ProxyTest extends TestCase
      */
     protected function checkOK($data)
     {
-        extract($data); // $result, $status, $headers
+        $result = $data['result'] ?? null;
+        $status = $data['status'] ?? null;
 
         // Make sure the result is true
         $this->assertInstanceOf(Result::class, $result);
-        $this->assertTrue($result->isValid(), var_export($result->getMessages(), 1));
+        $this->assertTrue($result->isValid(), var_export($result->getMessages(), true));
 
         // Verify we got a 200 response
         $this->assertEquals(200, $status);
@@ -464,7 +468,8 @@ class ProxyTest extends TestCase
      */
     protected function checkBadRequest($data)
     {
-        extract($data); // $result, $status, $headers
+        $result = $data['result'] ?? null;
+        $status = $data['status'] ?? null;
 
         // Make sure the result is false
         $this->assertInstanceOf(Result::class, $result);

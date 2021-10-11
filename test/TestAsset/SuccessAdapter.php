@@ -9,7 +9,7 @@ use Laminas\Authentication\Result as AuthenticationResult;
 
 class SuccessAdapter implements AdapterInterface
 {
-    public function authenticate()
+    public function authenticate(): AuthenticationResult
     {
         return new AuthenticationResult(AuthenticationResult::SUCCESS, 'someIdentity');
     }

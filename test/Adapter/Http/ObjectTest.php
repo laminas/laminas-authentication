@@ -144,7 +144,7 @@ class ObjectTest extends TestCase
     /**
      * @dataProvider invalidConfigs
      */
-    public function testInvalidConfigs($cfg): void
+    public function testInvalidConfigs(array $cfg): void
     {
         $this->expectException(Adapter\Exception\ExceptionInterface::class);
         new Adapter\Http($cfg);
@@ -193,7 +193,7 @@ class ObjectTest extends TestCase
     /**
      * @dataProvider noResolvers
      */
-    public function testNoResolvers($authHeader, $cfgProperty): void
+    public function testNoResolvers(string $authHeader, string $cfgProperty): void
     {
         // Stub request for Basic auth
         $headers = new Headers();

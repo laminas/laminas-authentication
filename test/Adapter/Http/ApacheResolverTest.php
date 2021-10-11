@@ -122,7 +122,7 @@ class ApacheResolverTest extends TestCase
      *
      * @dataProvider providePasswordFiles
      */
-    public function testResolveValidBasic($file): void
+    public function testResolveValidBasic(string $file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('test', null, 'password');
@@ -136,7 +136,7 @@ class ApacheResolverTest extends TestCase
      *
      * @dataProvider providePasswordFiles
      */
-    public function testResolveValidBasicWithRealm($file): void
+    public function testResolveValidBasicWithRealm(string $file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('test', 'realm', 'password');
@@ -149,7 +149,7 @@ class ApacheResolverTest extends TestCase
      *
      * @dataProvider providePasswordFiles
      */
-    public function testResolveNoUsers($file): void
+    public function testResolveNoUsers(string $file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('foo', null, 'password');
@@ -157,12 +157,12 @@ class ApacheResolverTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-        /**
-         * Ensure that resolve() failed for not valid password
-         *
-         * @dataProvider providePasswordFiles
-         */
-    public function testResolveNoValidPassword($file): void
+    /**
+     * Ensure that resolve() failed for not valid password
+     *
+     * @dataProvider providePasswordFiles
+     */
+    public function testResolveNoValidPassword(string $file): void
     {
         $this->_apache->setFile($file);
         $result = $this->_apache->resolve('test', null, 'bar');

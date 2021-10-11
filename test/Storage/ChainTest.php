@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ChainTest extends TestCase
 {
-    const ID = 1337;
+    private const ID = 1337;
 
     /**
      * Ensure chain without storage behavious as empty storage.

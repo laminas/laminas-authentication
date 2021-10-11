@@ -221,7 +221,7 @@ class Http implements AdapterInterface
             }
 
             // We use the opaque value unless explicitly told not to
-            if (isset($config['use_opaque']) && false == (bool) $config['use_opaque']) {
+            if (isset($config['use_opaque']) && false === (bool) $config['use_opaque']) {
                 $this->useOpaque = false;
             }
 
@@ -231,7 +231,7 @@ class Http implements AdapterInterface
         }
 
         // Don't be a proxy unless explicitly told to do so
-        if (isset($config['proxy_auth']) && true == (bool) $config['proxy_auth']) {
+        if (isset($config['proxy_auth']) && true === (bool) $config['proxy_auth']) {
             $this->imaProxy = true;  // I'm a Proxy
         }
     }
@@ -479,6 +479,10 @@ class Http implements AdapterInterface
 
         // Decode the Authorization header
         $auth = substr($header, strlen('Basic '));
+        if (! $auth) {
+            return $this->challengeClient();
+        }
+
         $auth = base64_decode($auth);
         if (! $auth) {
             return $this->challengeClient();
@@ -554,17 +558,17 @@ class Http implements AdapterInterface
 
         // See Laminas-1052. This code was a bit too unforgiving of invalid
         // usernames. Now, if the username is bad, we re-challenge the client.
-        if ('::invalid::' == $data['username']) {
+        if ('::invalid::' === $data['username']) {
             return $this->challengeClient();
         }
 
         // Verify that the client sent back the same nonce
-        if ($this->_calcNonce() != $data['nonce']) {
+        if ($this->_calcNonce() !== $data['nonce']) {
             return $this->challengeClient();
         }
         // The opaque value is also required to match, but of course IE doesn't
         // play ball.
-        if (! $this->ieNoOpaque && $this->_calcOpaque() != $data['opaque']) {
+        if (! $this->ieNoOpaque && $this->_calcOpaque() !== $data['opaque']) {
             return $this->challengeClient();
         }
 
@@ -580,7 +584,7 @@ class Http implements AdapterInterface
         // If MD5-sess is used, a1 value is made of the user's password
         // hash with the server and client nonce appended, separated by
         // colons.
-        if ($this->algo == 'MD5-sess') {
+        if ($this->algo === 'MD5-sess') {
             $ha1 = hash('md5', $ha1 . ':' . $data['nonce'] . ':' . $data['cnonce']);
         }
 
@@ -726,7 +730,7 @@ class Http implements AdapterInterface
         $cUri = UriFactory::factory($temp[1]);
 
         // Make sure the path portion of both URIs is the same
-        if ($rUri->getPath() != $cUri->getPath()) {
+        if ($rUri->getPath() !== $cUri->getPath()) {
             return false;
         }
 
@@ -824,7 +828,7 @@ class Http implements AdapterInterface
         if (! $ret || empty($temp[1])) {
             return false;
         }
-        if (8 != strlen($temp[1]) || ! ctype_xdigit($temp[1])) {
+        if (8 !== strlen($temp[1]) || ! ctype_xdigit($temp[1])) {
             return false;
         }
 
@@ -841,6 +845,6 @@ class Http implements AdapterInterface
      */
     private function isValidMd5Hash($value)
     {
-        return 32 == strlen($value) && ctype_xdigit($value);
+        return 32 === strlen($value) && ctype_xdigit($value);
     }
 }

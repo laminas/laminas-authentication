@@ -10,9 +10,14 @@ use stdClass;
 
 class BasicAuthObjectResolver implements ResolverInterface
 {
+    /**
+     * @param string $username
+     * @param string $realm
+     * @param string|null $password
+     */
     public function resolve($username, $realm, $password = null): AuthenticationResult
     {
-        if ($username == 'Bryce' && $password == 'ThisIsNotMyPassword') {
+        if ($username === 'Bryce' && $password === 'ThisIsNotMyPassword') {
             $identity = new stdClass();
 
             return new AuthenticationResult(

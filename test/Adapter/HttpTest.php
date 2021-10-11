@@ -30,6 +30,8 @@ class HttpTest extends TestCase
 
     public function testChallengeClient(): void
     {
+        $this->expectNotToPerformAssertions();
+
         $this->wrapper->setResponse(new Response());
         $this->wrapper->challengeClient();
     }

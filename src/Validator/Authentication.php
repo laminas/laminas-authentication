@@ -30,18 +30,18 @@ class Authentication extends AbstractValidator
      *
      * @const string
      */
-    const IDENTITY_NOT_FOUND = 'identityNotFound';
-    const IDENTITY_AMBIGUOUS = 'identityAmbiguous';
-    const CREDENTIAL_INVALID = 'credentialInvalid';
-    const UNCATEGORIZED      = 'uncategorized';
-    const GENERAL            = 'general';
+    public const IDENTITY_NOT_FOUND = 'identityNotFound';
+    public const IDENTITY_AMBIGUOUS = 'identityAmbiguous';
+    public const CREDENTIAL_INVALID = 'credentialInvalid';
+    public const UNCATEGORIZED      = 'uncategorized';
+    public const GENERAL            = 'general';
 
     /**
      * Authentication\Result codes mapping
      *
      * @const array
      */
-    const CODE_MAP = [
+    public const CODE_MAP = [
         Result::FAILURE_IDENTITY_NOT_FOUND => self::IDENTITY_NOT_FOUND,
         Result::FAILURE_CREDENTIAL_INVALID => self::CREDENTIAL_INVALID,
         Result::FAILURE_IDENTITY_AMBIGUOUS => self::IDENTITY_AMBIGUOUS,
@@ -297,10 +297,10 @@ class Authentication extends AbstractValidator
 
     /**
      * @return ValidatableAdapterInterface
-     * @throws Exception\RuntimeException if no adapter present in
-     *     authentication service
-     * @throws Exception\RuntimeException if adapter present in authentication
-     *     service is not a ValidatableAdapterInterface instance
+     * @throws Exception\RuntimeException If no adapter present in
+     *     authentication service.
+     * @throws Exception\RuntimeException If adapter present in authentication
+     *     service is not a ValidatableAdapterInterface instance.
      */
     private function getAdapterFromAuthenticationService()
     {

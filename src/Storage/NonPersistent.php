@@ -15,6 +15,8 @@ class NonPersistent implements StorageInterface
 {
     /**
      * Holds the actual auth data
+     *
+     * @var mixed
      */
     protected $data;
 

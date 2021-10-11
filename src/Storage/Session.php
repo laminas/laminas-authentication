@@ -12,12 +12,12 @@ class Session implements StorageInterface
     /**
      * Default session namespace
      */
-    const NAMESPACE_DEFAULT = 'Laminas_Auth';
+    public const NAMESPACE_DEFAULT = 'Laminas_Auth';
 
     /**
      * Default session object member name
      */
-    const MEMBER_DEFAULT = 'storage';
+    public const MEMBER_DEFAULT = 'storage';
 
     /**
      * Object to proxy $_SESSION storage

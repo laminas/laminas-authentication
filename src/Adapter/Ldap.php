@@ -289,18 +289,18 @@ class Ldap extends AbstractAdapter
 
                 $err = $zle->getCode();
 
-                if ($err == LdapException::LDAP_X_DOMAIN_MISMATCH) {
+                if ($err === LdapException::LDAP_X_DOMAIN_MISMATCH) {
                     /* This error indicates that the domain supplied in the
                      * username did not match the domains in the server options
                      * and therefore we should just skip to the next set of
                      * server options.
                      */
                     continue;
-                } elseif ($err == LdapException::LDAP_NO_SUCH_OBJECT) {
+                } elseif ($err === LdapException::LDAP_NO_SUCH_OBJECT) {
                     $code                      = AuthenticationResult::FAILURE_IDENTITY_NOT_FOUND;
                     $messages[0]               = "Account not found: $username";
                     $failedAuthorities[$dname] = $zle->getMessage();
-                } elseif ($err == LdapException::LDAP_INVALID_CREDENTIALS) {
+                } elseif ($err === LdapException::LDAP_INVALID_CREDENTIALS) {
                     $code                      = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
                     $messages[0]               = 'Invalid credentials';
                     $failedAuthorities[$dname] = $zle->getMessage();
@@ -364,7 +364,7 @@ class Ldap extends AbstractAdapter
                         break;
                     case 'memberIsDn':
                         $adapterOptions[$key] = $value === true ||
-                                $value === '1' || strcasecmp($value, 'true') == 0;
+                                $value === '1' || strcasecmp($value, 'true') === 0;
                         break;
                     default:
                         $adapterOptions[$key] = trim($value);

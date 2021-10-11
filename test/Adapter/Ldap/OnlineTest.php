@@ -139,8 +139,8 @@ class OnlineTest extends TestCase
         $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
         $this->assertTrue(
-            $result->getCode() == Authentication\Result::FAILURE_IDENTITY_NOT_FOUND ||
-            $result->getCode() == Authentication\Result::FAILURE_CREDENTIAL_INVALID
+            $result->getCode() === Authentication\Result::FAILURE_IDENTITY_NOT_FOUND ||
+            $result->getCode() === Authentication\Result::FAILURE_CREDENTIAL_INVALID
         );
     }
 

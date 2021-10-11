@@ -351,7 +351,7 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->assertEquals('my_username', $result2->getIdentity());
     }
 
-    protected function setupDbAdapter($optionalParams = []): void
+    protected function setupDbAdapter(array $optionalParams = []): void
     {
         $params = [
             'driver' => 'pdo_sqlite',
