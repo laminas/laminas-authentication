@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\TestAsset;
 
 use Laminas\Authentication\Adapter\AbstractAdapter as AuthenticationAdapter;
@@ -7,9 +9,7 @@ use Laminas\Authentication\Result as AuthenticationResult;
 
 class ValidatableAdapter extends AuthenticationAdapter
 {
-    /**
-     * @var int Authentication result code
-     */
+    /** @var int Authentication result code */
     private $code;
 
     /**

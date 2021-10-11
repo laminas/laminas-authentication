@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\TestAsset;
 
 use Laminas\Authentication\Adapter\AdapterInterface;

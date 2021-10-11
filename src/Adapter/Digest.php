@@ -1,10 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Crypt\Utils as CryptUtils;
 use Laminas\Stdlib\ErrorHandler;
+
+use function fgets;
+use function fopen;
+use function md5;
+use function strpos;
+use function substr;
+use function trim;
+
+use const E_WARNING;
 
 class Digest extends AbstractAdapter
 {
@@ -154,15 +165,15 @@ class Digest extends AbstractAdapter
             throw new Exception\UnexpectedValueException("Cannot open '$this->filename' for reading", 0, $error);
         }
 
-        $id       = "$this->identity:$this->realm";
+        $id = "$this->identity:$this->realm";
 
         $result = [
-            'code'  => AuthenticationResult::FAILURE,
+            'code'     => AuthenticationResult::FAILURE,
             'identity' => [
                 'realm'    => $this->realm,
                 'username' => $this->identity,
             ],
-            'messages' => []
+            'messages' => [],
         ];
 
         while (($line = fgets($fileHandle)) !== false) {
@@ -171,10 +182,12 @@ class Digest extends AbstractAdapter
                 break;
             }
             if (0 === strpos($line, $id)) {
-                if (CryptUtils::compareStrings(
-                    substr($line, -32),
-                    md5("$this->identity:$this->realm:$this->credential")
-                )) {
+                if (
+                    CryptUtils::compareStrings(
+                        substr($line, -32),
+                        md5("$this->identity:$this->realm:$this->credential")
+                    )
+                ) {
                     return new AuthenticationResult(
                         AuthenticationResult::SUCCESS,
                         $result['identity'],

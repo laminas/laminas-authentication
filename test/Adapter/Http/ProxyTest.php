@@ -1,12 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
+use Laminas\Authentication\Result;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use PHPUnit\Framework\TestCase;
+
+use function base64_encode;
+use function ceil;
+use function count;
+use function extract;
+use function md5;
+use function preg_match;
+use function preg_replace;
+use function str_repeat;
+use function time;
+use function var_export;
 
 /**
  * @group      Laminas_Auth
@@ -59,8 +73,6 @@ class ProxyTest extends TestCase
 
     /**
      * Sets up test configuration
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -70,21 +82,21 @@ class ProxyTest extends TestCase
         $this->_basicConfig    = [
             'accept_schemes' => 'basic',
             'realm'          => 'Test Realm',
-            'proxy_auth'     => true
+            'proxy_auth'     => true,
         ];
         $this->_digestConfig   = [
             'accept_schemes' => 'digest',
             'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
             'nonce_timeout'  => 300,
-            'proxy_auth'     => true
+            'proxy_auth'     => true,
         ];
         $this->_bothConfig     = [
             'accept_schemes' => 'basic digest',
             'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
             'nonce_timeout'  => 300,
-            'proxy_auth'     => true
+            'proxy_auth'     => true,
         ];
     }
 
@@ -96,8 +108,8 @@ class ProxyTest extends TestCase
 
         // The expected Basic Proxy-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_bothConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_bothConfig['realm'] . '"',
         ];
 
         $data = $this->_doAuth('', 'basic');
@@ -131,7 +143,7 @@ class ProxyTest extends TestCase
         $digest = $this->digestChallenge();
 
         // Make sure the result is false
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
 
         // Verify the status code and the presence of both challenges
@@ -170,8 +182,8 @@ class ProxyTest extends TestCase
 
         // The expected Basic WWW-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->_doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
@@ -184,8 +196,8 @@ class ProxyTest extends TestCase
 
         // The expected Basic Proxy-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->_doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
@@ -199,8 +211,8 @@ class ProxyTest extends TestCase
 
         // The expected Basic WWW-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->_doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
@@ -256,7 +268,7 @@ class ProxyTest extends TestCase
         $tampered = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $tampered = preg_replace(
             '/ nonce="[a-fA-F0-9]{32}", /',
-            ' nonce="' . str_repeat('0', 32).'", ',
+            ' nonce="' . str_repeat('0', 32) . '", ',
             $tampered
         );
 
@@ -283,7 +295,7 @@ class ProxyTest extends TestCase
         // possibilities, so we're just going to pick one for now.
         $bad = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $bad = preg_replace(
-            '/realm="([^"]+)"/',  // cut out the realm
+            '/realm="([^"]+)"/', // cut out the realm
             '',
             $bad
         );
@@ -304,14 +316,14 @@ class ProxyTest extends TestCase
     {
         // @codingStandardsIgnoreEnd
         // Set up stub request and response objects
-        $response = new Response;
+        $response = new Response();
         $response->setStatusCode(200);
 
-        $headers  = new Headers();
+        $headers = new Headers();
         $headers->addHeaderLine('Proxy-Authorization', $clientHeader);
         $headers->addHeaderLine('User-Agent', 'PHPUnit');
 
-        $request  = new Request();
+        $request = new Request();
         $request->setUri('http://localhost/');
         $request->setMethod('GET');
         $request->setHeaders($headers);
@@ -330,7 +342,7 @@ class ProxyTest extends TestCase
         }
 
         // Create the HTTP Auth adapter
-        $a = new \Laminas\Authentication\Adapter\Http($use);
+        $a = new Http($use);
         $a->setBasicResolver($this->_basicResolver);
         $a->setDigestResolver($this->_digestResolver);
 
@@ -339,19 +351,17 @@ class ProxyTest extends TestCase
         $a->setResponse($response);
         $result = $a->authenticate();
 
-        $return = [
+        return [
             'result'  => $result,
             'status'  => $response->getStatusCode(),
             'headers' => $response->getHeaders(),
         ];
-        return $return;
     }
 
     /**
      * Constructs a local version of the digest challenge we expect to receive
      *
      * @return string[]
-     *
      * @psalm-return array{type: string, realm: string, domain: string}
      */
     protected function digestChallenge(): array
@@ -379,7 +389,7 @@ class ProxyTest extends TestCase
         $cnonce   = md5('cnonce');
         $response = md5(md5($user . ':' . $this->_digestConfig['realm'] . ':' . $pass) . ":$nonce:$nc:$cnonce:auth:"
                   . md5('GET:/'));
-        $cauth = 'Digest '
+        return 'Digest '
                . 'username="Bryce", '
                . 'realm="' . $this->_digestConfig['realm'] . '", '
                . 'nonce="' . $nonce . '", '
@@ -390,8 +400,6 @@ class ProxyTest extends TestCase
                . 'opaque="' . $opaque . '", '
                . 'qop="auth", '
                . 'nc=' . $nc;
-
-        return $cauth;
     }
 
     /**
@@ -400,7 +408,6 @@ class ProxyTest extends TestCase
      * @param  array  $data     Authentication results
      * @param  array  $expected Expected Proxy-Authenticate header value
      * @return void
-     *
      * @psalm-param array<string, string> $expected
      */
     protected function checkUnauthorized($data, $expected)
@@ -408,7 +415,7 @@ class ProxyTest extends TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
 
         // Verify the status code and the presence of the challenge
@@ -442,7 +449,7 @@ class ProxyTest extends TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is true
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid(), var_export($result->getMessages(), 1));
 
         // Verify we got a 200 response
@@ -460,7 +467,7 @@ class ProxyTest extends TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
 
         // Make sure it set the right HTTP code

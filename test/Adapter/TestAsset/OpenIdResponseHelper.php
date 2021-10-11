@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\Adapter\TestAsset;
 
 use Laminas\Http\Response;

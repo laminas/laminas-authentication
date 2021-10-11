@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Validator;
 
 use Laminas\Authentication\Adapter\ValidatableAdapterInterface;
@@ -10,8 +12,13 @@ use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\AbstractValidator;
 use Traversable;
 
+use function array_key_exists;
+use function get_class;
+use function gettype;
 use function is_array;
+use function is_object;
 use function is_string;
+use function sprintf;
 
 /**
  * Authentication Validator
@@ -20,6 +27,7 @@ class Authentication extends AbstractValidator
 {
     /**
      * Error codes
+     *
      * @const string
      */
     const IDENTITY_NOT_FOUND = 'identityNotFound';
@@ -30,6 +38,7 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication\Result codes mapping
+     *
      * @const array
      */
     const CODE_MAP = [
@@ -41,12 +50,14 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication\Result codes mapping configurable overrides
+     *
      * @var string[]
      */
     protected $codeMap = [];
 
     /**
      * Error Messages
+     *
      * @var array
      */
     protected $messageTemplates = [
@@ -59,24 +70,28 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication Adapter
+     *
      * @var ValidatableAdapterInterface
      */
     protected $adapter;
 
     /**
      * Identity (or field)
+     *
      * @var string
      */
     protected $identity;
 
     /**
      * Credential (or field)
+     *
      * @var string
      */
     protected $credential;
 
     /**
      * Authentication Service
+     *
      * @var AuthenticationService
      */
     protected $service;
@@ -135,7 +150,6 @@ class Authentication extends AbstractValidator
     /**
      * Set Adapter
      *
-     * @param ValidatableAdapterInterface $adapter
      * @return self Provides a fluent interface
      */
     public function setAdapter(ValidatableAdapterInterface $adapter)
@@ -203,7 +217,6 @@ class Authentication extends AbstractValidator
     /**
      * Set Service
      *
-     * @param AuthenticationService $service
      * @return self Provides a fluent interface
      */
     public function setService(AuthenticationService $service)

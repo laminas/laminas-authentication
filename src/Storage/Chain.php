@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Storage;
 
 use Laminas\Stdlib\PriorityQueue;
@@ -24,9 +26,7 @@ class Chain implements StorageInterface
     }
 
     /**
-     * @param StorageInterface $storage
      * @param int          $priority
-     *
      * @return void
      */
     public function add(StorageInterface $storage, $priority = 1)

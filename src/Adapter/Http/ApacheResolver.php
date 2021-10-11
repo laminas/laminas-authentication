@@ -1,10 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Result as AuthResult;
 use Laminas\Crypt\Password\Apache as ApachePassword;
 use Laminas\Stdlib\ErrorHandler;
+
+use function ctype_print;
+use function fclose;
+use function fgetcsv;
+use function fopen;
+use function is_readable;
+use function strpos;
+
+use const E_WARNING;
 
 /**
  * Apache Authentication Resolver
@@ -81,8 +92,6 @@ class ApacheResolver implements ResolverInterface
 
     /**
      * Resolve credentials
-     *
-     *
      *
      * @param  string $username Username
      * @param  string $realm    Authentication Realm

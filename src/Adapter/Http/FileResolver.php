@@ -1,8 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Stdlib\ErrorHandler;
+
+use function ctype_print;
+use function fclose;
+use function fgetcsv;
+use function fopen;
+use function is_readable;
+use function strpos;
+
+use const E_WARNING;
 
 /**
  * HTTP Authentication File Resolver
@@ -95,7 +106,7 @@ class FileResolver implements ResolverInterface
 
         // Open file, read through looking for matching credentials
         ErrorHandler::start(E_WARNING);
-        $fp     = fopen($this->file, 'r');
+        $fp    = fopen($this->file, 'r');
         $error = ErrorHandler::stop();
         if (! $fp) {
             throw new Exception\RuntimeException('Unable to open password file: ' . $this->file, 0, $error);
