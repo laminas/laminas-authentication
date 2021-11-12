@@ -278,13 +278,13 @@ abstract class AbstractAdapter extends BaseAdapter
     {
         $exception = null;
 
-        if ($this->tableName === '') {
+        if ((string) $this->tableName === '') {
             $exception = 'A table must be supplied for the DbTable authentication adapter.';
-        } elseif ($this->identityColumn === '') {
+        } elseif ((string) $this->identityColumn === '') {
             $exception = 'An identity column must be supplied for the DbTable authentication adapter.';
-        } elseif ($this->credentialColumn === '') {
+        } elseif ((string) $this->credentialColumn === '') {
             $exception = 'A credential column must be supplied for the DbTable authentication adapter.';
-        } elseif ($this->identity === '') {
+        } elseif ((string) $this->identity === '') {
             $exception = 'A value for the identity was not provided prior to authentication with DbTable.';
         } elseif ($this->credential === null) {
             $exception = 'A credential value was not provided prior to authentication with DbTable.';
