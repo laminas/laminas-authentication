@@ -28,7 +28,7 @@
         "laminas/laminas-coding-standard": "~1.0.0",
         "laminas/laminas-crypt": "^2.6 || ^3.2.1",
         "laminas/laminas-db": "^2.8.2",
-        "laminas/laminas-http": "^2.7",
+        "laminas/laminas-http": "^2.9.0",
         "laminas/laminas-ldap": "^2.8",
         "laminas/laminas-session": "^2.8",
         "laminas/laminas-uri": "^2.5.2",
