@@ -41,13 +41,10 @@ class CallbackCheckAdapterTest extends TestCase
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')) {
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
-            return;
         } elseif (! extension_loaded('pdo')) {
             $this->markTestSkipped('PDO extension is not loaded');
-            return;
         } elseif (! in_array('sqlite', \PDO::getAvailableDrivers())) {
             $this->markTestSkipped('SQLite PDO driver is not available');
-            return;
         }
 
         $this->setupDbAdapter();
