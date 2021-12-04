@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication;
@@ -368,25 +362,6 @@ class Http implements AdapterInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @deprecated
-     * @see Http::challengeClient()
-     * @return Authentication\Result Always returns a non-identity Auth result
-     */
-    // @codingStandardsIgnoreStart
-    protected function _challengeClient()
-    {
-        // @codingStandardsIgnoreEnd
-        trigger_error(sprintf(
-            'The method "%s" is deprecated and will be removed in the future; '
-            . 'please use the public method "%s::challengeClient()" instead',
-            __METHOD__,
-            __CLASS__
-        ), E_USER_DEPRECATED);
-
-        return $this->challengeClient();
     }
 
     /**
