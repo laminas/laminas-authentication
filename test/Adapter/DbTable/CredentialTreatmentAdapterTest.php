@@ -12,6 +12,9 @@ use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function serialize;
 
 /**
  * @group      Laminas_Auth
@@ -181,12 +184,11 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->_adapter->setCredential('my_password');
         $this->_adapter->authenticate();
         $resultRow = $this->_adapter->getResultRowObject(null, 'password');
-        $this->assertEquals(
-            // @codingStandardsIgnoreStart
-            'O:8:"stdClass":3:{s:2:"id";s:1:"1";s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}',
-            // @codingStandardsIgnoreEnd
-            serialize($resultRow)
-        );
+        $expected = new stdClass();
+        $expected->id = 1;
+        $expected->username = 'my_username';
+        $expected->real_name = 'My Real Name';
+        $this->assertEquals($expected, $resultRow);
     }
 
     /**
