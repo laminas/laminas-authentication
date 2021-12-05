@@ -70,7 +70,7 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-authentication": "^2.7.0"
+    "conflict": {
+        "zendframework/zend-authentication": "*"
     }
 }
