@@ -7,6 +7,9 @@ use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
 use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function serialize;
 
 /**
  * @group      Laminas_Auth
@@ -35,13 +38,10 @@ class CredentialTreatmentAdapterTest extends TestCase
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')) {
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
-            return;
         } elseif (! extension_loaded('pdo')) {
             $this->markTestSkipped('PDO extension is not loaded');
-            return;
         } elseif (! in_array('sqlite', \PDO::getAvailableDrivers())) {
             $this->markTestSkipped('SQLite PDO driver is not available');
-            return;
         }
 
         $this->setupDbAdapter();
@@ -173,12 +173,11 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->adapter->setCredential('my_password');
         $this->adapter->authenticate();
         $resultRow = $this->adapter->getResultRowObject(null, 'password');
-        $this->assertEquals(
-            // @codingStandardsIgnoreStart
-            'O:8:"stdClass":3:{s:2:"id";s:1:"1";s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}',
-            // @codingStandardsIgnoreEnd
-            serialize($resultRow)
-        );
+        $expected = new stdClass();
+        $expected->id = 1;
+        $expected->username = 'my_username';
+        $expected->real_name = 'My Real Name';
+        $this->assertEquals($expected, $resultRow);
     }
 
     /**
@@ -403,10 +402,7 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
     }
 
-    /**
-     * @return void
-     */
-    protected function setupAuthAdapter()
+    protected function setupAuthAdapter(): void
     {
         $this->adapter = new CredentialTreatmentAdapter($this->db, 'users', 'username', 'password');
     }

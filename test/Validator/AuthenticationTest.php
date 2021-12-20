@@ -164,7 +164,7 @@ class AuthenticationTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Message key in code_map option must be a non-empty string');
-        $auth = new AuthenticationValidator([
+        new AuthenticationValidator([
             'code_map' => [
                 -999 => [],
             ]

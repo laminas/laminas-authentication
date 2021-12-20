@@ -50,7 +50,7 @@ class Http implements AdapterInterface
     /**
      * List of authentication schemes supported by this class
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected $supportedSchemes = ['basic', 'digest'];
 
@@ -108,7 +108,7 @@ class Http implements AdapterInterface
      * List of supported qop options. My intention is to support both 'auth' and
      * 'auth-int', but 'auth-int' won't make it into the first version.
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected $supportedQops = ['auth'];
 

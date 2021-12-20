@@ -21,21 +21,21 @@
     "extra": {
     },
     "require": {
-        "php": "^7.3 || ~8.0.0",
-        "laminas/laminas-stdlib": "^3.2.1",
-        "laminas/laminas-zendframework-bridge": "^1.0"
+        "php": "^7.3 || ~8.0.0 || ~8.1.0",
+        "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
         "laminas/laminas-crypt": "^2.6 || ^3.2.1",
-        "laminas/laminas-db": "^2.8.2",
-        "laminas/laminas-http": "^2.7",
-        "laminas/laminas-ldap": "^2.8",
-        "laminas/laminas-session": "^2.8",
+        "laminas/laminas-db": "^2.13",
+        "laminas/laminas-http": "^2.15.0",
+        "laminas/laminas-ldap": "^2.12",
+        "laminas/laminas-session": "^2.12",
         "laminas/laminas-uri": "^2.5.2",
         "laminas/laminas-validator": "^2.10.1",
         "phpunit/phpunit": "^9.3",
         "psalm/plugin-phpunit": "^0.15.1",
+        "squizlabs/php_codesniffer": "^2.9.2 || ^3.6",
         "vimeo/psalm": "^4.6"
     },
     "suggest": {
@@ -70,7 +70,7 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-authentication": "^2.7.0"
+    "conflict": {
+        "zendframework/zend-authentication": "*"
     }
 }
