@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Authentication\Adapter\Ldap;
 
 use Laminas\Authentication;
@@ -171,7 +165,7 @@ class OnlineTest extends TestCase
             getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')
         );
 
-        $result = $adapter->authenticate();
+        $adapter->authenticate();
         $account = $adapter->getAccountObject();
 
         //$this->assertTrue($result->isValid());
@@ -187,10 +181,10 @@ class OnlineTest extends TestCase
             getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')
         );
 
-        $result = $adapter->authenticate();
+        $adapter->authenticate();
         $account = $adapter->getAccountObject([], ['userPassword']);
 
-        $this->assertIsObject('object', $account);
+        $this->assertIsObject($account);
         $this->assertFalse(isset($account->userpassword));
     }
 }

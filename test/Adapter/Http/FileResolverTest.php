@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
@@ -103,7 +97,7 @@ class FileResolverTest extends TestCase
     {
         $this->expectException(Http\Exception\ExceptionInterface::class);
         $this->expectExceptionMessage('Path not readable');
-        $v = new Http\FileResolver($this->_badPath);
+        new Http\FileResolver($this->_badPath);
     }
 
     /**

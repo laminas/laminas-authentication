@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication;
@@ -56,7 +50,7 @@ class Http implements AdapterInterface
     /**
      * List of authentication schemes supported by this class
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected $supportedSchemes = ['basic', 'digest'];
 
@@ -114,7 +108,7 @@ class Http implements AdapterInterface
      * List of supported qop options. My intention is to support both 'auth' and
      * 'auth-int', but 'auth-int' won't make it into the first version.
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected $supportedQops = ['auth'];
 
@@ -368,25 +362,6 @@ class Http implements AdapterInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @deprecated
-     * @see Http::challengeClient()
-     * @return Authentication\Result Always returns a non-identity Auth result
-     */
-    // @codingStandardsIgnoreStart
-    protected function _challengeClient()
-    {
-        // @codingStandardsIgnoreEnd
-        trigger_error(sprintf(
-            'The method "%s" is deprecated and will be removed in the future; '
-            . 'please use the public method "%s::challengeClient()" instead',
-            __METHOD__,
-            __CLASS__
-        ), E_USER_DEPRECATED);
-
-        return $this->challengeClient();
     }
 
     /**

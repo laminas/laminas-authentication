@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Authentication\Validator;
 
 use Laminas\Authentication\Adapter\ValidatableAdapterInterface;
@@ -170,7 +164,7 @@ class AuthenticationTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Message key in code_map option must be a non-empty string');
-        $auth = new AuthenticationValidator([
+        new AuthenticationValidator([
             'code_map' => [
                 -999 => [],
             ]
