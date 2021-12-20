@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication;
 
 class AuthenticationService implements AuthenticationServiceInterface
@@ -9,22 +11,19 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @var Storage\StorageInterface
      */
-    protected $storage = null;
+    protected $storage;
 
     /**
      * Authentication adapter
      *
      * @var Adapter\AdapterInterface
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * Constructor
-     *
-     * @param  Storage\StorageInterface $storage
-     * @param  Adapter\AdapterInterface $adapter
      */
-    public function __construct(Storage\StorageInterface $storage = null, Adapter\AdapterInterface $adapter = null)
+    public function __construct(?Storage\StorageInterface $storage = null, ?Adapter\AdapterInterface $adapter = null)
     {
         if (null !== $storage) {
             $this->setStorage($storage);
@@ -49,7 +48,6 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Sets the authentication adapter
      *
-     * @param  Adapter\AdapterInterface $adapter
      * @return self Provides a fluent interface
      */
     public function setAdapter(Adapter\AdapterInterface $adapter)
@@ -77,7 +75,6 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Sets the persistent storage handler
      *
-     * @param  Storage\StorageInterface $storage
      * @return self Provides a fluent interface
      */
     public function setStorage(Storage\StorageInterface $storage)
@@ -89,11 +86,10 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Authenticates against the supplied adapter
      *
-     * @param  Adapter\AdapterInterface $adapter
      * @return Result
      * @throws Exception\RuntimeException
      */
-    public function authenticate(Adapter\AdapterInterface $adapter = null)
+    public function authenticate(?Adapter\AdapterInterface $adapter = null)
     {
         if (! $adapter) {
             if (! $adapter = $this->getAdapter()) {

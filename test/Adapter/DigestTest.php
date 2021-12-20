@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\Adapter;
 
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use PHPUnit\Framework\TestCase;
+
+use function count;
 
 /**
  * @group      Laminas_Auth
@@ -22,8 +26,6 @@ class DigestTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function setUp(): void
     {

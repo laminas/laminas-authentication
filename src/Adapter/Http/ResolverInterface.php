@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Adapter\Http;
 
 /**
@@ -15,7 +17,7 @@ interface ResolverInterface
      *
      * @param  string $username Username
      * @param  string $realm    Authentication Realm
-     * @param  string $password Password (optional)
+     * @param  string|null $password Password (optional)
      * @return string|array|false User's shared secret as string if found in realm, or User's identity as array
      *         if resolved, false otherwise.
      */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\Adapter;
 
 use Laminas\Authentication\Adapter\Http;
@@ -8,9 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class HttpTest extends TestCase
 {
-    /**
-     * @var Http
-     */
+    /** @var Http */
     private $wrapper;
 
     public function setUp(): void
@@ -30,6 +30,8 @@ class HttpTest extends TestCase
 
     public function testChallengeClient(): void
     {
+        $this->expectNotToPerformAssertions();
+
         $this->wrapper->setResponse(new Response());
         $this->wrapper->challengeClient();
     }

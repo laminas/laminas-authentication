@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\Adapter\Ldap;
 
 use Laminas\Authentication\Adapter;
 use Laminas\Ldap;
 use PHPUnit\Framework\TestCase;
+
+use function extension_loaded;
 
 /**
  * @group      Laminas_Auth
@@ -16,14 +20,12 @@ class OfflineTest extends TestCase
      *
      * @var Adapter\Ldap
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * Setup operations run prior to each test method:
      *
      * * Creates an instance of Laminas\Authentication\Adapter\Ldap
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -36,7 +38,7 @@ class OfflineTest extends TestCase
             $this->markTestSkipped('LDAP is not enabled');
         }
         $this->adapter->setLdap(new Ldap\Ldap());
-        $this->assertInstanceOf('Laminas\Ldap\Ldap', $this->adapter->getLdap());
+        $this->assertInstanceOf(\Laminas\Ldap\Ldap::class, $this->adapter->getLdap());
     }
 
     public function testUsernameIsNullIfNotSet(): void
@@ -52,7 +54,7 @@ class OfflineTest extends TestCase
     public function testSetAndGetUsername(): void
     {
         $usernameExpected = 'someUsername';
-        $usernameActual = $this->adapter->setUsername($usernameExpected)
+        $usernameActual   = $this->adapter->setUsername($usernameExpected)
                                          ->getUsername();
         $this->assertSame($usernameExpected, $usernameActual);
     }
@@ -60,7 +62,7 @@ class OfflineTest extends TestCase
     public function testSetAndGetPassword(): void
     {
         $passwordExpected = 'somePassword';
-        $passwordActual = $this->adapter->setPassword($passwordExpected)
+        $passwordActual   = $this->adapter->setPassword($passwordExpected)
                                          ->getPassword();
         $this->assertSame($passwordExpected, $passwordActual);
     }
@@ -68,7 +70,7 @@ class OfflineTest extends TestCase
     public function testSetIdentityProxiesToSetUsername(): void
     {
         $usernameExpected = 'someUsername';
-        $usernameActual = $this->adapter->setIdentity($usernameExpected)
+        $usernameActual   = $this->adapter->setIdentity($usernameExpected)
                                          ->getUsername();
         $this->assertSame($usernameExpected, $usernameActual);
     }
@@ -76,7 +78,7 @@ class OfflineTest extends TestCase
     public function testSetCredentialProxiesToSetPassword(): void
     {
         $passwordExpected = 'somePassword';
-        $passwordActual = $this->adapter->setCredential($passwordExpected)
+        $passwordActual   = $this->adapter->setCredential($passwordExpected)
                                          ->getPassword();
         $this->assertSame($passwordExpected, $passwordActual);
     }

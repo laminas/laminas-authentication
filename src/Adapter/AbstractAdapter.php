@@ -1,17 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Adapter;
 
 abstract class AbstractAdapter implements ValidatableAdapterInterface
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $credential;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $identity;
 
     /**

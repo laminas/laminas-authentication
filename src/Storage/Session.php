@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Storage;
 
 use Laminas\Session\Container as SessionContainer;
@@ -10,12 +12,12 @@ class Session implements StorageInterface
     /**
      * Default session namespace
      */
-    const NAMESPACE_DEFAULT = 'Laminas_Auth';
+    public const NAMESPACE_DEFAULT = 'Laminas_Auth';
 
     /**
      * Default session object member name
      */
-    const MEMBER_DEFAULT = 'storage';
+    public const MEMBER_DEFAULT = 'storage';
 
     /**
      * Object to proxy $_SESSION storage
@@ -43,9 +45,8 @@ class Session implements StorageInterface
      *
      * @param  mixed $namespace
      * @param  mixed $member
-     * @param  SessionManager $manager
      */
-    public function __construct($namespace = null, $member = null, SessionManager $manager = null)
+    public function __construct($namespace = null, $member = null, ?SessionManager $manager = null)
     {
         if ($namespace !== null) {
             $this->namespace = $namespace;
@@ -53,7 +54,7 @@ class Session implements StorageInterface
         if ($member !== null) {
             $this->member = $member;
         }
-        $this->session   = new SessionContainer($this->namespace, $manager);
+        $this->session = new SessionContainer($this->namespace, $manager);
     }
 
     /**
