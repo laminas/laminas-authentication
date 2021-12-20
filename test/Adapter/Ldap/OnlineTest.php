@@ -168,11 +168,7 @@ class OnlineTest extends TestCase
             getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')
         );
 
-<<<<<<< HEAD
         $adapter->authenticate();
-=======
-        $result  = $adapter->authenticate();
->>>>>>> f65af83 (Add automated phpcbf fixes)
         $account = $adapter->getAccountObject();
 
         //$this->assertTrue($result->isValid());
@@ -188,11 +184,7 @@ class OnlineTest extends TestCase
             getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')
         );
 
-<<<<<<< HEAD
         $adapter->authenticate();
-=======
-        $result  = $adapter->authenticate();
->>>>>>> f65af83 (Add automated phpcbf fixes)
         $account = $adapter->getAccountObject([], ['userPassword']);
 
         $this->assertIsObject($account);

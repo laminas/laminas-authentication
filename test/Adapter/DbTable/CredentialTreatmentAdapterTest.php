@@ -13,8 +13,6 @@ use PDO;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function serialize;
-
 use function array_pop;
 use function count;
 use function extension_loaded;
@@ -51,12 +49,7 @@ class CredentialTreatmentAdapterTest extends TestCase
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
         } elseif (! extension_loaded('pdo')) {
             $this->markTestSkipped('PDO extension is not loaded');
-<<<<<<< HEAD
-        } elseif (! in_array('sqlite', \PDO::getAvailableDrivers())) {
-=======
-            return;
         } elseif (! in_array('sqlite', PDO::getAvailableDrivers())) {
->>>>>>> f65af83 (Add automated phpcbf fixes)
             $this->markTestSkipped('SQLite PDO driver is not available');
         }
 
@@ -171,10 +164,10 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->adapter->setIdentity('my_username');
         $this->adapter->setCredential('my_password');
         $this->adapter->authenticate();
-        $resultRow = $this->adapter->getResultRowObject(null, 'password');
-        $expected = new stdClass();
-        $expected->id = 1;
-        $expected->username = 'my_username';
+        $resultRow           = $this->adapter->getResultRowObject(null, 'password');
+        $expected            = new stdClass();
+        $expected->id        = 1;
+        $expected->username  = 'my_username';
         $expected->real_name = 'My Real Name';
         $this->assertEquals($expected, $resultRow);
     }
