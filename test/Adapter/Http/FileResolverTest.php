@@ -103,7 +103,7 @@ class FileResolverTest extends TestCase
     {
         $this->expectException(Http\Exception\ExceptionInterface::class);
         $this->expectExceptionMessage('Path not readable');
-        $v = new Http\FileResolver($this->_badPath);
+        new Http\FileResolver($this->_badPath);
     }
 
     /**

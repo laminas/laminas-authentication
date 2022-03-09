@@ -334,7 +334,7 @@ class Ldap extends AbstractAdapter
             'memberAttr'  => 'uniqueMember',
             'memberIsDn'  => true
         ];
-        foreach ($adapterOptions as $key => $value) {
+        foreach (array_keys($adapterOptions) as $key) {
             if (array_key_exists($key, $options)) {
                 $value = $options[$key];
                 unset($options[$key]);

@@ -56,7 +56,7 @@ class Http implements AdapterInterface
     /**
      * List of authentication schemes supported by this class
      *
-     * @var array
+     * @var string[]
      */
     protected $supportedSchemes = ['basic', 'digest'];
 
@@ -99,7 +99,7 @@ class Http implements AdapterInterface
      * List of the supported digest algorithms. I want to support both MD5 and
      * MD5-sess, but MD5-sess won't make it into the first version.
      *
-     * @var array
+     * @var string[]
      */
     protected $supportedAlgos = ['MD5'];
 
@@ -114,7 +114,7 @@ class Http implements AdapterInterface
      * List of supported qop options. My intention is to support both 'auth' and
      * 'auth-int', but 'auth-int' won't make it into the first version.
      *
-     * @var array
+     * @var string[]
      */
     protected $supportedQops = ['auth'];
 
