@@ -59,7 +59,7 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication Adapter
-     * @var ValidatableAdapterInterface
+     * @var null|ValidatableAdapterInterface
      */
     protected $adapter;
 
@@ -77,7 +77,7 @@ class Authentication extends AbstractValidator
 
     /**
      * Authentication Service
-     * @var AuthenticationService
+     * @var null|AuthenticationService
      */
     protected $service;
 
@@ -125,7 +125,7 @@ class Authentication extends AbstractValidator
     /**
      * Get Adapter
      *
-     * @return ValidatableAdapterInterface
+     * @return null|ValidatableAdapterInterface
      */
     public function getAdapter()
     {
@@ -193,7 +193,7 @@ class Authentication extends AbstractValidator
     /**
      * Get Service
      *
-     * @return AuthenticationService
+     * @return null|AuthenticationService
      */
     public function getService()
     {
@@ -291,6 +291,10 @@ class Authentication extends AbstractValidator
      */
     private function getAdapterFromAuthenticationService()
     {
+        if (! $this->service) {
+            throw new Exception\RuntimeException('Adapter must be set prior to validation');
+        }
+
         $adapter = $this->service->getAdapter();
         if (! $adapter) {
             throw new Exception\RuntimeException('Adapter must be set prior to validation');
