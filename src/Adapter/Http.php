@@ -93,7 +93,7 @@ class Http implements AdapterInterface
      * List of the supported digest algorithms. I want to support both MD5 and
      * MD5-sess, but MD5-sess won't make it into the first version.
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected $supportedAlgos = ['MD5'];
 

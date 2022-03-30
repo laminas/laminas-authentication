@@ -237,6 +237,7 @@ class AuthenticationTest extends TestCase
             'password' => 'mypassword',
         ]);
         $adapter = $this->validator->getAdapter();
+        $this->assertInstanceOf(ValidatableAdapterInterface::class, $adapter);
         $this->assertEquals('myusername', $adapter->getIdentity());
         $this->assertEquals('mypassword', $adapter->getCredential());
     }
