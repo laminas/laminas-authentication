@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Result as AuthResult;
@@ -59,7 +55,7 @@ class ApacheResolver implements ResolverInterface
      *
      * @param  string $path
      * @return self Provides a fluent interface
-     * @throws Exception\InvalidArgumentException if path is not readable
+     * @throws Exception\InvalidArgumentException If path is not readable.
      */
     public function setFile($path)
     {
@@ -136,12 +132,12 @@ class ApacheResolver implements ResolverInterface
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
         while (($line = fgetcsv($fp, 512, ':')) !== false) {
-            if ($line[0] != $username) {
+            if ($line[0] !== $username) {
                 continue;
             }
 
             if (isset($line[2])) {
-                if ($line[1] == $realm) {
+                if ($line[1] === $realm) {
                     $matchedHash = $line[2];
                     break;
                 }

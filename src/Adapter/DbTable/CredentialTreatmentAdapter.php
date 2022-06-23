@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace Laminas\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication\Result as AuthenticationResult;
@@ -84,7 +80,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
         }
 
         $credentialExpression = new SqlExpr(
-            '(CASE WHEN ?' . ' = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
+            '(CASE WHEN ? = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
             [$this->credentialColumn, $this->credential, 'laminas_auth_credential_match'],
             [SqlExpr::TYPE_IDENTIFIER, SqlExpr::TYPE_VALUE, SqlExpr::TYPE_IDENTIFIER]
         );
@@ -108,7 +104,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      */
     protected function authenticateValidateResult($resultIdentity)
     {
-        if ($resultIdentity['laminas_auth_credential_match'] != '1') {
+        if ($resultIdentity['laminas_auth_credential_match'] !== '1') {
             $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
             $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
             return $this->authenticateCreateAuthResult();

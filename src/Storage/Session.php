@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace Laminas\Authentication\Storage;
 
 use Laminas\Session\Container as SessionContainer;
@@ -16,12 +12,12 @@ class Session implements StorageInterface
     /**
      * Default session namespace
      */
-    const NAMESPACE_DEFAULT = 'Laminas_Auth';
+    public const NAMESPACE_DEFAULT = 'Laminas_Auth';
 
     /**
      * Default session object member name
      */
-    const MEMBER_DEFAULT = 'storage';
+    public const MEMBER_DEFAULT = 'storage';
 
     /**
      * Object to proxy $_SESSION storage

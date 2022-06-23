@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace Laminas\Authentication;
 
 class Result
@@ -13,32 +9,32 @@ class Result
     /**
      * General Failure
      */
-    const FAILURE = 0;
+    public const FAILURE = 0;
 
     /**
      * Failure due to identity not being found.
      */
-    const FAILURE_IDENTITY_NOT_FOUND = -1;
+    public const FAILURE_IDENTITY_NOT_FOUND = -1;
 
     /**
      * Failure due to identity being ambiguous.
      */
-    const FAILURE_IDENTITY_AMBIGUOUS = -2;
+    public const FAILURE_IDENTITY_AMBIGUOUS = -2;
 
     /**
      * Failure due to invalid credential being supplied.
      */
-    const FAILURE_CREDENTIAL_INVALID = -3;
+    public const FAILURE_CREDENTIAL_INVALID = -3;
 
     /**
      * Failure due to uncategorized reasons.
      */
-    const FAILURE_UNCATEGORIZED = -4;
+    public const FAILURE_UNCATEGORIZED = -4;
 
     /**
      * Authentication success.
      */
-    const SUCCESS = 1;
+    public const SUCCESS = 1;
 
     /**
      * Authentication result code

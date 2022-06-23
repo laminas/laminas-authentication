@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace LaminasTest\Authentication;
 
 use Laminas\Authentication\AuthenticationService;
@@ -74,7 +70,7 @@ class AuthenticationServiceTest extends TestCase
         $this->assertEquals(null, $this->auth->getIdentity());
     }
 
-    protected function authenticate(?TestAsset\ValidatableAdapter $adapter = null)
+    protected function authenticate(?TestAsset\ValidatableAdapter $adapter = null): Result
     {
         if ($adapter === null) {
             $adapter = new TestAsset\ValidatableAdapter();

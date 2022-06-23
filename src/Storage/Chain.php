@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace Laminas\Authentication\Storage;
 
 use Laminas\Stdlib\PriorityQueue;
@@ -47,6 +43,8 @@ class Chain implements StorageInterface
      * are filled.
      *
      * @see StorageInterface::isEmpty()
+     *
+     * @return bool
      */
     public function isEmpty()
     {
@@ -76,6 +74,8 @@ class Chain implements StorageInterface
      * filled. Return its value.
      *
      * @see StorageInterface::read()
+     *
+     * @return mixed
      */
     public function read()
     {
@@ -86,6 +86,9 @@ class Chain implements StorageInterface
      * Write the new $contents to all storage in the chain.
      *
      * @see StorageInterface::write()
+     *
+     * @param mixed $contents
+     * @return void
      */
     public function write($contents)
     {

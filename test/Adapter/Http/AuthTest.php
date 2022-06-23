@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
@@ -17,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 use function base64_encode;
 use function ceil;
 use function count;
-use function extract;
 use function md5;
 use function preg_match;
 use function preg_replace;
@@ -132,9 +127,11 @@ class AuthTest extends TestCase
         // should result in a 401 reply with at least one Www-Authenticate
         // header, and a false result.
 
-        $result = $status = $headers = null;
-        $data   = $this->doAuth('', 'both');
-        extract($data); // $result, $status, $headers
+        $result  = $status = $headers = null;
+        $data    = $this->doAuth('', 'both');
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // The expected Www-Authenticate header values
         $basic  = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
@@ -459,8 +456,9 @@ class AuthTest extends TestCase
      */
     protected function checkUnauthorized($data, $expected)
     {
-        $result = $status = $headers = null;
-        extract($data); // $result, $status, $headers
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // Make sure the result is false
         $this->assertInstanceOf(Result::class, $result);
@@ -494,8 +492,8 @@ class AuthTest extends TestCase
      */
     protected function checkOK($data)
     {
-        $result = $status = $headers = null;
-        extract($data); // $result, $status, $headers
+        $result = $data['result'] ?? null;
+        $status = $data['status'] ?? null;
 
         // Make sure the result is true
         $this->assertInstanceOf(Result::class, $result);
@@ -513,8 +511,8 @@ class AuthTest extends TestCase
      */
     protected function checkBadRequest($data)
     {
-        $result = $status = $headers = null;
-        extract($data); // $result, $status, $headers
+        $result = $data['result'] ?? null;
+        $status = $data['status'] ?? null;
 
         // Make sure the result is false
         $this->assertInstanceOf(Result::class, $result);

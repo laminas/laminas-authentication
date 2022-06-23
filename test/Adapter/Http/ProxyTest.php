@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
@@ -18,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use function base64_encode;
 use function ceil;
 use function count;
-use function extract;
 use function md5;
 use function preg_match;
 use function preg_replace;
@@ -139,8 +134,10 @@ class ProxyTest extends TestCase
         // should result in a 407 reply with at least one Proxy-Authenticate
         // header, and a false result.
 
-        $data = $this->_doAuth('', 'both');
-        extract($data); // $result, $status, $headers
+        $data    = $this->_doAuth('', 'both');
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // The expected Proxy-Authenticate header values
         $basic  = 'Basic realm="' . $this->_bothConfig['realm'] . '"';
@@ -416,7 +413,9 @@ class ProxyTest extends TestCase
      */
     protected function checkUnauthorized($data, $expected)
     {
-        extract($data); // $result, $status, $headers
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // Make sure the result is false
         $this->assertInstanceOf(Result::class, $result);
@@ -450,7 +449,9 @@ class ProxyTest extends TestCase
      */
     protected function checkOK($data)
     {
-        extract($data); // $result, $status, $headers
+        $result  = $data['result'] ?? null;
+        $status  = $data['status'] ?? null;
+        $headers = $data['headers'] ?? null;
 
         // Make sure the result is true
         $this->assertInstanceOf(Result::class, $result);
@@ -468,7 +469,8 @@ class ProxyTest extends TestCase
      */
     protected function checkBadRequest($data)
     {
-        extract($data); // $result, $status, $headers
+        $result = $data['result'] ?? null;
+        $status = $data['status'] ?? null;
 
         // Make sure the result is false
         $this->assertInstanceOf(Result::class, $result);

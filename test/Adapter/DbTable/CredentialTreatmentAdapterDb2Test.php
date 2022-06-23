@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
@@ -44,6 +40,8 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Database adapter configuration
+     *
+     * @var array
      */
     protected $dbAdapterParams;
 
@@ -77,7 +75,9 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         ];
         $this->dbAdapterParams['driver_options']['i5_commit'] = constant('DB2_I5_TXN_NO_COMMIT');
         $this->dbAdapterParams['driver_options']['i5_naming'] = constant('DB2_I5_NAMING_OFF');
-        $this->tableName                                      = getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE');
+        $this->tableName                                      = getenv(
+            'TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE'
+        );
 
         $this->setupDbAdapter();
         $this->setupAuthAdapter();
@@ -378,7 +378,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->assertEquals('my_username', $result2->getIdentity());
     }
 
-    protected function setupDbAdapter($optionalParams = []): void
+    protected function setupDbAdapter(array $optionalParams = []): void
     {
         $this->createDbAdapter($optionalParams);
 
@@ -388,7 +388,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
     }
 
-    protected function createDbAdapter($optionalParams = []): void
+    protected function createDbAdapter(array $optionalParams = []): void
     {
         if (! empty($optionalParams)) {
             $this->dbAdapterParams['options'] = $optionalParams;

@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace Laminas\Authentication\Adapter\DbTable;
 
 use Exception;
@@ -227,7 +223,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * necessary information to successfully connect to a database table and
      * attempt to find a record matching the provided identity.
      *
-     * @throws Exception\RuntimeException if answering the authentication query is impossible
+     * @throws Exception\RuntimeException If answering the authentication query is impossible.
      * @return AuthenticationResult
      */
     public function authenticate()
@@ -274,20 +270,20 @@ abstract class AbstractAdapter extends BaseAdapter
      * making sure that this adapter was indeed setup properly with all
      * required pieces of information.
      *
-     * @throws Exception\RuntimeException in the event that setup was not done properly
+     * @throws Exception\RuntimeException In the event that setup was not done properly.
      * @return bool
      */
     protected function authenticateSetup()
     {
         $exception = null;
 
-        if ($this->tableName == '') {
+        if ($this->tableName === '') {
             $exception = 'A table must be supplied for the DbTable authentication adapter.';
-        } elseif ($this->identityColumn == '') {
+        } elseif ($this->identityColumn === '') {
             $exception = 'An identity column must be supplied for the DbTable authentication adapter.';
-        } elseif ($this->credentialColumn == '') {
+        } elseif ($this->credentialColumn === '') {
             $exception = 'A credential column must be supplied for the DbTable authentication adapter.';
-        } elseif ($this->identity == '') {
+        } elseif ($this->identity === '') {
             $exception = 'A value for the identity was not provided prior to authentication with DbTable.';
         } elseif ($this->credential === null) {
             $exception = 'A credential value was not provided prior to authentication with DbTable.';
@@ -310,7 +306,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * _authenticateQuerySelect() - This method accepts a Laminas\Db\Sql\Select object and
      * performs a query against the database with that object.
      *
-     * @throws Exception\RuntimeException when an invalid select object is encountered
+     * @throws Exception\RuntimeException When an invalid select object is encountered.
      * @return array
      */
     protected function authenticateQuerySelect(Sql\Select $dbSelect)

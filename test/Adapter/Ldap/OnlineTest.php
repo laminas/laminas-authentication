@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace LaminasTest\Authentication\Adapter\Ldap;
 
 use Laminas\Authentication;
@@ -143,8 +139,8 @@ class OnlineTest extends TestCase
         $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
         $this->assertTrue(
-            $result->getCode() == Authentication\Result::FAILURE_IDENTITY_NOT_FOUND ||
-            $result->getCode() == Authentication\Result::FAILURE_CREDENTIAL_INVALID
+            $result->getCode() === Authentication\Result::FAILURE_IDENTITY_NOT_FOUND ||
+            $result->getCode() === Authentication\Result::FAILURE_CREDENTIAL_INVALID
         );
     }
 

@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- */
-
 namespace LaminasTest\Authentication\Storage;
 
 use Laminas\Authentication\Storage\Chain;
@@ -18,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ChainTest extends TestCase
 {
-    const ID = 1337;
+    public const ID = 1337;
 
     /**
      * Ensure chain without storage behavious as empty storage.
