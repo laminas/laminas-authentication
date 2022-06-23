@@ -109,7 +109,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
          * of strings when using emulated prepared statements. To keep the behavior consistent with older versions of
          * PHP, strict comparison of both types is used.
          *
-         * @linkhttps://www.php.net/manual/en/migration81.incompatible.php#migration81.incompatible.pdo.mysql
+         * @link https://www.php.net/manual/migration81.incompatible.php#migration81.incompatible.pdo.mysql
          */
         if (
             $resultIdentity['laminas_auth_credential_match'] !== '1'
