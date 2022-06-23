@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace Laminas\Authentication\Adapter\Http;
@@ -11,6 +11,15 @@ namespace Laminas\Authentication\Adapter\Http;
 use Laminas\Authentication\Result as AuthResult;
 use Laminas\Crypt\Password\Apache as ApachePassword;
 use Laminas\Stdlib\ErrorHandler;
+
+use function ctype_print;
+use function fclose;
+use function fgetcsv;
+use function fopen;
+use function is_readable;
+use function strpos;
+
+use const E_WARNING;
 
 /**
  * Apache Authentication Resolver
@@ -87,8 +96,6 @@ class ApacheResolver implements ResolverInterface
 
     /**
      * Resolve credentials
-     *
-     *
      *
      * @param  string $username Username
      * @param  string $realm    Authentication Realm

@@ -1,18 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace Laminas\Authentication\Adapter\DbTable;
 
+use Exception;
 use Laminas\Authentication\Adapter\AbstractAdapter as BaseAdapter;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
 use stdClass;
+
+use function array_keys;
+use function count;
+use function in_array;
+use function is_bool;
+use function is_int;
 
 abstract class AbstractAdapter extends BaseAdapter
 {
@@ -21,46 +28,44 @@ abstract class AbstractAdapter extends BaseAdapter
      *
      * @var DbAdapter
      */
-    protected $laminasDb = null;
+    protected $laminasDb;
 
-    /**
-     * @var Sql\Select
-     */
-    protected $dbSelect = null;
+    /** @var Sql\Select */
+    protected $dbSelect;
     /**
      * $tableName - the table name to check
      *
      * @var string
      */
-    protected $tableName = null;
+    protected $tableName;
 
     /**
      * $identityColumn - the column to use as the identity
      *
      * @var string
      */
-    protected $identityColumn = null;
+    protected $identityColumn;
 
     /**
      * $credentialColumns - columns to be used as the credentials
      *
      * @var string
      */
-    protected $credentialColumn = null;
+    protected $credentialColumn;
 
     /**
      * $authenticateResultInfo
      *
      * @var array
      */
-    protected $authenticateResultInfo = null;
+    protected $authenticateResultInfo;
 
     /**
      * $resultRow - Results of database authentication query
      *
      * @var array
      */
-    protected $resultRow = null;
+    protected $resultRow;
 
     /**
      * $ambiguityIdentity - Flag to indicate same Identity can be used with
@@ -74,7 +79,6 @@ abstract class AbstractAdapter extends BaseAdapter
     /**
      * __construct() - Sets configuration options
      *
-     * @param DbAdapter $laminasDb
      * @param string    $tableName           Optional
      * @param string    $identityColumn      Optional
      * @param string    $credentialColumn    Optional
@@ -147,7 +151,7 @@ abstract class AbstractAdapter extends BaseAdapter
     public function setAmbiguityIdentity($flag)
     {
         if (is_int($flag)) {
-            $this->ambiguityIdentity = (1 === $flag);
+            $this->ambiguityIdentity = 1 === $flag;
         } elseif (is_bool($flag)) {
             $this->ambiguityIdentity = $flag;
         }
@@ -224,7 +228,6 @@ abstract class AbstractAdapter extends BaseAdapter
      * attempt to find a record matching the provided identity.
      *
      * @throws Exception\RuntimeException if answering the authentication query is impossible
-     *
      * @return AuthenticationResult
      */
     public function authenticate()
@@ -297,7 +300,7 @@ abstract class AbstractAdapter extends BaseAdapter
         $this->authenticateResultInfo = [
             'code'     => AuthenticationResult::FAILURE,
             'identity' => $this->identity,
-            'messages' => []
+            'messages' => [],
         ];
 
         return true;
@@ -307,16 +310,15 @@ abstract class AbstractAdapter extends BaseAdapter
      * _authenticateQuerySelect() - This method accepts a Laminas\Db\Sql\Select object and
      * performs a query against the database with that object.
      *
-     * @param  Sql\Select $dbSelect
      * @throws Exception\RuntimeException when an invalid select object is encountered
      * @return array
      */
     protected function authenticateQuerySelect(Sql\Select $dbSelect)
     {
-        $sql = new Sql\Sql($this->laminasDb);
+        $sql       = new Sql\Sql($this->laminasDb);
         $statement = $sql->prepareStatementForSqlObject($dbSelect);
         try {
-            $result = $statement->execute();
+            $result           = $statement->execute();
             $resultIdentities = [];
             // iterate result, most cross platform way
             foreach ($result as $row) {
@@ -327,7 +329,7 @@ abstract class AbstractAdapter extends BaseAdapter
                 }
                 $resultIdentities[] = $row;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new Exception\RuntimeException(
                 'The supplied parameters to DbTable failed to '
                 . 'produce a valid sql statement, please check table and column names '
@@ -344,7 +346,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * certain that only one record was returned in the resultset
      *
      * @param  array $resultIdentities
-     * @return bool|\Laminas\Authentication\Result
+     * @return bool|AuthenticationResult
      */
     protected function authenticateValidateResultSet(array $resultIdentities)
     {

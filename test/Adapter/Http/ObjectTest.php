@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace LaminasTest\Authentication\Adapter\Http;
@@ -15,6 +15,8 @@ use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use PHPUnit\Framework\TestCase;
+
+use function sprintf;
 
 /**
  * @group      Laminas_Auth
@@ -67,8 +69,6 @@ class ObjectTest extends TestCase
 
     /**
      * Sets up test configuration
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -77,19 +77,19 @@ class ObjectTest extends TestCase
         $this->_digestResolver = new Http\FileResolver("$this->_filesPath/htdigest.3");
         $this->_basicConfig    = [
             'accept_schemes' => 'basic',
-            'realm'          => 'Test Realm'
+            'realm'          => 'Test Realm',
         ];
         $this->_digestConfig   = [
             'accept_schemes' => 'digest',
             'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
-            'nonce_timeout'  => 300
+            'nonce_timeout'  => 300,
         ];
         $this->_bothConfig     = [
             'accept_schemes' => 'basic digest',
             'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
-            'nonce_timeout'  => 300
+            'nonce_timeout'  => 300,
         ];
     }
 
@@ -121,7 +121,7 @@ class ObjectTest extends TestCase
             'bad2' => [
                 [
                     'auth_type'      => 'digest',
-                    'realm'          => 'Bad: "Chars"'."\n",
+                    'realm'          => 'Bad: "Chars"' . "\n",
                     'digest_domains' => '/ /admin',
                     'nonce_timeout'  => 300,
                 ],
@@ -130,7 +130,7 @@ class ObjectTest extends TestCase
                 [
                     'auth_type'      => 'digest',
                     'realm'          => 'Test Realm',
-                    'digest_domains' => 'no"quotes'."\tor tabs",
+                    'digest_domains' => 'no"quotes' . "\tor tabs",
                     'nonce_timeout'  => 300,
                 ],
             ],
@@ -141,14 +141,12 @@ class ObjectTest extends TestCase
                     'digest_domains' => '/ /admin',
                     'nonce_timeout'  => 'junk',
                 ],
-            ]
+            ],
         ];
     }
 
     /**
      * @dataProvider invalidConfigs
-     *
-     * @return void
      */
     public function testInvalidConfigs($cfg): void
     {
@@ -167,8 +165,8 @@ class ObjectTest extends TestCase
             // Good, it threw an exception
         }
 
-        $request  = new Request;
-        $response = new Response;
+        $request  = new Request();
+        $response = new Response();
 
         // If this throws an exception, it fails
         $response = $a->setRequest($request)
@@ -180,13 +178,12 @@ class ObjectTest extends TestCase
 
     /**
      * @return string[][]
-     *
      * @psalm-return array{basic: array{0: string, 1: string}, digest: array{0: string, 1: string}}
      */
     public function noResolvers(): array
     {
         return [
-            'basic' => [
+            'basic'  => [
                 'Basic',
                 '_basicConfig',
             ],
@@ -199,13 +196,11 @@ class ObjectTest extends TestCase
 
     /**
      * @dataProvider noResolvers
-     *
-     * @return void
      */
     public function testNoResolvers($authHeader, $cfgProperty): void
     {
         // Stub request for Basic auth
-        $headers  = new Headers;
+        $headers = new Headers();
         $headers->addHeaderLine(
             'Authorization',
             sprintf(
@@ -214,9 +209,9 @@ class ObjectTest extends TestCase
             )
         );
 
-        $request  = new Request;
+        $request = new Request();
         $request->setHeaders($headers);
-        $response = new Response;
+        $response = new Response();
 
         $a = new Adapter\Http($this->$cfgProperty);
         $a->setRequest($request)

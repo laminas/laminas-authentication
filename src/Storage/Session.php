@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace Laminas\Authentication\Storage;
@@ -49,9 +49,8 @@ class Session implements StorageInterface
      *
      * @param  mixed $namespace
      * @param  mixed $member
-     * @param  SessionManager $manager
      */
-    public function __construct($namespace = null, $member = null, SessionManager $manager = null)
+    public function __construct($namespace = null, $member = null, ?SessionManager $manager = null)
     {
         if ($namespace !== null) {
             $this->namespace = $namespace;
@@ -59,7 +58,7 @@ class Session implements StorageInterface
         if ($member !== null) {
             $this->member = $member;
         }
-        $this->session   = new SessionContainer($this->namespace, $manager);
+        $this->session = new SessionContainer($this->namespace, $manager);
     }
 
     /**

@@ -1,18 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
-use Laminas\Http\Headers;
+use Laminas\Authentication\Result;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use PHPUnit\Framework\TestCase;
+
+use function base64_encode;
+use function ceil;
+use function count;
+use function extract;
+use function md5;
+use function preg_match;
+use function preg_replace;
+use function str_repeat;
+use function time;
+use function var_export;
 
 class AuthTest extends TestCase
 {
@@ -62,8 +73,6 @@ class AuthTest extends TestCase
 
     /**
      * Set up test configuration
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -72,19 +81,19 @@ class AuthTest extends TestCase
         $this->_digestResolver = new Http\FileResolver("{$this->_filesPath}/htdigest.3");
         $this->_basicConfig    = [
             'accept_schemes' => 'basic',
-            'realm'          => 'Test Realm'
+            'realm'          => 'Test Realm',
         ];
         $this->_digestConfig   = [
             'accept_schemes' => 'digest',
             'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
-            'nonce_timeout'  => 300
+            'nonce_timeout'  => 300,
         ];
         $this->_bothConfig     = [
             'accept_schemes' => 'basic digest',
             'realm'          => 'Test Realm',
             'digest_domains' => '/ http://localhost/',
-            'nonce_timeout'  => 300
+            'nonce_timeout'  => 300,
         ];
     }
 
@@ -96,8 +105,8 @@ class AuthTest extends TestCase
 
         // The expected Basic Www-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_bothConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_bothConfig['realm'] . '"',
         ];
 
         $data = $this->doAuth('', 'basic');
@@ -124,7 +133,7 @@ class AuthTest extends TestCase
         // header, and a false result.
 
         $result = $status = $headers = null;
-        $data = $this->doAuth('', 'both');
+        $data   = $this->doAuth('', 'both');
         extract($data); // $result, $status, $headers
 
         // The expected Www-Authenticate header values
@@ -132,7 +141,7 @@ class AuthTest extends TestCase
         $digest = $this->digestChallenge();
 
         // Make sure the result is false
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
 
         // Verify the status code and the presence of both challenges
@@ -178,8 +187,8 @@ class AuthTest extends TestCase
 
         // The expected Basic Www-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->doAuth('Basic ' . base64_encode("Bad\tChars:In:Creds"), 'basic');
@@ -193,8 +202,8 @@ class AuthTest extends TestCase
 
         // The expected Basic Www-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->doAuth('Basic ' . base64_encode('Nobody:NotValid'), 'basic');
@@ -208,8 +217,8 @@ class AuthTest extends TestCase
 
         // The expected Basic Www-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->doAuth('Basic ' . base64_encode('Bryce:Invalid'), 'basic');
@@ -223,8 +232,8 @@ class AuthTest extends TestCase
 
         // The expected Basic Www-Authenticate header value
         $basic = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_basicConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
         ];
 
         $data = $this->doAuth('Basic', 'basic');
@@ -292,7 +301,7 @@ class AuthTest extends TestCase
         $tampered = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $tampered = preg_replace(
             '/ nonce="[a-fA-F0-9]{32}", /',
-            ' nonce="'.str_repeat('0', 32).'", ',
+            ' nonce="' . str_repeat('0', 32) . '", ',
             $tampered
         );
 
@@ -319,7 +328,7 @@ class AuthTest extends TestCase
         // possibilities, so we're just going to pick one for now.
         $bad = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $bad = preg_replace(
-            '/realm="([^"]+)"/',  // cut out the realm
+            '/realm="([^"]+)"/', // cut out the realm
             '',
             $bad
         );
@@ -332,14 +341,12 @@ class AuthTest extends TestCase
      * check if response is validated
      *
      * @group PR6983
-     *
-     * @return void
      */
     public function testBadDigestResponse(): void
     {
         $bad = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $bad = preg_replace(
-            '/response="([^"]+)"/',  // cut out the realm
+            '/response="([^"]+)"/', // cut out the realm
             'response="foobar"',
             $bad
         );
@@ -358,8 +365,8 @@ class AuthTest extends TestCase
     protected function doAuth($clientHeader, $scheme)
     {
         // Set up stub request and response objects
-        $request  = new Request;
-        $response = new Response;
+        $request  = new Request();
+        $response = new Response();
         $response->setStatusCode(200);
 
         // Set stub method return values
@@ -384,7 +391,7 @@ class AuthTest extends TestCase
         }
 
         // Create the HTTP Auth adapter
-        $a = new HTTP($use);
+        $a = new Http($use);
         $a->setBasicResolver($this->_basicResolver);
         $a->setDigestResolver($this->_digestResolver);
 
@@ -393,19 +400,17 @@ class AuthTest extends TestCase
         $a->setResponse($response);
         $result = $a->authenticate();
 
-        $return = [
+        return [
             'result'  => $result,
             'status'  => $response->getStatusCode(),
             'headers' => $response->getHeaders(),
         ];
-        return $return;
     }
 
     /**
      * Constructs a local version of the digest challenge we expect to receive
      *
      * @return string[]
-     *
      * @psalm-return array{type: string, realm: string, domain: string}
      */
     protected function digestChallenge(): array
@@ -431,7 +436,7 @@ class AuthTest extends TestCase
         $cnonce   = md5('cnonce');
         $response = md5(md5($user . ':' . $this->_digestConfig['realm'] . ':' . $pass) . ":$nonce:$nc:$cnonce:auth:"
                   . md5('GET:/'));
-        $cauth = 'Digest '
+        return 'Digest '
                . 'username="Bryce", '
                . 'realm="' . $this->_digestConfig['realm'] . '", '
                . 'nonce="' . $nonce . '", '
@@ -442,8 +447,6 @@ class AuthTest extends TestCase
                . 'opaque="' . $opaque . '", '
                . 'qop="auth", '
                . 'nc=' . $nc;
-
-        return $cauth;
     }
 
     /**
@@ -452,7 +455,6 @@ class AuthTest extends TestCase
      * @param  array  $data     Authentication results
      * @param  array  $expected Expected Www-Authenticate header value
      * @return void
-     *
      * @psalm-param array<string, string> $expected
      */
     protected function checkUnauthorized($data, $expected)
@@ -461,7 +463,7 @@ class AuthTest extends TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
 
         // Verify the status code and the presence of the challenge
@@ -496,7 +498,7 @@ class AuthTest extends TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is true
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid(), var_export($result, 1));
 
         // Verify we got a 200 response
@@ -515,7 +517,7 @@ class AuthTest extends TestCase
         extract($data); // $result, $status, $headers
 
         // Make sure the result is false
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
 
         // Make sure it set the right HTTP code
@@ -524,23 +526,23 @@ class AuthTest extends TestCase
 
     public function testBasicAuthValidCredsWithCustomIdentityObjectResolverReturnsAuthResult(): void
     {
-        $this->_basicResolver  = new TestAsset\BasicAuthObjectResolver();
+        $this->_basicResolver = new TestAsset\BasicAuthObjectResolver();
 
         $result = $this->doAuth('Basic ' . base64_encode('Bryce:ThisIsNotMyPassword'), 'basic');
         $result = $result['result'];
 
-        $this->assertInstanceOf('Laminas\\Authentication\\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid());
     }
 
     public function testBasicAuthInvalidCredsWithCustomIdentityObjectResolverReturnsUnauthorizedResponse(): void
     {
-        $this->_basicResolver  = new TestAsset\BasicAuthObjectResolver();
-        $data = $this->doAuth('Basic ' . base64_encode('David:ThisIsNotMyPassword'), 'basic');
+        $this->_basicResolver = new TestAsset\BasicAuthObjectResolver();
+        $data                 = $this->doAuth('Basic ' . base64_encode('David:ThisIsNotMyPassword'), 'basic');
 
         $expected = [
-            'type'   => 'Basic ',
-            'realm'  => 'realm="' . $this->_bothConfig['realm'] . '"',
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_bothConfig['realm'] . '"',
         ];
 
         $this->checkUnauthorized($data, $expected);

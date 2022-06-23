@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace LaminasTest\Authentication;
 
 use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Result;
+use Laminas\Authentication\Storage\Session;
 use PHPUnit\Framework\TestCase;
 
 class AuthenticationServiceTest extends TestCase
@@ -26,14 +28,14 @@ class AuthenticationServiceTest extends TestCase
     public function testGetStorage()
     {
         $storage = $this->auth->getStorage();
-        $this->assertInstanceOf('Laminas\Authentication\Storage\Session', $storage);
+        $this->assertInstanceOf(Session::class, $storage);
     }
 
     public function testAdapter(): void
     {
         $this->assertNull($this->auth->getAdapter());
         $successAdapter = new TestAsset\ValidatableAdapter();
-        $ret = $this->auth->setAdapter($successAdapter);
+        $ret            = $this->auth->setAdapter($successAdapter);
         $this->assertSame($ret, $this->auth);
         $this->assertSame($successAdapter, $this->auth->getAdapter());
     }
@@ -46,7 +48,7 @@ class AuthenticationServiceTest extends TestCase
     public function testAuthenticate()
     {
         $result = $this->authenticate();
-        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($this->auth->hasIdentity());
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }
@@ -54,7 +56,7 @@ class AuthenticationServiceTest extends TestCase
     public function testAuthenticateSetAdapter(): void
     {
         $result = $this->authenticate(new TestAsset\ValidatableAdapter());
-        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($this->auth->hasIdentity());
         $this->assertEquals('someIdentity', $this->auth->getIdentity());
     }
@@ -72,9 +74,6 @@ class AuthenticationServiceTest extends TestCase
         $this->assertEquals(null, $this->auth->getIdentity());
     }
 
-    /**
-     * @param TestAsset\ValidatableAdapter|null $adapter
-     */
     protected function authenticate(?TestAsset\ValidatableAdapter $adapter = null)
     {
         if ($adapter === null) {

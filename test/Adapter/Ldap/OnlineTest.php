@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace LaminasTest\Authentication\Adapter\Ldap;
 
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
+use Laminas\Authentication\Result;
 use Laminas\Ldap;
 use PHPUnit\Framework\TestCase;
+
+use function getenv;
 
 /**
  * @group      Laminas_Auth
@@ -25,9 +28,7 @@ class OnlineTest extends TestCase
      */
     protected $options = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $names = [];
 
     public function setUp(): void
@@ -87,7 +88,7 @@ class OnlineTest extends TestCase
 
         $result = $adapter->authenticate();
 
-        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid());
         $this->assertEquals(Authentication\Result::SUCCESS, $result->getCode());
     }
@@ -101,14 +102,14 @@ class OnlineTest extends TestCase
          * EXAMPLE\uname). A total of 9 authentications are performed.
          */
         foreach ($this->names as $form => $formName) {
-            $options = $this->options;
+            $options                         = $this->options;
             $options['accountCanonicalForm'] = $form;
-            $adapter = new Adapter\Ldap([$options]);
+            $adapter                         = new Adapter\Ldap([$options]);
             $adapter->setPassword(getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD'));
             foreach ($this->names as $username) {
                 $adapter->setUsername($username);
                 $result = $adapter->authenticate();
-                $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+                $this->assertInstanceOf(Result::class, $result);
                 $this->assertTrue($result->isValid());
                 $this->assertEquals(Authentication\Result::SUCCESS, $result->getCode());
                 $this->assertEquals($formName, $result->getIdentity());
@@ -125,7 +126,7 @@ class OnlineTest extends TestCase
         );
 
         $result = $adapter->authenticate();
-        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
         $this->assertEquals(Authentication\Result::FAILURE_CREDENTIAL_INVALID, $result->getCode());
     }
@@ -139,7 +140,7 @@ class OnlineTest extends TestCase
         );
 
         $result = $adapter->authenticate();
-        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
         $this->assertTrue(
             $result->getCode() == Authentication\Result::FAILURE_IDENTITY_NOT_FOUND ||
@@ -156,7 +157,7 @@ class OnlineTest extends TestCase
         );
 
         $result = $adapter->authenticate();
-        $this->assertInstanceOf('Laminas\Authentication\Result', $result);
+        $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
         $this->assertThat($result->getCode(), $this->lessThanOrEqual(Authentication\Result::FAILURE));
         $messages = $result->getMessages();

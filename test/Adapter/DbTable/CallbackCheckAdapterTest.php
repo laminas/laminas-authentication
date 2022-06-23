@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace LaminasTest\Authentication\Adapter\DbTable;
@@ -11,9 +11,16 @@ namespace LaminasTest\Authentication\Adapter\DbTable;
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Sql\Select;
+use PDO;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_pop;
+use function count;
+use function extension_loaded;
+use function getenv;
+use function in_array;
 use function serialize;
 
 /**
@@ -47,7 +54,7 @@ class CallbackCheckAdapterTest extends TestCase
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
         } elseif (! extension_loaded('pdo')) {
             $this->markTestSkipped('PDO extension is not loaded');
-        } elseif (! in_array('sqlite', \PDO::getAvailableDrivers())) {
+        } elseif (! in_array('sqlite', PDO::getAvailableDrivers())) {
             $this->markTestSkipped('SQLite PDO driver is not available');
         }
 
@@ -66,8 +73,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
-     *
-     * @return void
      */
     public function testAuthenticateSuccess(): void
     {
@@ -77,11 +82,8 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertTrue($result->isValid());
     }
 
-
     /**
      * Ensures expected behavior for authentication success
-     *
-     * @return void
      */
     public function testAuthenticateSuccessWithCallback(): void
     {
@@ -94,11 +96,8 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertTrue($result->isValid());
     }
 
-
     /**
      * Ensures expected behavior for an invalid callback
-     *
-     * @return void
      */
     public function testAuthenticateCallbackThrowsException(): void
     {
@@ -110,8 +109,6 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
-     *
-     * @return void
      */
     public function testAuthenticateFailureIdentityNotFound(): void
     {
@@ -125,8 +122,6 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
-     *
-     * @return void
      */
     public function testAuthenticateFailureIdentityAmbiguous(): void
     {
@@ -143,8 +138,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication failure because of a bad password
-     *
-     * @return void
      */
     public function testAuthenticateFailureInvalidCredential(): void
     {
@@ -156,8 +149,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensures that getResultRowObject() works for successful authentication
-     *
-     * @return void
      */
     public function testGetResultRow(): void
     {
@@ -170,8 +161,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that ResultRowObject returns only what told to be included
-     *
-     * @return void
      */
     public function testGetSpecificResultRow(): void
     {
@@ -187,36 +176,30 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that ResultRowObject returns an object has specific omissions
-     *
-     * @return void
      */
     public function testGetOmittedResultRow(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
         $this->_adapter->authenticate();
-        $resultRow = $this->_adapter->getResultRowObject(null, 'password');
-        $expected = new stdClass();
-        $expected->id = 1;
-        $expected->username = 'my_username';
+        $resultRow           = $this->_adapter->getResultRowObject(null, 'password');
+        $expected            = new stdClass();
+        $expected->id        = 1;
+        $expected->username  = 'my_username';
         $expected->real_name = 'My Real Name';
         $this->assertEquals($expected, $resultRow);
     }
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterCanReturnDbSelectObject(): void
     {
-        $this->assertInstanceOf('Laminas\Db\Sql\Select', $this->_adapter->getDbSelect());
+        $this->assertInstanceOf(Select::class, $this->_adapter->getDbSelect());
     }
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
@@ -231,8 +214,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
@@ -252,8 +233,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoTable(): void
     {
@@ -265,8 +244,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoIdentityColumn(): void
     {
@@ -278,8 +255,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoCredentialColumn(): void
     {
@@ -291,8 +266,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoIdentity(): void
     {
@@ -303,8 +276,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoCredential(): void
     {
@@ -316,8 +287,6 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionBadSql(): void
     {
@@ -335,8 +304,6 @@ class CallbackCheckAdapterTest extends TestCase
      * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
      * @group Laminas-7289
-     *
-     * @return void
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
@@ -360,8 +327,6 @@ class CallbackCheckAdapterTest extends TestCase
      * a flag is set
      *
      * @group Laminas-7289
-     *
-     * @return void
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {

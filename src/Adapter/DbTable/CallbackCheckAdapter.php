@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace Laminas\Authentication\Adapter\DbTable;
 
+use Exception;
 use Laminas\Authentication\Adapter\DbTable\Exception\InvalidArgumentException;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
 use Laminas\Db\Sql\Predicate\Operator as SqlOp;
+
+use function call_user_func;
+use function is_callable;
 
 class CallbackCheckAdapter extends AbstractAdapter
 {
@@ -22,12 +26,11 @@ class CallbackCheckAdapter extends AbstractAdapter
      *
      * @var callable
      */
-    protected $credentialValidationCallback = null;
+    protected $credentialValidationCallback;
 
     /**
      * __construct() - Sets configuration options
      *
-     * @param DbAdapter $laminasDb
      * @param string    $tableName                    Optional
      * @param string    $identityColumn               Optional
      * @param string    $credentialColumn             Optional
@@ -101,7 +104,7 @@ class CallbackCheckAdapter extends AbstractAdapter
                 $resultIdentity[$this->credentialColumn],
                 $this->credential
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_UNCATEGORIZED;
             $this->authenticateResultInfo['messages'][] = $e->getMessage();
             return $this->authenticateCreateAuthResult();

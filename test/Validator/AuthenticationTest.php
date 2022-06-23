@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
  */
 
 namespace LaminasTest\Authentication\Validator;
@@ -17,26 +17,23 @@ use LaminasTest\Authentication as AuthTest;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
+use function print_r;
+use function sprintf;
+
 class AuthenticationTest extends TestCase
 {
-    /**
-     * @var AuthenticationValidator
-     */
+    /** @var AuthenticationValidator */
     protected $validator;
 
-    /**
-     * @var AuthenticationService
-     */
+    /** @var AuthenticationService */
     protected $authService;
 
-    /**
-     * @var ValidatableAdapterInterface
-     */
+    /** @var ValidatableAdapterInterface */
     protected $authAdapter;
 
     public function setUp(): void
     {
-        $this->validator = new AuthenticationValidator();
+        $this->validator   = new AuthenticationValidator();
         $this->authService = new AuthenticationService();
         $this->authAdapter = new AuthTest\TestAsset\ValidatableAdapter();
     }
@@ -44,9 +41,9 @@ class AuthenticationTest extends TestCase
     public function testOptions(): void
     {
         $auth = new AuthenticationValidator([
-            'adapter' => $this->authAdapter,
-            'service' => $this->authService,
-            'identity' => 'username',
+            'adapter'    => $this->authAdapter,
+            'service'    => $this->authService,
+            'identity'   => 'username',
             'credential' => 'password',
         ]);
         $this->assertSame($auth->getAdapter(), $this->authAdapter);
@@ -58,14 +55,14 @@ class AuthenticationTest extends TestCase
     public function testConstructorOptionCodeMapOverridesDefaultMap(): void
     {
         $authAdapter = new AuthTest\TestAsset\ValidatableAdapter(AuthenticationResult::FAILURE_UNCATEGORIZED);
-        $auth = new AuthenticationValidator([
-            'adapter' => $authAdapter,
-            'service' => $this->authService,
-            'identity' => 'username',
+        $auth        = new AuthenticationValidator([
+            'adapter'    => $authAdapter,
+            'service'    => $this->authService,
+            'identity'   => 'username',
             'credential' => 'password',
-            'code_map' => [
+            'code_map'   => [
                 AuthenticationResult::FAILURE_UNCATEGORIZED => AuthenticationValidator::IDENTITY_NOT_FOUND,
-            ]
+            ],
         ]);
         $this->assertFalse($auth->isValid());
         $this->assertArrayHasKey(
@@ -78,14 +75,14 @@ class AuthenticationTest extends TestCase
     public function testConstructorOptionCodeMapUsesDefaultMapForOmittedCodes(): void
     {
         $authAdapter = new AuthTest\TestAsset\ValidatableAdapter(AuthenticationResult::FAILURE_IDENTITY_AMBIGUOUS);
-        $auth = new AuthenticationValidator([
-            'adapter' => $authAdapter,
-            'service' => $this->authService,
-            'identity' => 'username',
+        $auth        = new AuthenticationValidator([
+            'adapter'    => $authAdapter,
+            'service'    => $this->authService,
+            'identity'   => 'username',
             'credential' => 'password',
-            'code_map' => [
+            'code_map'   => [
                 AuthenticationResult::FAILURE_UNCATEGORIZED => AuthenticationValidator::IDENTITY_NOT_FOUND,
-            ]
+            ],
         ]);
         $this->assertFalse($auth->isValid());
         $this->assertArrayHasKey(
@@ -98,14 +95,14 @@ class AuthenticationTest extends TestCase
     public function testCodeMapAllowsToSpecifyCustomCodes(): void
     {
         $authAdapter = new AuthTest\TestAsset\ValidatableAdapter(-999);
-        $auth = new AuthenticationValidator([
-            'adapter' => $authAdapter,
-            'service' => $this->authService,
-            'identity' => 'username',
+        $auth        = new AuthenticationValidator([
+            'adapter'    => $authAdapter,
+            'service'    => $this->authService,
+            'identity'   => 'username',
             'credential' => 'password',
-            'code_map' => [
+            'code_map'   => [
                 -999 => AuthenticationValidator::IDENTITY_NOT_FOUND,
-            ]
+            ],
         ]);
         $this->assertFalse($auth->isValid());
         $this->assertArrayHasKey(
@@ -117,10 +114,10 @@ class AuthenticationTest extends TestCase
 
     public function testCodeMapAllowsToAddCustomMessageTemplates(): void
     {
-        $auth = new AuthenticationValidator([
+        $auth      = new AuthenticationValidator([
             'code_map' => [
                 -999 => 'custom_error',
-            ]
+            ],
         ]);
         $templates = $auth->getMessageTemplates();
         $this->assertArrayHasKey(
@@ -132,15 +129,13 @@ class AuthenticationTest extends TestCase
 
     /**
      * @depends testCodeMapAllowsToAddCustomMessageTemplates
-     *
-     * @return void
      */
     public function testCodeMapCustomMessageTemplateValueDefaultsToGeneralMessageTemplate(): void
     {
-        $auth = new AuthenticationValidator([
+        $auth      = new AuthenticationValidator([
             'code_map' => [
                 -999 => 'custom_error',
-            ]
+            ],
         ]);
         $templates = $auth->getMessageTemplates();
         $this->assertEquals($templates['general'], $templates['custom_error']);
@@ -148,19 +143,16 @@ class AuthenticationTest extends TestCase
 
     /**
      * @depends testCodeMapAllowsToAddCustomMessageTemplates
-     *
-     * @return void
      */
     public function testCustomMessageTemplateValueCanBeProvidedAsOption(): void
     {
-        $auth = new AuthenticationValidator([
+        $auth      = new AuthenticationValidator([
             'code_map' => [
                 -999 => 'custom_error',
             ],
             'messages' => [
-                'custom_error' => 'Custom Error'
-            ]
-
+                'custom_error' => 'Custom Error',
+            ],
         ]);
         $templates = $auth->getMessageTemplates();
         $this->assertEquals('Custom Error', $templates['custom_error']);
@@ -173,7 +165,7 @@ class AuthenticationTest extends TestCase
         new AuthenticationValidator([
             'code_map' => [
                 -999 => [],
-            ]
+            ],
         ]);
     }
 
@@ -250,7 +242,6 @@ class AuthenticationTest extends TestCase
 
     /**
      * @return (bool|int|string[])[][]
-     *
      * @psalm-return array<string, array{
      *     0: int,
      *     1: bool,
@@ -260,7 +251,7 @@ class AuthenticationTest extends TestCase
     public function errorMessagesProvider(): array
     {
         return [
-            'failure' => [
+            'failure'            => [
                 AuthenticationResult::FAILURE,
                 false,
                 [AuthenticationValidator::GENERAL => 'Authentication failed'],
@@ -280,12 +271,12 @@ class AuthenticationTest extends TestCase
                 false,
                 [AuthenticationValidator::CREDENTIAL_INVALID => 'Invalid password'],
             ],
-            'uncategorized' => [
+            'uncategorized'      => [
                 AuthenticationResult::FAILURE_UNCATEGORIZED,
                 false,
                 [AuthenticationValidator::UNCATEGORIZED => 'Authentication failed'],
             ],
-            'success' => [
+            'success'            => [
                 AuthenticationResult::SUCCESS,
                 true,
                 [],
@@ -295,12 +286,9 @@ class AuthenticationTest extends TestCase
 
     /**
      * @dataProvider errorMessagesProvider
-     *
      * @param int   $code
      * @param bool  $valid
      * @param array $messages
-     *
-     * @return void
      */
     public function testErrorMessages($code, $valid, $messages): void
     {
@@ -317,8 +305,6 @@ class AuthenticationTest extends TestCase
 
     /**
      * Test using Authentication Service's adapter
-     *
-     * @return void
      */
     public function testUsingAdapterFromService(): void
     {
@@ -339,8 +325,6 @@ class AuthenticationTest extends TestCase
     /**
      * Ensures that isValid() throws an exception when Authentication Service's
      * adapter is not an instance of ValidatableAdapterInterface
-     *
-     * @return void
      */
     public function testUsingNonValidatableAdapterFromServiceThrowsRuntimeException(): void
     {
