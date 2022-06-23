@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Authentication\Adapter;
 
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use PHPUnit\Framework\TestCase;
+
+use function count;
 
 /**
  * @group      Laminas_Auth
@@ -28,8 +26,6 @@ class DigestTest extends TestCase
 
     /**
      * Sets the path to test files
-     *
-     * @return void
      */
     public function setUp(): void
     {

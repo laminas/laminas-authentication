@@ -1,22 +1,24 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Authentication\Adapter\Http\TestAsset;
 
-use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Authentication\Adapter\Http\ResolverInterface;
+use Laminas\Authentication\Result as AuthenticationResult;
+use stdClass;
 
 class BasicAuthObjectResolver implements ResolverInterface
 {
+    /**
+     * @param string $username
+     * @param string $realm
+     * @param string|null $password
+     */
     public function resolve($username, $realm, $password = null): AuthenticationResult
     {
-        if ($username == 'Bryce' && $password == 'ThisIsNotMyPassword') {
-            $identity = new \stdClass();
+        if ($username === 'Bryce' && $password === 'ThisIsNotMyPassword') {
+            $identity = new stdClass();
 
             return new AuthenticationResult(
                 AuthenticationResult::SUCCESS,

@@ -1,16 +1,21 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Result as AuthResult;
 use Laminas\Crypt\Password\Apache as ApachePassword;
 use Laminas\Stdlib\ErrorHandler;
+
+use function ctype_print;
+use function fclose;
+use function fgetcsv;
+use function fopen;
+use function is_readable;
+use function strpos;
+
+use const E_WARNING;
 
 /**
  * Apache Authentication Resolver
@@ -50,7 +55,7 @@ class ApacheResolver implements ResolverInterface
      *
      * @param  string $path
      * @return self Provides a fluent interface
-     * @throws Exception\InvalidArgumentException if path is not readable
+     * @throws Exception\InvalidArgumentException If path is not readable.
      */
     public function setFile($path)
     {
@@ -87,8 +92,6 @@ class ApacheResolver implements ResolverInterface
 
     /**
      * Resolve credentials
-     *
-     *
      *
      * @param  string $username Username
      * @param  string $realm    Authentication Realm
@@ -129,12 +132,12 @@ class ApacheResolver implements ResolverInterface
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
         while (($line = fgetcsv($fp, 512, ':')) !== false) {
-            if ($line[0] != $username) {
+            if ($line[0] !== $username) {
                 continue;
             }
 
             if (isset($line[2])) {
-                if ($line[1] == $realm) {
+                if ($line[1] === $realm) {
                     $matchedHash = $line[2];
                     break;
                 }

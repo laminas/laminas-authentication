@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Authentication\TestAsset;
 
@@ -13,7 +9,7 @@ use Laminas\Authentication\Result as AuthenticationResult;
 
 class SuccessAdapter implements AdapterInterface
 {
-    public function authenticate()
+    public function authenticate(): AuthenticationResult
     {
         return new AuthenticationResult(AuthenticationResult::SUCCESS, 'someIdentity');
     }

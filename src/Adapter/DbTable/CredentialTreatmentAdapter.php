@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter\DbTable;
 
@@ -14,6 +10,8 @@ use Laminas\Db\Sql;
 use Laminas\Db\Sql\Expression as SqlExpr;
 use Laminas\Db\Sql\Predicate\Operator as SqlOp;
 
+use function strpos;
+
 class CredentialTreatmentAdapter extends AbstractAdapter
 {
     /**
@@ -21,12 +19,11 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      *
      * @var string
      */
-    protected $credentialTreatment = null;
+    protected $credentialTreatment;
 
     /**
      * __construct() - Sets configuration options
      *
-     * @param DbAdapter $laminasDb
      * @param string    $tableName           Optional
      * @param string    $identityColumn      Optional
      * @param string    $credentialColumn    Optional
@@ -83,7 +80,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
         }
 
         $credentialExpression = new SqlExpr(
-            '(CASE WHEN ?' . ' = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
+            '(CASE WHEN ? = ' . $this->credentialTreatment . ' THEN 1 ELSE 0 END) AS ?',
             [$this->credentialColumn, $this->credential, 'laminas_auth_credential_match'],
             [SqlExpr::TYPE_IDENTIFIER, SqlExpr::TYPE_VALUE, SqlExpr::TYPE_IDENTIFIER]
         );
@@ -107,7 +104,17 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      */
     protected function authenticateValidateResult($resultIdentity)
     {
-        if ($resultIdentity['laminas_auth_credential_match'] != '1') {
+        /**
+         * Starting with PHP 8.1.0 integers and floats in result sets will be returned using native PHP types instead
+         * of strings when using emulated prepared statements. To keep the behavior consistent with older versions of
+         * PHP, strict comparison of both types is used.
+         *
+         * @link https://www.php.net/manual/migration81.incompatible.php#migration81.incompatible.pdo.mysql
+         */
+        if (
+            $resultIdentity['laminas_auth_credential_match'] !== '1'
+            && $resultIdentity['laminas_auth_credential_match'] !== 1
+        ) {
             $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
             $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
             return $this->authenticateCreateAuthResult();

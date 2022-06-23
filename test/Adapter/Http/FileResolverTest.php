@@ -1,15 +1,13 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
 use PHPUnit\Framework\TestCase;
+
+use function rename;
 
 /**
  * @group      Laminas_Auth
@@ -49,8 +47,6 @@ class FileResolverTest extends TestCase
     /**
      * Sets the paths to files used in this test, and creates a shared resolver instance
      * having a valid path.
-     *
-     * @return void
      */
     public function setUp(): void
     {

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Authentication\Adapter;
 
@@ -12,7 +8,9 @@ use Exception;
 use Laminas\Authentication\Adapter\Callback;
 use Laminas\Authentication\Exception as AuthenticationException;
 use Laminas\Authentication\Result;
-use PHPUnit\Framework\TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+
+use function array_map;
 
 class CallbackTest extends TestCase
 {
@@ -21,7 +19,7 @@ class CallbackTest extends TestCase
      *
      * @var Callback
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * Set up test configuration
@@ -43,8 +41,6 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures expected behavior for an invalid callback
-     *
-     * @return void
      */
     public function testSetCallbackThrowsException(): void
     {
@@ -55,8 +51,6 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures setter/getter behaviour for callback
-     *
-     * @return void
      */
     public function testCallbackSetGetMethods(): void
     {
@@ -68,8 +62,6 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures constructor sets callback if provided
-     *
-     * @return void
      */
     public function testClassConstructorSetCallback(): void
     {
@@ -81,8 +73,6 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authenticate throws Exception if no callback is defined
-     *
-     * @return void
      */
     public function testAuthenticateThrowsException(): void
     {
@@ -93,15 +83,13 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures identity and credential are provided as arguments to callback
-     *
-     * @return void
      */
     public function testAuthenticateProvidesCallbackWithIdentityAndCredentials(): void
     {
         $adapter = $this->adapter;
         $adapter->setIdentity('testIdentity');
         $adapter->setCredential('testCredential');
-        $that = $this;
+        $that     = $this;
         $callback = function ($identity, $credential) use ($that, $adapter): void {
             $that->assertEquals($identity, $adapter->getIdentity());
             $that->assertEquals($credential, $adapter->getCredential());
@@ -112,8 +100,6 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authentication result is invalid when callback throws exception
-     *
-     * @return void
      */
     public function testAuthenticateResultIfCallbackThrows(): void
     {
@@ -131,19 +117,16 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authentication result is invalid when callback returns falsy value
-     *
-     * @return void
      */
     public function testAuthenticateResultIfCallbackReturnsFalsy(): void
     {
-        $that    = $this;
-        $adapter = $this->adapter;
+        $that        = $this;
+        $adapter     = $this->adapter;
         $falsyValues = [false, null, '', '0', [], 0, 0.0];
         array_map(function ($falsy) use ($that, $adapter) {
             $callback = /**
-             * @return array|false|float|int|null|string
-             *
-             * @psalm-return array<empty, empty>|false|float|int|null|string
+            $callback =  * @return array|false|float|int|null|string
+            $callback =  * @psalm-return array<empty, empty>|false|float|int|null|string
              */
             function () use ($falsy) {
                 return $falsy;
@@ -158,8 +141,6 @@ class CallbackTest extends TestCase
 
     /**
      * Ensures authentication result is valid when callback returns truthy value
-     *
-     * @return void
      */
     public function testAuthenticateResultIfCallbackReturnsIdentity(): void
     {

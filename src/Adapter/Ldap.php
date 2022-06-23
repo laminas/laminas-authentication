@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter;
 
@@ -13,6 +9,19 @@ use Laminas\Ldap as LaminasLdap;
 use Laminas\Ldap\Exception\LdapException;
 use stdClass;
 
+use function array_diff;
+use function array_key_exists;
+use function array_keys;
+use function array_map;
+use function count;
+use function in_array;
+use function is_array;
+use function preg_quote;
+use function preg_replace;
+use function strcasecmp;
+use function substr;
+use function trim;
+
 class Ldap extends AbstractAdapter
 {
     /**
@@ -20,21 +29,21 @@ class Ldap extends AbstractAdapter
      *
      * @var LaminasLdap\Ldap
      */
-    protected $ldap = null;
+    protected $ldap;
 
     /**
      * The array of arrays of Laminas\Ldap\Ldap options passed to the constructor.
      *
      * @var array
      */
-    protected $options = null;
+    protected $options;
 
     /**
      * The DN of the authenticated account. Used to retrieve the account entry on request.
      *
      * @var string
      */
-    protected $authenticatedDn = null;
+    protected $authenticatedDn;
 
     /**
      * Constructor
@@ -165,7 +174,7 @@ class Ldap extends AbstractAdapter
     protected function getAuthorityName()
     {
         $options = $this->getLdap()->getOptions();
-        $name = $options['accountDomainName'];
+        $name    = $options['accountDomainName'];
         if (! $name) {
             $name = $options['accountDomainNameShort'];
         }
@@ -181,7 +190,7 @@ class Ldap extends AbstractAdapter
      */
     public function authenticate()
     {
-        $messages = [];
+        $messages    = [];
         $messages[0] = ''; // reserved
         $messages[1] = ''; // reserved
 
@@ -189,7 +198,7 @@ class Ldap extends AbstractAdapter
         $password = $this->credential;
 
         if (! $username) {
-            $code = AuthenticationResult::FAILURE_IDENTITY_NOT_FOUND;
+            $code        = AuthenticationResult::FAILURE_IDENTITY_NOT_FOUND;
             $messages[0] = 'A username is required';
             return new AuthenticationResult($code, '', $messages);
         }
@@ -197,15 +206,15 @@ class Ldap extends AbstractAdapter
             /* A password is required because some servers will
              * treat an empty password as an anonymous bind.
              */
-            $code = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
+            $code        = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
             $messages[0] = 'A password is required';
             return new AuthenticationResult($code, '', $messages);
         }
 
         $ldap = $this->getLdap();
 
-        $code = AuthenticationResult::FAILURE;
-        $messages[0] = "Authority not found: $username";
+        $code              = AuthenticationResult::FAILURE;
+        $messages[0]       = "Authority not found: $username";
         $failedAuthorities = [];
 
         /* Iterate through each server and try to authenticate the supplied
@@ -216,7 +225,7 @@ class Ldap extends AbstractAdapter
                 throw new Exception\InvalidArgumentException('Adapter options array not an array');
             }
             $adapterOptions = $this->prepareOptions($ldap, $options);
-            $dname = '';
+            $dname          = '';
 
             try {
                 if ($messages[1]) {
@@ -224,7 +233,7 @@ class Ldap extends AbstractAdapter
                 }
 
                 $messages[1] = '';
-                $messages[] = $this->optionsToString($options);
+                $messages[]  = $this->optionsToString($options);
 
                 $dname = $this->getAuthorityName();
                 if (isset($failedAuthorities[$dname])) {
@@ -237,7 +246,7 @@ class Ldap extends AbstractAdapter
                      * This fixes issue Laminas-4093.
                      */
                     $messages[1] = $failedAuthorities[$dname];
-                    $messages[] = "Skipping previously failed authority: $dname";
+                    $messages[]  = "Skipping previously failed authority: $dname";
                     continue;
                 }
 
@@ -260,17 +269,17 @@ class Ldap extends AbstractAdapter
                 $groupResult = $this->checkGroupMembership($ldap, $canonicalName, $dn, $adapterOptions);
                 if ($groupResult === true) {
                     $this->authenticatedDn = $dn;
-                    $messages[0] = '';
-                    $messages[1] = '';
-                    $messages[] = "$canonicalName authentication successful";
+                    $messages[0]           = '';
+                    $messages[1]           = '';
+                    $messages[]            = "$canonicalName authentication successful";
                     if ($requireRebind === true) {
                         // rebinding with authenticated user
                         $ldap->bind($dn, $password);
                     }
                     return new AuthenticationResult(AuthenticationResult::SUCCESS, $canonicalName, $messages);
                 } else {
-                    $messages[0] = 'Account is not a member of the specified group';
-                    $messages[1] = $groupResult;
+                    $messages[0]               = 'Account is not a member of the specified group';
+                    $messages[1]               = $groupResult;
                     $failedAuthorities[$dname] = $groupResult;
                 }
             } catch (LdapException $zle) {
@@ -281,26 +290,26 @@ class Ldap extends AbstractAdapter
 
                 $err = $zle->getCode();
 
-                if ($err == LdapException::LDAP_X_DOMAIN_MISMATCH) {
+                if ($err === LdapException::LDAP_X_DOMAIN_MISMATCH) {
                     /* This error indicates that the domain supplied in the
                      * username did not match the domains in the server options
                      * and therefore we should just skip to the next set of
                      * server options.
                      */
                     continue;
-                } elseif ($err == LdapException::LDAP_NO_SUCH_OBJECT) {
-                    $code = AuthenticationResult::FAILURE_IDENTITY_NOT_FOUND;
-                    $messages[0] = "Account not found: $username";
+                } elseif ($err === LdapException::LDAP_NO_SUCH_OBJECT) {
+                    $code                      = AuthenticationResult::FAILURE_IDENTITY_NOT_FOUND;
+                    $messages[0]               = "Account not found: $username";
                     $failedAuthorities[$dname] = $zle->getMessage();
-                } elseif ($err == LdapException::LDAP_INVALID_CREDENTIALS) {
-                    $code = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
-                    $messages[0] = 'Invalid credentials';
+                } elseif ($err === LdapException::LDAP_INVALID_CREDENTIALS) {
+                    $code                      = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
+                    $messages[0]               = 'Invalid credentials';
                     $failedAuthorities[$dname] = $zle->getMessage();
                 } else {
-                    $line = $zle->getLine();
-                    $messages[] = $zle->getFile() . "($line): " . $zle->getMessage();
-                    $messages[] = preg_replace(
-                        '/\b'.preg_quote(substr($password, 0, 15), '/').'\b/',
+                    $line        = $zle->getLine();
+                    $messages[]  = $zle->getFile() . "($line): " . $zle->getMessage();
+                    $messages[]  = preg_replace(
+                        '/\b' . preg_quote(substr($password, 0, 15), '/') . '\b/',
                         '*****',
                         $zle->getTraceAsString()
                     );
@@ -310,7 +319,7 @@ class Ldap extends AbstractAdapter
             }
         }
 
-        $msg = isset($messages[1]) ? $messages[1] : $messages[0];
+        $msg        = $messages[1] ?? $messages[0];
         $messages[] = "$username authentication failed: $msg";
 
         return new AuthenticationResult($code, $username, $messages);
@@ -319,7 +328,6 @@ class Ldap extends AbstractAdapter
     /**
      * Sets the LDAP specific options on the Laminas\Ldap\Ldap instance
      *
-     * @param  LaminasLdap\Ldap $ldap
      * @param  array         $options
      * @return array of auth-adapter specific options
      */
@@ -332,7 +340,7 @@ class Ldap extends AbstractAdapter
             'groupAttr'   => 'cn',
             'groupFilter' => 'objectClass=groupOfUniqueNames',
             'memberAttr'  => 'uniqueMember',
-            'memberIsDn'  => true
+            'memberIsDn'  => true,
         ];
         foreach (array_keys($adapterOptions) as $key) {
             if (array_key_exists($key, $options)) {
@@ -341,21 +349,23 @@ class Ldap extends AbstractAdapter
                 switch ($key) {
                     case 'groupScope':
                         $value = (int) $value;
-                        if (in_array(
-                            $value,
-                            [
-                                LaminasLdap\Ldap::SEARCH_SCOPE_BASE,
-                                LaminasLdap\Ldap::SEARCH_SCOPE_ONE,
-                                LaminasLdap\Ldap::SEARCH_SCOPE_SUB,
-                            ],
-                            true
-                        )) {
+                        if (
+                            in_array(
+                                $value,
+                                [
+                                    LaminasLdap\Ldap::SEARCH_SCOPE_BASE,
+                                    LaminasLdap\Ldap::SEARCH_SCOPE_ONE,
+                                    LaminasLdap\Ldap::SEARCH_SCOPE_SUB,
+                                ],
+                                true
+                            )
+                        ) {
                             $adapterOptions[$key] = $value;
                         }
                         break;
                     case 'memberIsDn':
-                        $adapterOptions[$key] = ($value === true ||
-                                $value === '1' || strcasecmp($value, 'true') == 0);
+                        $adapterOptions[$key] = $value === true ||
+                                $value === '1' || strcasecmp($value, 'true') === 0;
                         break;
                     default:
                         $adapterOptions[$key] = trim($value);
@@ -370,7 +380,6 @@ class Ldap extends AbstractAdapter
     /**
      * Checks the group membership of the bound user
      *
-     * @param  LaminasLdap\Ldap $ldap
      * @param  string        $canonicalName
      * @param  string        $dn
      * @param  array         $adapterOptions
@@ -434,7 +443,7 @@ class Ldap extends AbstractAdapter
                 continue;
             }
             if (is_array($value)) {
-                $returnObject->$attr = (count($value) > 1) ? $value : $value[0];
+                $returnObject->$attr = count($value) > 1 ? $value : $value[0];
             } else {
                 $returnObject->$attr = $value;
             }

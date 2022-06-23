@@ -1,14 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Stdlib\ErrorHandler;
+
+use function ctype_print;
+use function fclose;
+use function fgetcsv;
+use function fopen;
+use function is_readable;
+use function strpos;
+
+use const E_WARNING;
 
 /**
  * HTTP Authentication File Resolver
@@ -39,7 +44,7 @@ class FileResolver implements ResolverInterface
      *
      * @param  string $path
      * @return self Provides a fluent interface
-     * @throws Exception\InvalidArgumentException if path is not readable
+     * @throws Exception\InvalidArgumentException If path is not readable.
      */
     public function setFile($path)
     {
@@ -78,6 +83,7 @@ class FileResolver implements ResolverInterface
      *
      * @param  string $username Username
      * @param  string $realm    Authentication Realm
+     * @param string|null $password
      * @return string|false User's shared secret, if the user is found in the
      *         realm, false otherwise.
      * @throws Exception\ExceptionInterface
@@ -101,7 +107,7 @@ class FileResolver implements ResolverInterface
 
         // Open file, read through looking for matching credentials
         ErrorHandler::start(E_WARNING);
-        $fp     = fopen($this->file, 'r');
+        $fp    = fopen($this->file, 'r');
         $error = ErrorHandler::stop();
         if (! $fp) {
             throw new Exception\RuntimeException('Unable to open password file: ' . $this->file, 0, $error);
@@ -110,7 +116,7 @@ class FileResolver implements ResolverInterface
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
         while (($line = fgetcsv($fp, 512, ':', '"')) !== false) {
-            if ($line[0] == $username && $line[1] == $realm) {
+            if ($line[0] === $username && $line[1] === $realm) {
                 $password = $line[2];
                 fclose($fp);
                 return $password;

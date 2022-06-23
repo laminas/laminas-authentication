@@ -1,19 +1,22 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Sql\Select;
+use PDO;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_pop;
+use function count;
+use function extension_loaded;
+use function getenv;
+use function in_array;
 use function serialize;
 
 /**
@@ -47,7 +50,7 @@ class CredentialTreatmentAdapterTest extends TestCase
             $this->markTestSkipped('Tests are not enabled in phpunit.xml');
         } elseif (! extension_loaded('pdo')) {
             $this->markTestSkipped('PDO extension is not loaded');
-        } elseif (! in_array('sqlite', \PDO::getAvailableDrivers())) {
+        } elseif (! in_array('sqlite', PDO::getAvailableDrivers())) {
             $this->markTestSkipped('SQLite PDO driver is not available');
         }
 
@@ -66,8 +69,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
-     *
-     * @return void
      */
     public function testAuthenticateSuccess(): void
     {
@@ -79,8 +80,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
-     *
-     * @return void
      */
     public function testAuthenticateSuccessWithTreatment(): void
     {
@@ -91,12 +90,9 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->assertTrue($result->isValid());
     }
 
-
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
-     *
-     * @return void
      */
     public function testAuthenticateFailureIdentityNotFound(): void
     {
@@ -110,8 +106,6 @@ class CredentialTreatmentAdapterTest extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
-     *
-     * @return void
      */
     public function testAuthenticateFailureIdentityAmbiguous(): void
     {
@@ -128,8 +122,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensures expected behavior for authentication failure because of a bad password
-     *
-     * @return void
      */
     public function testAuthenticateFailureInvalidCredential(): void
     {
@@ -141,8 +133,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensures that getResultRowObject() works for successful authentication
-     *
-     * @return void
      */
     public function testGetResultRow(): void
     {
@@ -155,8 +145,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that ResultRowObject returns only what told to be included
-     *
-     * @return void
      */
     public function testGetSpecificResultRow(): void
     {
@@ -172,36 +160,30 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that ResultRowObject returns an object has specific omissions
-     *
-     * @return void
      */
     public function testGetOmittedResultRow(): void
     {
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
         $this->_adapter->authenticate();
-        $resultRow = $this->_adapter->getResultRowObject(null, 'password');
-        $expected = new stdClass();
-        $expected->id = 1;
-        $expected->username = 'my_username';
+        $resultRow           = $this->_adapter->getResultRowObject(null, 'password');
+        $expected            = new stdClass();
+        $expected->id        = 1;
+        $expected->username  = 'my_username';
         $expected->real_name = 'My Real Name';
         $this->assertEquals($expected, $resultRow);
     }
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterCanReturnDbSelectObject(): void
     {
-        $this->assertInstanceOf('Laminas\Db\Sql\Select', $this->_adapter->getDbSelect());
+        $this->assertInstanceOf(Select::class, $this->_adapter->getDbSelect());
     }
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
@@ -216,8 +198,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
@@ -237,8 +217,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoTable(): void
     {
@@ -250,8 +228,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoIdentityColumn(): void
     {
@@ -263,8 +239,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoCredentialColumn(): void
     {
@@ -276,8 +250,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoIdentity(): void
     {
@@ -288,8 +260,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoCredential(): void
     {
@@ -301,8 +271,6 @@ class CredentialTreatmentAdapterTest extends TestCase
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionBadSql(): void
     {
@@ -320,8 +288,6 @@ class CredentialTreatmentAdapterTest extends TestCase
      * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
      * @group Laminas-7289
-     *
-     * @return void
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
@@ -345,8 +311,6 @@ class CredentialTreatmentAdapterTest extends TestCase
      * a flag is set
      *
      * @group Laminas-7289
-     *
-     * @return void
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {
@@ -386,8 +350,10 @@ class CredentialTreatmentAdapterTest extends TestCase
     protected function _setupDbAdapter($optionalParams = []): void
     {
         // @codingStandardsIgnoreEnd
-        $params = ['driver' => 'pdo_sqlite',
-                        'dbname' => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE')];
+        $params = [
+            'driver' => 'pdo_sqlite',
+            'dbname' => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE'),
+        ];
 
         if (! empty($optionalParams)) {
             $params['options'] = $optionalParams;

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter;
 
@@ -12,13 +8,22 @@ use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Crypt\Utils as CryptUtils;
 use Laminas\Stdlib\ErrorHandler;
 
+use function fgets;
+use function fopen;
+use function md5;
+use function strpos;
+use function substr;
+use function trim;
+
+use const E_WARNING;
+
 /**
  * @deprecated Since 2.10.0; to be removed in 3.0.0. Digest authentication has
-*     known security issues due to the usage of MD5 for hash comparisons.
-*     We recommend usage of HTTP Basic, LDAP, DbTable, or a custom adapter that
-*     makes usage of strong hashing algorithms, preferably via usage of
-*     password_hash and password_verify.
-*/
+ *     known security issues due to the usage of MD5 for hash comparisons.
+ *     We recommend usage of HTTP Basic, LDAP, DbTable, or a custom adapter that
+ *     makes usage of strong hashing algorithms, preferably via usage of
+ *     password_hash and password_verify.
+ */
 class Digest extends AbstractAdapter
 {
     /**
@@ -167,15 +172,15 @@ class Digest extends AbstractAdapter
             throw new Exception\UnexpectedValueException("Cannot open '$this->filename' for reading", 0, $error);
         }
 
-        $id       = "$this->identity:$this->realm";
+        $id = "$this->identity:$this->realm";
 
         $result = [
-            'code'  => AuthenticationResult::FAILURE,
+            'code'     => AuthenticationResult::FAILURE,
             'identity' => [
                 'realm'    => $this->realm,
                 'username' => $this->identity,
             ],
-            'messages' => []
+            'messages' => [],
         ];
 
         while (($line = fgets($fileHandle)) !== false) {
@@ -184,10 +189,12 @@ class Digest extends AbstractAdapter
                 break;
             }
             if (0 === strpos($line, $id)) {
-                if (CryptUtils::compareStrings(
-                    substr($line, -32),
-                    md5("$this->identity:$this->realm:$this->credential")
-                )) {
+                if (
+                    CryptUtils::compareStrings(
+                        substr($line, -32),
+                        md5("$this->identity:$this->realm:$this->credential")
+                    )
+                ) {
                     return new AuthenticationResult(
                         AuthenticationResult::SUCCESS,
                         $result['identity'],

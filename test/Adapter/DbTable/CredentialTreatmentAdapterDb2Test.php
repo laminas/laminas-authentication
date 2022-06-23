@@ -1,16 +1,22 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-authentication for the canonical source repository
- * @copyright https://github.com/laminas/laminas-authentication/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-authentication/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
+
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
+use Laminas\Authentication\Adapter\DbTable;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Sql\Select;
 use PHPUnit\Framework\TestCase;
+
+use function array_pop;
+use function constant;
+use function count;
+use function extension_loaded;
+use function getenv;
+use function serialize;
 
 /**
  * @group Laminas_Auth
@@ -21,19 +27,21 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * IbmDb2 database connection
      *
-     * @var \Laminas\Db\Adapter\Adapter
+     * @var DbAdapter
      */
-    protected $db = null;
+    protected $db;
 
     /**
      * Database table authentication adapter
      *
-     * @var \Laminas\Authentication\Adapter\DbTable
+     * @var DbTable
      */
-    protected $adapter = null;
+    protected $adapter;
 
     /**
      * Database adapter configuration
+     *
+     * @var array
      */
     protected $dbAdapterParams;
 
@@ -57,7 +65,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
             $this->markTestSkipped('ibm_db2 extension is not loaded');
         }
 
-        $this->dbAdapterParams = [
+        $this->dbAdapterParams                                = [
             'driver'           => 'IbmDb2',
             'dbname'           => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_DATABASE'),
             'username'         => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_USERNAME'),
@@ -67,7 +75,9 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         ];
         $this->dbAdapterParams['driver_options']['i5_commit'] = constant('DB2_I5_TXN_NO_COMMIT');
         $this->dbAdapterParams['driver_options']['i5_naming'] = constant('DB2_I5_NAMING_OFF');
-        $this->tableName = getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE');
+        $this->tableName                                      = getenv(
+            'TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE'
+        );
 
         $this->setupDbAdapter();
         $this->setupAuthAdapter();
@@ -95,8 +105,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
-     *
-     * @return void
      */
     public function testAuthenticateSuccess(): void
     {
@@ -108,8 +116,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensures expected behavior for authentication success
-     *
-     * @return void
      */
     public function testAuthenticateSuccessWithTreatment(): void
     {
@@ -123,8 +129,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity not found.
-     *
-     * @return void
      */
     public function testAuthenticateFailureIdentityNotFound(): void
     {
@@ -138,8 +142,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Ensures expected behavior for for authentication failure
      * reason: Identity ambiguous.
-     *
-     * @return void
      */
     public function testAuthenticateFailureIdentityAmbiguous(): void
     {
@@ -156,8 +158,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensures expected behavior for authentication failure because of a bad password
-     *
-     * @return void
      */
     public function testAuthenticateFailureInvalidCredential(): void
     {
@@ -169,8 +169,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensures that getResultRowObject() works for successful authentication
-     *
-     * @return void
      */
     public function testGetResultRow(): void
     {
@@ -184,8 +182,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that ResultRowObject returns only what told to be included
-     *
-     * @return void
      */
     public function testGetSpecificResultRow(): void
     {
@@ -195,7 +191,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         // Since we did not set db2_attr_case, column names will be upper case, as expected
         $resultRow = $this->authAdapter->getResultRowObject([
             'USERNAME',
-            'REAL_NAME'
+            'REAL_NAME',
         ]);
         $this->assertEquals(
             'O:8:"stdClass":2:{s:8:"USERNAME";s:11:"my_username";s:9:"REAL_NAME";s:12:"My Real Name";}',
@@ -205,8 +201,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that ResultRowObject returns an object that has specific omissions
-     *
-     * @return void
      */
     public function testGetOmittedResultRow(): void
     {
@@ -223,18 +217,14 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterCanReturnDbSelectObject(): void
     {
-        $this->assertInstanceOf('Laminas\Db\Sql\Select', $this->authAdapter->getDbSelect());
+        $this->assertInstanceOf(Select::class, $this->authAdapter->getDbSelect());
     }
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
@@ -249,8 +239,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * @group Laminas-5957
-     *
-     * @return void
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
@@ -260,18 +248,16 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->authAdapter->setCredential('my_password');
         $this->authAdapter->authenticate();
         $selectAfterAuth = $this->authAdapter->getDbSelect();
-        $whereParts = $selectAfterAuth->where->getPredicates();
+        $whereParts      = $selectAfterAuth->where->getPredicates();
         $this->assertEquals(1, count($whereParts));
 
-        $lastWherePart = array_pop($whereParts);
+        $lastWherePart  = array_pop($whereParts);
         $expressionData = $lastWherePart[1]->getExpressionData();
         $this->assertEquals('1 = 1', $expressionData[0][0]);
     }
 
     /**
      * Ensure that exceptions are caught
-     *
-     * @return void
      */
     public function testCatchExceptionNoTable(): void
     {
@@ -283,8 +269,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that exceptions are thrown
-     *
-     * @return void
      */
     public function testCatchExceptionNoIdentityColumn(): void
     {
@@ -296,8 +280,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that exceptions are thrown
-     *
-     * @return void
      */
     public function testCatchExceptionNoCredentialColumn(): void
     {
@@ -309,8 +291,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that exceptions are thrown
-     *
-     * @return void
      */
     public function testCatchExceptionNoIdentity(): void
     {
@@ -321,8 +301,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that exceptions are thrown
-     *
-     * @return void
      */
     public function testCatchExceptionNoCredential(): void
     {
@@ -334,8 +312,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
 
     /**
      * Ensure that exceptions are thrown
-     *
-     * @return void
      */
     public function testCatchExceptionBadSql(): void
     {
@@ -354,8 +330,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
      *
      * @group Laminas-7289
-     *
-     * @return void
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
@@ -375,8 +349,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      * a flag is set
      *
      * @group Laminas-7289
-     *
-     * @return void
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {
@@ -406,7 +378,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->assertEquals('my_username', $result2->getIdentity());
     }
 
-    protected function setupDbAdapter($optionalParams = []): void
+    protected function setupDbAdapter(array $optionalParams = []): void
     {
         $this->createDbAdapter($optionalParams);
 
@@ -416,7 +388,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
     }
 
-    protected function createDbAdapter($optionalParams = []): void
+    protected function createDbAdapter(array $optionalParams = []): void
     {
         if (! empty($optionalParams)) {
             $this->dbAdapterParams['options'] = $optionalParams;
