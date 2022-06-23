@@ -766,7 +766,8 @@
       <code>has</code>
       <code>has</code>
     </MixedMethodCall>
-    <MixedOperand occurrences="11">
+    <MixedOperand occurrences="12">
+      <code>$this-&gt;_basicConfig['realm']</code>
       <code>$this-&gt;_basicConfig['realm']</code>
       <code>$this-&gt;_basicConfig['realm']</code>
       <code>$this-&gt;_basicConfig['realm']</code>
