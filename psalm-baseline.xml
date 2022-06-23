@@ -68,6 +68,11 @@
       <code>$resultRow</code>
       <code>$tableName</code>
     </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="3">
+      <code>(string) $this-&gt;credentialColumn</code>
+      <code>(string) $this-&gt;identityColumn</code>
+      <code>(string) $this-&gt;tableName</code>
+    </RedundantCastGivenDocblockType>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_bool($flag)</code>
     </RedundantConditionGivenDocblockType>
