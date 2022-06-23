@@ -222,10 +222,10 @@ class AuthTest extends TestCase
         $this->checkUnauthorized($data, $basic);
     }
 
-    public function testBasicAuthTokenIsNotBase64(): void
+    public function testBasicAuthTokenIsNotBasicAuthToken(): void
     {
-        // Attempt Basic Authentication with a valid username, but invalid
-        // password
+        // Attempt Basic Authentication with missing credentials causing
+        // extracting the Basic Auth token to fail.
 
         // The expected Basic Www-Authenticate header value
         $basic = [
@@ -234,6 +234,21 @@ class AuthTest extends TestCase
         ];
 
         $data = $this->doAuth('Basic', 'basic');
+        $this->checkUnauthorized($data, $basic);
+    }
+
+    public function testBasicAuthTokenIsNotBase64(): void
+    {
+        // Attempt Basic Authentication with empty credentials causing
+        // decoding the Basic Auth token to fail.
+
+        // The expected Basic Www-Authenticate header value
+        $basic = [
+            'type'  => 'Basic ',
+            'realm' => 'realm="' . $this->_basicConfig['realm'] . '"',
+        ];
+
+        $data = $this->doAuth('Basic ', 'basic');
         $this->checkUnauthorized($data, $basic);
     }
 
