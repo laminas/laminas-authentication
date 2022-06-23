@@ -104,7 +104,17 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      */
     protected function authenticateValidateResult($resultIdentity)
     {
-        if ($resultIdentity['laminas_auth_credential_match'] !== '1') {
+        /**
+         * Starting with PHP 8.1.0 integers and floats in result sets will be returned using native PHP types instead
+         * of strings when using emulated prepared statements. To keep the behavior consistent with older versions of
+         * PHP, strict comparison of both types is used.
+         *
+         * @linkhttps://www.php.net/manual/en/migration81.incompatible.php#migration81.incompatible.pdo.mysql
+         */
+        if (
+            $resultIdentity['laminas_auth_credential_match'] !== '1'
+            && $resultIdentity['laminas_auth_credential_match'] !== 1
+        ) {
             $this->authenticateResultInfo['code']       = AuthenticationResult::FAILURE_CREDENTIAL_INVALID;
             $this->authenticateResultInfo['messages'][] = 'Supplied credential is invalid.';
             return $this->authenticateCreateAuthResult();
