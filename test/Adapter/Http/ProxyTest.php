@@ -151,7 +151,7 @@ class ProxyTest extends TestCase
         $this->assertEquals(407, $status);
         $this->assertTrue($headers->has('Proxy-Authenticate'));
         $authHeader = $headers->get('Proxy-Authenticate');
-        $this->assertEquals(2, count($authHeader), var_export($authHeader, 1));
+        $this->assertEquals(2, count($authHeader), var_export($authHeader, true));
 
         // Check to see if the expected challenges match the actual
         $basicFound = $digestFound = false;
@@ -455,7 +455,7 @@ class ProxyTest extends TestCase
 
         // Make sure the result is true
         $this->assertInstanceOf(Result::class, $result);
-        $this->assertTrue($result->isValid(), var_export($result->getMessages(), 1));
+        $this->assertTrue($result->isValid(), var_export($result->getMessages(), true));
 
         // Verify we got a 200 response
         $this->assertEquals(200, $status);

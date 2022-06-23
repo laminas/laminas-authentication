@@ -497,7 +497,7 @@ class AuthTest extends TestCase
 
         // Make sure the result is true
         $this->assertInstanceOf(Result::class, $result);
-        $this->assertTrue($result->isValid(), var_export($result, 1));
+        $this->assertTrue($result->isValid(), var_export($result, true));
 
         // Verify we got a 200 response
         $this->assertEquals(200, $status);
