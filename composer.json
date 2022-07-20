@@ -35,7 +35,7 @@
         "laminas/laminas-uri": "^2.5.2",
         "laminas/laminas-validator": "^2.10.1",
         "phpunit/phpunit": "^9.3",
-        "psalm/plugin-phpunit": "^0.15.1",
+        "psalm/plugin-phpunit": "^0.17.0",
         "squizlabs/php_codesniffer": "^2.9.2 || ^3.6",
         "vimeo/psalm": "^4.6"
     },
