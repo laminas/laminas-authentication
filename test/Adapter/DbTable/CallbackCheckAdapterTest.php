@@ -366,6 +366,7 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertEquals('my_username', $result2->getIdentity());
     }
 
+    /** @param array<array-key, mixed> $optionalParams */
     protected function setupDbAdapter($optionalParams = []): void
     {
         $params = [

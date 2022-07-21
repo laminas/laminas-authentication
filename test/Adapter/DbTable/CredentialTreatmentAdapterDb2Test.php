@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
-use Laminas\Authentication\Adapter;
-use Laminas\Authentication\Adapter\DbTable;
-use Laminas\Authentication\Adapter\DbTable\AbstractAdapter;
 use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
 use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
@@ -33,13 +30,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      * @var DbAdapter
      */
     protected $db;
-
-    /**
-     * Database table authentication adapter
-     *
-     * @var DbTable
-     */
-    protected $adapter;
 
     /**
      * Database adapter configuration

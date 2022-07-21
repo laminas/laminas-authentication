@@ -28,9 +28,6 @@ use function strpos;
 use function strtolower;
 use function substr;
 use function time;
-use function trigger_error;
-
-use const E_USER_DEPRECATED;
 
 /**
  * HTTP Authentication Adapter
