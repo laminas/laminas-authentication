@@ -10,7 +10,8 @@ use PHPUnit\Framework\TestCase;
 
 class HttpTest extends TestCase
 {
-    private Http $wrapper;
+    /** @var Http */
+    private $wrapper;
 
     public function setUp(): void
     {
