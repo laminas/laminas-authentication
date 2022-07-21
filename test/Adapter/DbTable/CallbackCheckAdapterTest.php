@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
-use Laminas\Authentication\Adapter;
+use Laminas\Authentication\Adapter\DbTable\AbstractAdapter;
+use Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter;
+use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
+use Laminas\Authentication\Adapter\DbTable\Exception\InvalidArgumentException;
+use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
 use PDO;
@@ -25,21 +29,19 @@ use function serialize;
  */
 class CallbackCheckAdapterTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
     /**
      * SQLite database connection
      *
-     * @var \Laminas\Db\Adapter\Adapter
+     * @var DbAdapter
      */
-    protected $_db = null;
+    protected $db;
 
     /**
      * Database table authentication adapter
      *
-     * @var \Laminas\Authentication\Adapter\DbTable
+     * @var AbstractAdapter
      */
-    protected $_adapter = null;
-    // @codingStandardsIgnoreEnd
+    protected $adapter;
 
     /**
      * Set up test configuration
@@ -54,17 +56,16 @@ class CallbackCheckAdapterTest extends TestCase
             $this->markTestSkipped('SQLite PDO driver is not available');
         }
 
-        $this->_setupDbAdapter();
-        $this->_setupAuthAdapter();
+        $this->setupDbAdapter();
+        $this->setupAuthAdapter();
     }
 
     public function tearDown(): void
     {
-        $this->_adapter = null;
-        if ($this->_db instanceof DbAdapter) {
-            $this->_db->query('DROP TABLE [users]');
-        }
-        $this->_db = null;
+        $this->adapter = null;
+
+        $this->db->query('DROP TABLE [users]');
+        $this->db = null;
     }
 
     /**
@@ -72,9 +73,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateSuccess(): void
     {
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
-        $result = $this->_adapter->authenticate();
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
+        $result = $this->adapter->authenticate();
         $this->assertTrue($result->isValid());
     }
 
@@ -83,12 +84,19 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateSuccessWithCallback(): void
     {
-        $this->_adapter = new Adapter\DbTable($this->_db, 'users', 'username', 'password', null, function ($a, $b) {
-            return $a === $b;
-        });
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
-        $result = $this->_adapter->authenticate();
+        $this->adapter = new CredentialTreatmentAdapter(
+            $this->db,
+            'users',
+            'username',
+            'password',
+            null,
+            function ($a, $b) {
+                return $a === $b;
+            }
+        );
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
+        $result = $this->adapter->authenticate();
         $this->assertTrue($result->isValid());
     }
 
@@ -97,9 +105,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateCallbackThrowsException(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
-        $this->_adapter->setCredentialValidationCallback('This is not a valid callback');
+        $this->adapter->setCredentialValidationCallback('This is not a valid callback');
     }
 
     /**
@@ -108,10 +116,10 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateFailureIdentityNotFound(): void
     {
-        $this->_adapter->setIdentity('non_existent_username');
-        $this->_adapter->setCredential('my_password');
+        $this->adapter->setIdentity('non_existent_username');
+        $this->adapter->setCredential('my_password');
 
-        $result = $this->_adapter->authenticate();
+        $result = $this->adapter->authenticate();
         $this->assertEquals(Authentication\Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
     }
 
@@ -123,12 +131,12 @@ class CallbackCheckAdapterTest extends TestCase
     {
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
             . 'VALUES ("my_username", "my_password", "My Real Name")';
-        $this->_db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
 
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
 
-        $result = $this->_adapter->authenticate();
+        $result = $this->adapter->authenticate();
         $this->assertEquals(Authentication\Result::FAILURE_IDENTITY_AMBIGUOUS, $result->getCode());
     }
 
@@ -137,9 +145,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateFailureInvalidCredential(): void
     {
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password_bad');
-        $result = $this->_adapter->authenticate();
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password_bad');
+        $result = $this->adapter->authenticate();
         $this->assertFalse($result->isValid());
     }
 
@@ -148,10 +156,10 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testGetResultRow(): void
     {
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
-        $this->_adapter->authenticate();
-        $resultRow = $this->_adapter->getResultRowObject();
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
+        $this->adapter->authenticate();
+        $resultRow = $this->adapter->getResultRowObject();
         $this->assertEquals($resultRow->username, 'my_username');
     }
 
@@ -160,10 +168,10 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testGetSpecificResultRow(): void
     {
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
-        $this->_adapter->authenticate();
-        $resultRow = $this->_adapter->getResultRowObject(['username', 'real_name']);
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
+        $this->adapter->authenticate();
+        $resultRow = $this->adapter->getResultRowObject(['username', 'real_name']);
         $this->assertEquals(
             'O:8:"stdClass":2:{s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}',
             serialize($resultRow)
@@ -175,10 +183,10 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testGetOmittedResultRow(): void
     {
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
-        $this->_adapter->authenticate();
-        $resultRow           = $this->_adapter->getResultRowObject(null, 'password');
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
+        $this->adapter->authenticate();
+        $resultRow           = $this->adapter->getResultRowObject(null, 'password');
         $expected            = new stdClass();
         $expected->id        = 1;
         $expected->username  = 'my_username';
@@ -191,7 +199,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAdapterCanReturnDbSelectObject(): void
     {
-        $this->assertInstanceOf(Select::class, $this->_adapter->getDbSelect());
+        $this->assertInstanceOf(Select::class, $this->adapter->getDbSelect());
     }
 
     /**
@@ -199,12 +207,12 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
-        $select = $this->_adapter->getDbSelect();
+        $select = $this->adapter->getDbSelect();
         $select->where('1 = 0');
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
 
-        $result = $this->_adapter->authenticate();
+        $result = $this->adapter->authenticate();
         $this->assertEquals(Authentication\Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
     }
 
@@ -213,12 +221,12 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
-        $select = $this->_adapter->getDbSelect();
+        $select = $this->adapter->getDbSelect();
         $select->where('1 = 1');
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->setCredential('my_password');
-        $this->_adapter->authenticate();
-        $selectAfterAuth = $this->_adapter->getDbSelect();
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->setCredential('my_password');
+        $this->adapter->authenticate();
+        $selectAfterAuth = $this->adapter->getDbSelect();
         $whereParts      = $selectAfterAuth->where->getPredicates();
         $this->assertEquals(1, count($whereParts));
 
@@ -232,9 +240,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoTable(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A table must be supplied for');
-        $adapter = new Adapter\DbTable($this->_db);
+        $adapter = new CredentialTreatmentAdapter($this->db);
         $adapter->authenticate();
     }
 
@@ -243,9 +251,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoIdentityColumn(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('An identity column must be supplied for the');
-        $adapter = new Adapter\DbTable($this->_db, 'users');
+        $adapter = new CredentialTreatmentAdapter($this->db, 'users');
         $adapter->authenticate();
     }
 
@@ -254,9 +262,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoCredentialColumn(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential column must be supplied');
-        $adapter = new Adapter\DbTable($this->_db, 'users', 'username');
+        $adapter = new CredentialTreatmentAdapter($this->db, 'users', 'username');
         $adapter->authenticate();
     }
 
@@ -265,9 +273,9 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoIdentity(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A value for the identity was not provided prior');
-        $this->_adapter->authenticate();
+        $this->adapter->authenticate();
     }
 
     /**
@@ -275,10 +283,10 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionNoCredential(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential value was not provided prior');
-        $this->_adapter->setIdentity('my_username');
-        $this->_adapter->authenticate();
+        $this->adapter->setIdentity('my_username');
+        $this->adapter->authenticate();
     }
 
     /**
@@ -286,12 +294,12 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testCatchExceptionBadSql(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('The supplied parameters to');
-        $this->_adapter->setTableName('bad_table_name');
-        $this->_adapter->setIdentity('value');
-        $this->_adapter->setCredential('value');
-        $this->_adapter->authenticate();
+        $this->adapter->setTableName('bad_table_name');
+        $this->adapter->setIdentity('value');
+        $this->adapter->setCredential('value');
+        $this->adapter->authenticate();
     }
 
     /**
@@ -305,12 +313,12 @@ class CallbackCheckAdapterTest extends TestCase
     {
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
                    . 'VALUES ("my_username", "my_otherpass", "Test user 2")';
-        $this->_db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
 
         // test if user 1 can authenticate
-        $this->_adapter->setIdentity('my_username')
+        $this->adapter->setIdentity('my_username')
                        ->setCredential('my_password');
-        $result = $this->_adapter->authenticate();
+        $result = $this->adapter->authenticate();
         $this->assertContains(
             'More than one record matches the supplied identity.',
             $result->getMessages()
@@ -328,13 +336,13 @@ class CallbackCheckAdapterTest extends TestCase
     {
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
                    . 'VALUES ("my_username", "my_otherpass", "Test user 2")';
-        $this->_db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
 
         // test if user 1 can authenticate
-        $this->_adapter->setIdentity('my_username')
+        $this->adapter->setIdentity('my_username')
                        ->setCredential('my_password')
                        ->setAmbiguityIdentity(true);
-        $result = $this->_adapter->authenticate();
+        $result = $this->adapter->authenticate();
         $this->assertNotContains(
             'More than one record matches the supplied identity.',
             $result->getMessages()
@@ -342,14 +350,14 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertTrue($result->isValid());
         $this->assertEquals('my_username', $result->getIdentity());
 
-        $this->_adapter = null;
-        $this->_setupAuthAdapter();
+        $this->adapter = null;
+        $this->setupAuthAdapter();
 
         // test if user 2 can authenticate
-        $this->_adapter->setIdentity('my_username')
+        $this->adapter->setIdentity('my_username')
                        ->setCredential('my_otherpass')
                        ->setAmbiguityIdentity(true);
-        $result2 = $this->_adapter->authenticate();
+        $result2 = $this->adapter->authenticate();
         $this->assertNotContains(
             'More than one record matches the supplied identity.',
             $result->getMessages()
@@ -358,10 +366,8 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertEquals('my_username', $result2->getIdentity());
     }
 
-    // @codingStandardsIgnoreStart
-    protected function _setupDbAdapter($optionalParams = []): void
+    protected function setupDbAdapter($optionalParams = []): void
     {
-        // @codingStandardsIgnoreEnd
         $params = [
             'driver' => 'pdo_sqlite',
             'dbname' => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE'),
@@ -371,27 +377,25 @@ class CallbackCheckAdapterTest extends TestCase
             $params['options'] = $optionalParams;
         }
 
-        $this->_db = new DbAdapter($params);
+        $this->db = new DbAdapter($params);
 
         $sqlCreate = 'CREATE TABLE IF NOT EXISTS [users] ( '
                    . '[id] INTEGER  NOT NULL PRIMARY KEY, '
                    . '[username] VARCHAR(50) NOT NULL, '
                    . '[password] VARCHAR(32) NULL, '
                    . '[real_name] VARCHAR(150) NULL)';
-        $this->_db->query($sqlCreate, DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->query($sqlCreate, DbAdapter::QUERY_MODE_EXECUTE);
 
         $sqlDelete = 'DELETE FROM users';
-        $this->_db->query($sqlDelete, DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->query($sqlDelete, DbAdapter::QUERY_MODE_EXECUTE);
 
         $sqlInsert = 'INSERT INTO users (username, password, real_name) '
                    . 'VALUES ("my_username", "my_password", "My Real Name")';
-        $this->_db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
+        $this->db->query($sqlInsert, DbAdapter::QUERY_MODE_EXECUTE);
     }
 
-    // @codingStandardsIgnoreStart
-    protected function _setupAuthAdapter(): void
+    protected function setupAuthAdapter(): void
     {
-        // @codingStandardsIgnoreEnd
-        $this->_adapter = new Adapter\DbTable\CallbackCheckAdapter($this->_db, 'users', 'username', 'password');
+        $this->adapter = new CallbackCheckAdapter($this->db, 'users', 'username', 'password');
     }
 }
