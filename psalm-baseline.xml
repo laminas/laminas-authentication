@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="v4.14.0@14dcbc908ab2625cd7a74258ee6c740cbecc6140">
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
   <file src="src/Adapter/AdapterInterface.php">
     <InvalidThrow occurrences="1">
       <code>\Laminas\Authentication\Adapter\Exception\ExceptionInterface</code>
@@ -309,9 +309,6 @@
     <TooManyArguments occurrences="1">
       <code>LaminasLdap\Filter::andFilter($groupName, $membership)</code>
     </TooManyArguments>
-    <UnusedForeachValue occurrences="1">
-      <code>$value</code>
-    </UnusedForeachValue>
   </file>
   <file src="src/AuthenticationService.php">
     <DocblockTypeContradiction occurrences="1">
@@ -372,12 +369,9 @@
     </InvalidThrow>
   </file>
   <file src="src/Validator/Authentication.php">
-    <DocblockTypeContradiction occurrences="6">
-      <code>! $this-&gt;service</code>
+    <DocblockTypeContradiction occurrences="3">
       <code>$this-&gt;credential === null</code>
-      <code>$this-&gt;getAdapterFromAuthenticationService()</code>
       <code>$this-&gt;identity === null</code>
-      <code>$this-&gt;service</code>
       <code>gettype($adapter)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="3">
@@ -385,12 +379,8 @@
       <code>$options['service']</code>
       <code>static::CODE_MAP</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>static::CODE_MAP[$code]</code>
-    </MixedArrayAccess>
-    <MixedArrayOffset occurrences="2">
+    <MixedArrayOffset occurrences="1">
       <code>$this-&gt;messageTemplates[static::GENERAL]</code>
-      <code>static::CODE_MAP[$code]</code>
     </MixedArrayOffset>
     <MixedAssignment occurrences="5">
       <code>$code</code>
@@ -399,21 +389,14 @@
       <code>$this-&gt;credential</code>
       <code>$this-&gt;identity</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>static::CODE_MAP[$code]</code>
-    </MixedReturnStatement>
-    <PropertyNotSetInConstructor occurrences="4">
-      <code>$adapter</code>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$options</code>
+    </PossiblyInvalidArgument>
+    <PropertyNotSetInConstructor occurrences="2">
       <code>$credential</code>
       <code>$identity</code>
-      <code>$service</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>$this-&gt;adapter</code>
-      <code>$this-&gt;adapter</code>
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_object($adapter)</code>
     </RedundantConditionGivenDocblockType>
   </file>
