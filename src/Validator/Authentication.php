@@ -99,7 +99,7 @@ class Authentication extends AbstractValidator
     /**
      * Sets validator options
      *
-     * @param array|Traversable $options
+     * @param array<string, mixed>|Traversable<string, mixed> $options
      */
     public function __construct($options = null)
     {
