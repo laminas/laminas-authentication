@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication;
@@ -7,6 +9,25 @@ use Laminas\Crypt\Utils as CryptUtils;
 use Laminas\Http\Request as HTTPRequest;
 use Laminas\Http\Response as HTTPResponse;
 use Laminas\Uri\UriFactory;
+
+use function array_intersect;
+use function base64_decode;
+use function ceil;
+use function ctype_print;
+use function ctype_xdigit;
+use function explode;
+use function hash;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_numeric;
+use function preg_match;
+use function sprintf;
+use function strlen;
+use function strpos;
+use function strtolower;
+use function substr;
+use function time;
 
 /**
  * HTTP Authentication Adapter
@@ -146,7 +167,7 @@ class Http implements AdapterInterface
             throw new Exception\InvalidArgumentException('Config key "accept_schemes" is required');
         }
 
-        $schemes = explode(' ', $config['accept_schemes']);
+        $schemes             = explode(' ', $config['accept_schemes']);
         $this->acceptSchemes = array_intersect($schemes, $this->supportedSchemes);
         if (empty($this->acceptSchemes)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -157,10 +178,12 @@ class Http implements AdapterInterface
 
         // Double-quotes are used to delimit the realm string in the HTTP header,
         // and colons are field delimiters in the password file.
-        if (empty($config['realm']) ||
+        if (
+            empty($config['realm']) ||
             ! ctype_print($config['realm']) ||
             strpos($config['realm'], ':') !== false ||
-            strpos($config['realm'], '"') !== false) {
+            strpos($config['realm'], '"') !== false
+        ) {
             throw new Exception\InvalidArgumentException(
                 'Config key \'realm\' is required, and must contain only printable characters,'
                 . 'excluding quotation marks and colons'
@@ -171,11 +194,13 @@ class Http implements AdapterInterface
 
         if (in_array('digest', $this->acceptSchemes)) {
             $this->useOpaque = true;
-            $this->algo = 'MD5';
+            $this->algo      = 'MD5';
 
-            if (empty($config['digest_domains']) ||
+            if (
+                empty($config['digest_domains']) ||
                 ! ctype_print($config['digest_domains']) ||
-                strpos($config['digest_domains'], '"') !== false) {
+                strpos($config['digest_domains'], '"') !== false
+            ) {
                 throw new Exception\InvalidArgumentException(
                     'Config key \'digest_domains\' is required, and must contain '
                     . 'only printable characters, excluding quotation marks'
@@ -184,8 +209,10 @@ class Http implements AdapterInterface
                 $this->domains = $config['digest_domains'];
             }
 
-            if (empty($config['nonce_timeout']) ||
-                ! is_numeric($config['nonce_timeout'])) {
+            if (
+                empty($config['nonce_timeout']) ||
+                ! is_numeric($config['nonce_timeout'])
+            ) {
                 throw new Exception\InvalidArgumentException(
                     'Config key \'nonce_timeout\' is required, and must be an integer'
                 );
@@ -194,7 +221,7 @@ class Http implements AdapterInterface
             }
 
             // We use the opaque value unless explicitly told not to
-            if (isset($config['use_opaque']) && false == (bool) $config['use_opaque']) {
+            if (isset($config['use_opaque']) && false === (bool) $config['use_opaque']) {
                 $this->useOpaque = false;
             }
 
@@ -204,7 +231,7 @@ class Http implements AdapterInterface
         }
 
         // Don't be a proxy unless explicitly told to do so
-        if (isset($config['proxy_auth']) && true == (bool) $config['proxy_auth']) {
+        if (isset($config['proxy_auth']) && true === (bool) $config['proxy_auth']) {
             $this->imaProxy = true;  // I'm a Proxy
         }
     }
@@ -212,7 +239,6 @@ class Http implements AdapterInterface
     /**
      * Setter for the basicResolver property
      *
-     * @param  Http\ResolverInterface $resolver
      * @return self Provides a fluent interface
      */
     public function setBasicResolver(Http\ResolverInterface $resolver)
@@ -235,7 +261,6 @@ class Http implements AdapterInterface
     /**
      * Setter for the digestResolver property
      *
-     * @param  Http\ResolverInterface $resolver
      * @return self Provides a fluent interface
      */
     public function setDigestResolver(Http\ResolverInterface $resolver)
@@ -258,7 +283,6 @@ class Http implements AdapterInterface
     /**
      * Setter for the Request object
      *
-     * @param  HTTPRequest $request
      * @return self Provides a fluent interface
      */
     public function setRequest(HTTPRequest $request)
@@ -281,7 +305,6 @@ class Http implements AdapterInterface
     /**
      * Setter for the Response object
      *
-     * @param  HTTPResponse $response
      * @return self Provides a fluent interface
      */
     public function setResponse(HTTPResponse $response)
@@ -330,8 +353,8 @@ class Http implements AdapterInterface
             return $this->challengeClient();
         }
 
-        list($clientScheme) = explode(' ', $authHeader);
-        $clientScheme = strtolower($clientScheme);
+        [$clientScheme] = explode(' ', $authHeader);
+        $clientScheme   = strtolower($clientScheme);
 
         // The server can issue multiple challenges, but the client should
         // answer with only the selected auth scheme.
@@ -426,14 +449,12 @@ class Http implements AdapterInterface
     protected function _digestHeader()
     {
         // @codingStandardsIgnoreEnd
-        $wwwauth = 'Digest realm="' . $this->realm . '", '
+        return 'Digest realm="' . $this->realm . '", '
                  . 'domain="' . $this->domains . '", '
                  . 'nonce="' . $this->_calcNonce() . '", '
                  . ($this->useOpaque ? 'opaque="' . $this->_calcOpaque() . '", ' : '')
                  . 'algorithm="' . $this->algo . '", '
                  . 'qop="' . implode(',', $this->supportedQops) . '"';
-
-        return $wwwauth;
     }
 
     /**
@@ -458,6 +479,10 @@ class Http implements AdapterInterface
 
         // Decode the Authorization header
         $auth = substr($header, strlen('Basic '));
+        if ($auth === false) {
+            return $this->challengeClient();
+        }
+
         $auth = base64_decode($auth);
         if (! $auth) {
             return $this->challengeClient();
@@ -474,7 +499,7 @@ class Http implements AdapterInterface
         if ($pos === false) {
             return $this->challengeClient();
         }
-        list($username, $password) = explode(':', $auth, 2);
+        [$username, $password] = explode(':', $auth, 2);
 
         // Fix for Laminas-1515: Now re-challenges on empty username or password
         if (empty($username) || empty($password)) {
@@ -487,7 +512,8 @@ class Http implements AdapterInterface
             return $result;
         }
 
-        if (! $result instanceof Authentication\Result
+        if (
+            ! $result instanceof Authentication\Result
             && ! is_array($result)
             && CryptUtils::compareStrings($result, $password)
         ) {
@@ -532,17 +558,17 @@ class Http implements AdapterInterface
 
         // See Laminas-1052. This code was a bit too unforgiving of invalid
         // usernames. Now, if the username is bad, we re-challenge the client.
-        if ('::invalid::' == $data['username']) {
+        if ('::invalid::' === $data['username']) {
             return $this->challengeClient();
         }
 
         // Verify that the client sent back the same nonce
-        if ($this->_calcNonce() != $data['nonce']) {
+        if ($this->_calcNonce() !== $data['nonce']) {
             return $this->challengeClient();
         }
         // The opaque value is also required to match, but of course IE doesn't
         // play ball.
-        if (! $this->ieNoOpaque && $this->_calcOpaque() != $data['opaque']) {
+        if (! $this->ieNoOpaque && $this->_calcOpaque() !== $data['opaque']) {
             return $this->challengeClient();
         }
 
@@ -558,7 +584,7 @@ class Http implements AdapterInterface
         // If MD5-sess is used, a1 value is made of the user's password
         // hash with the server and client nonce appended, separated by
         // colons.
-        if ($this->algo == 'MD5-sess') {
+        if ($this->algo === 'MD5-sess') {
             $ha1 = hash('md5', $ha1 . ':' . $data['nonce'] . ':' . $data['cnonce']);
         }
 
@@ -621,8 +647,7 @@ class Http implements AdapterInterface
         } else {
             $userAgent = 'Laminas_Authenticaion';
         }
-        $nonce = hash('md5', $timeout . ':' . $userAgent . ':' . __CLASS__);
-        return $nonce;
+        return hash('md5', $timeout . ':' . $userAgent . ':' . self::class);
     }
 
     /**
@@ -641,7 +666,7 @@ class Http implements AdapterInterface
     protected function _calcOpaque()
     {
         // @codingStandardsIgnoreEnd
-        return hash('md5', 'Opaque Data:' . __CLASS__);
+        return hash('md5', 'Opaque Data:' . self::class);
     }
 
     /**
@@ -661,9 +686,11 @@ class Http implements AdapterInterface
         // See Laminas-1052. Detect invalid usernames instead of just returning a
         // 400 code.
         $ret = preg_match('/username="([^"]+)"/', $header, $temp);
-        if (! $ret || empty($temp[1])
+        if (
+            ! $ret || empty($temp[1])
                   || ! ctype_print($temp[1])
-                  || strpos($temp[1], ':') !== false) {
+                  || strpos($temp[1], ':') !== false
+        ) {
             $data['username'] = '::invalid::';
         } else {
             $data['username'] = $temp[1];
@@ -690,7 +717,7 @@ class Http implements AdapterInterface
         }
 
         $data['nonce'] = $temp[1];
-        $temp = null;
+        $temp          = null;
 
         $ret = preg_match('/uri="([^"]+)"/', $header, $temp);
         if (! $ret || empty($temp[1])) {
@@ -703,7 +730,7 @@ class Http implements AdapterInterface
         $cUri = UriFactory::factory($temp[1]);
 
         // Make sure the path portion of both URIs is the same
-        if ($rUri->getPath() != $cUri->getPath()) {
+        if ($rUri->getPath() !== $cUri->getPath()) {
             return false;
         }
 
@@ -712,7 +739,7 @@ class Http implements AdapterInterface
         // Request URI is absolute, but it's vague, and that's a bunch of
         // code I don't want to write right now.
         $data['uri'] = $temp[1];
-        $temp = null;
+        $temp        = null;
 
         $ret = preg_match('/response="([^"]+)"/', $header, $temp);
         if (! $ret || empty($temp[1])) {
@@ -723,14 +750,16 @@ class Http implements AdapterInterface
         }
 
         $data['response'] = $temp[1];
-        $temp = null;
+        $temp             = null;
 
         // The spec says this should default to MD5 if omitted. OK, so how does
         // that square with the algo we send out in the WWW-Authenticate header,
         // if it can easily be overridden by the client?
         $ret = preg_match('/algorithm="?(' . $this->algo . ')"?/', $header, $temp);
-        if ($ret && ! empty($temp[1])
-                 && in_array($temp[1], $this->supportedAlgos)) {
+        if (
+            $ret && ! empty($temp[1])
+                 && in_array($temp[1], $this->supportedAlgos)
+        ) {
             $data['algorithm'] = $temp[1];
         } else {
             $data['algorithm'] = 'MD5';  // = $this->algo; ?
@@ -747,7 +776,7 @@ class Http implements AdapterInterface
         }
 
         $data['cnonce'] = $temp[1];
-        $temp = null;
+        $temp           = null;
 
         // If the server sent an opaque value, the client must send it back
         if ($this->useOpaque) {
@@ -763,18 +792,20 @@ class Http implements AdapterInterface
                     return false;
                 }
 
-                $temp[1] = '';
+                $temp[1]          = '';
                 $this->ieNoOpaque = true;
             }
 
             // This implementation only sends MD5 hex strings in the opaque value
-            if (! $this->ieNoOpaque &&
-                ! $this->isValidMd5Hash($temp[1])) {
+            if (
+                ! $this->ieNoOpaque &&
+                ! $this->isValidMd5Hash($temp[1])
+            ) {
                 return false;
             }
 
             $data['opaque'] = $temp[1];
-            $temp = null;
+            $temp           = null;
         }
 
         // Not optional in this implementation, but must be one of the supported
@@ -788,7 +819,7 @@ class Http implements AdapterInterface
         }
 
         $data['qop'] = $temp[1];
-        $temp = null;
+        $temp        = null;
 
         // Not optional in this implementation. The spec says this value
         // shouldn't be a quoted string, but apparently some implementations
@@ -797,7 +828,7 @@ class Http implements AdapterInterface
         if (! $ret || empty($temp[1])) {
             return false;
         }
-        if (8 != strlen($temp[1]) || ! ctype_xdigit($temp[1])) {
+        if (8 !== strlen($temp[1]) || ! ctype_xdigit($temp[1])) {
             return false;
         }
 
@@ -808,11 +839,12 @@ class Http implements AdapterInterface
 
     /**
      * validates if $value is a valid Md5 hash
+     *
      * @param string $value
      * @return bool
      */
     private function isValidMd5Hash($value)
     {
-        return 32 == strlen($value) && ctype_xdigit($value);
+        return 32 === strlen($value) && ctype_xdigit($value);
     }
 }

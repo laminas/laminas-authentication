@@ -51,13 +51,13 @@ use Laminas\Authentication\Result;
 
 class Authentication
 {
-    const IDENTITY_NOT_FOUND = 'identityNotFound';
-    const IDENTITY_AMBIGUOUS = 'identityAmbiguous';
-    const CREDENTIAL_INVALID = 'credentialInvalid';
-    const UNCATEGORIZED      = 'uncategorized';
-    const GENERAL            = 'general';
+    public const IDENTITY_NOT_FOUND = 'identityNotFound';
+    public const IDENTITY_AMBIGUOUS = 'identityAmbiguous';
+    public const CREDENTIAL_INVALID = 'credentialInvalid';
+    public const UNCATEGORIZED      = 'uncategorized';
+    public const GENERAL            = 'general';
 
-    const CODE_MAP = [
+    public const CODE_MAP = [
         Result::FAILURE_IDENTITY_NOT_FOUND => self::IDENTITY_NOT_FOUND,
         Result::FAILURE_CREDENTIAL_INVALID => self::CREDENTIAL_INVALID,
         Result::FAILURE_IDENTITY_AMBIGUOUS => self::IDENTITY_AMBIGUOUS,

@@ -16,6 +16,9 @@
         "forum": "https://discourse.laminas.dev"
     },
     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
         "sort-packages": true,
         "platform": {
             "php": "7.3.99"
@@ -26,7 +29,7 @@
         "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-crypt": "^2.6 || ^3.2.1",
         "laminas/laminas-db": "^2.13",
         "laminas/laminas-http": "^2.15.0",
@@ -54,9 +57,6 @@
         }
     },
     "autoload-dev": {
-        "files": [
-            "test/autoload.php"
-        ],
         "psr-4": {
             "LaminasTest\\Authentication\\": "test/"
         }
