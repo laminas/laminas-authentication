@@ -28,9 +28,6 @@ use function strpos;
 use function strtolower;
 use function substr;
 use function time;
-use function trigger_error;
-
-use const E_USER_DEPRECATED;
 
 /**
  * HTTP Authentication Adapter
@@ -74,7 +71,7 @@ class Http implements AdapterInterface
     /**
      * List of authentication schemes supported by this class
      *
-     * @var string[]
+     * @var array<array-key, string>
      */
     protected $supportedSchemes = ['basic', 'digest'];
 
@@ -117,7 +114,7 @@ class Http implements AdapterInterface
      * List of the supported digest algorithms. I want to support both MD5 and
      * MD5-sess, but MD5-sess won't make it into the first version.
      *
-     * @var string[]
+     * @var array<array-key, string>
      */
     protected $supportedAlgos = ['MD5'];
 
@@ -132,7 +129,7 @@ class Http implements AdapterInterface
      * List of supported qop options. My intention is to support both 'auth' and
      * 'auth-int', but 'auth-int' won't make it into the first version.
      *
-     * @var string[]
+     * @var array<array-key, string>
      */
     protected $supportedQops = ['auth'];
 
@@ -388,27 +385,6 @@ class Http implements AdapterInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @deprecated
-     *
-     * @see Http::challengeClient()
-     *
-     * @return Authentication\Result Always returns a non-identity Auth result
-     */
-    // @codingStandardsIgnoreStart
-    protected function _challengeClient()
-    {
-        // @codingStandardsIgnoreEnd
-        trigger_error(sprintf(
-            'The method "%s" is deprecated and will be removed in the future; '
-            . 'please use the public method "%s::challengeClient()" instead',
-            __METHOD__,
-            self::class
-        ), E_USER_DEPRECATED);
-
-        return $this->challengeClient();
     }
 
     /**
