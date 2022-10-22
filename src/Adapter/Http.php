@@ -479,7 +479,7 @@ class Http implements AdapterInterface
 
         // Decode the Authorization header
         $auth = substr($header, strlen('Basic '));
-        if ($auth === false) {
+        if ($auth === '') {
             return $this->challengeClient();
         }
 
