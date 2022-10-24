@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.22.0@fc2c6ab4d5fa5d644d8617089f012f3bb84b8703">
+<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
   <file src="src/Adapter/AdapterInterface.php">
     <InvalidThrow occurrences="1">
       <code>ExceptionInterface</code>
@@ -143,7 +143,8 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/Http.php">
-    <DocblockTypeContradiction occurrences="4">
+    <DocblockTypeContradiction occurrences="5">
+      <code>$auth === false</code>
       <code>$result instanceof Authentication\Result</code>
       <code>empty($this-&gt;basicResolver)</code>
       <code>empty($this-&gt;digestResolver)</code>
@@ -166,11 +167,10 @@
       <code>$data['username']</code>
       <code>$userAgent</code>
     </MixedArgument>
-    <MixedAssignment occurrences="7">
+    <MixedAssignment occurrences="6">
       <code>$authHeader</code>
       <code>$this-&gt;domains</code>
       <code>$this-&gt;realm</code>
-      <code>$userAgent</code>
       <code>$userAgent</code>
       <code>$userAgent</code>
       <code>$userAgentHeader</code>
