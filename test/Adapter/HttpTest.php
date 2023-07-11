@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace LaminasTest\Authentication\Adapter;
 
 use Laminas\Authentication\Adapter\Http;
+
+use Laminas\Http\Response;
+
 use PHPUnit\Framework\TestCase;
 
 class HttpTest extends TestCase
 {
-    /** @var TestAsset\Wrapper */
+    /** @var Http */
     private $wrapper;
 
     public function setUp(): void
@@ -19,7 +22,7 @@ class HttpTest extends TestCase
             'realm'          => 'testing',
         ];
 
-        $this->wrapper = new TestAsset\Wrapper($config);
+        $this->wrapper = new Http($config);
     }
 
     public function tearDown(): void
@@ -27,10 +30,10 @@ class HttpTest extends TestCase
         unset($this->wrapper);
     }
 
-    public function testProtectedMethodChallengeClientTriggersErrorDeprecated(): void
+    public function testChallengeClient(): void
     {
-        $this->expectDeprecation();
-        $this->wrapper->_challengeClient();
+        $this->wrapper->setResponse(new Response());
+        $this->wrapper->challengeClient();
     }
 
     public function testSetGetBasicResolver(): void
