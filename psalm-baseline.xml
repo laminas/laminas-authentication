@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="src/Adapter/AdapterInterface.php">
     <InvalidThrow occurrences="1">
       <code>ExceptionInterface</code>
@@ -143,11 +143,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/Http.php">
-    <DocblockTypeContradiction occurrences="5">
+    <DocblockTypeContradiction occurrences="3">
       <code>$auth === false</code>
       <code>$result instanceof Authentication\Result</code>
-      <code>empty($this-&gt;basicResolver)</code>
-      <code>empty($this-&gt;digestResolver)</code>
       <code>empty($this-&gt;response)</code>
     </DocblockTypeContradiction>
     <InvalidThrow occurrences="2">
@@ -225,10 +223,8 @@
       <code>has</code>
       <code>has</code>
     </PossiblyUndefinedMethod>
-    <PropertyNotSetInConstructor occurrences="8">
+    <PropertyNotSetInConstructor occurrences="6">
       <code>$algo</code>
-      <code>$basicResolver</code>
-      <code>$digestResolver</code>
       <code>$domains</code>
       <code>$nonceTimeout</code>
       <code>$request</code>
@@ -708,21 +704,11 @@
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
     </InvalidArgument>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;_digest</code>
-    </MixedArgument>
     <NullArgument occurrences="3">
       <code>null</code>
       <code>null</code>
       <code>null</code>
     </NullArgument>
-    <UndefinedThisPropertyAssignment occurrences="2">
-      <code>$this-&gt;_digest</code>
-      <code>$this-&gt;_path</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="1">
-      <code>$this-&gt;_digest</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/Adapter/Http/AuthTest.php">
     <ArgumentTypeCoercion occurrences="1">
@@ -892,6 +878,11 @@
       <code>AuthenticationResult</code>
     </ImplementedReturnTypeMismatch>
   </file>
+  <file src="test/Adapter/HttpTest.php">
+    <DeprecatedMethod occurrences="1">
+      <code>expectDeprecation</code>
+    </DeprecatedMethod>
+  </file>
   <file src="test/Adapter/Ldap/OfflineTest.php">
     <UndefinedMethod occurrences="2">
       <code>getPassword</code>
@@ -925,9 +916,7 @@
     </PossiblyFalseOperand>
   </file>
   <file src="test/Adapter/TestAsset/Wrapper.php">
-    <PropertyNotSetInConstructor occurrences="8">
-      <code>Wrapper</code>
-      <code>Wrapper</code>
+    <PropertyNotSetInConstructor occurrences="6">
       <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
@@ -936,46 +925,8 @@
       <code>Wrapper</code>
     </PropertyNotSetInConstructor>
   </file>
-  <file src="test/AuthenticationServiceTest.php">
-    <MixedAssignment occurrences="1">
-      <code>$ret</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>Result</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="12">
-      <code>authenticate</code>
-      <code>clearIdentity</code>
-      <code>getAdapter</code>
-      <code>getAdapter</code>
-      <code>getIdentity</code>
-      <code>getIdentity</code>
-      <code>getIdentity</code>
-      <code>getStorage</code>
-      <code>hasIdentity</code>
-      <code>hasIdentity</code>
-      <code>hasIdentity</code>
-      <code>setAdapter</code>
-    </MixedMethodCall>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;auth-&gt;authenticate($adapter)</code>
-    </MixedReturnStatement>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;auth</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="6">
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-    </UndefinedThisPropertyFetch>
-  </file>
   <file src="test/TestAsset/Wrapper.php">
-    <PropertyNotSetInConstructor occurrences="8">
-      <code>Wrapper</code>
-      <code>Wrapper</code>
+    <PropertyNotSetInConstructor occurrences="6">
       <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
