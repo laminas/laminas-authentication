@@ -143,11 +143,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/Http.php">
-    <DocblockTypeContradiction occurrences="5">
+    <DocblockTypeContradiction occurrences="3">
       <code>$auth === false</code>
       <code>$result instanceof Authentication\Result</code>
-      <code>empty($this-&gt;basicResolver)</code>
-      <code>empty($this-&gt;digestResolver)</code>
       <code>empty($this-&gt;response)</code>
     </DocblockTypeContradiction>
     <InvalidThrow occurrences="2">
@@ -225,10 +223,8 @@
       <code>has</code>
       <code>has</code>
     </PossiblyUndefinedMethod>
-    <PropertyNotSetInConstructor occurrences="8">
+    <PropertyNotSetInConstructor occurrences="6">
       <code>$algo</code>
-      <code>$basicResolver</code>
-      <code>$digestResolver</code>
       <code>$domains</code>
       <code>$nonceTimeout</code>
       <code>$request</code>
@@ -925,7 +921,7 @@
     </PossiblyFalseOperand>
   </file>
   <file src="test/Adapter/TestAsset/Wrapper.php">
-    <PropertyNotSetInConstructor occurrences="8">
+    <PropertyNotSetInConstructor occurrences="6">
       <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
@@ -973,7 +969,7 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="test/TestAsset/Wrapper.php">
-    <PropertyNotSetInConstructor occurrences="8">
+    <PropertyNotSetInConstructor occurrences="6">
       <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
