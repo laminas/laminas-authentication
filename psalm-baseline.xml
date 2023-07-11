@@ -704,21 +704,11 @@
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
     </InvalidArgument>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;_digest</code>
-    </MixedArgument>
     <NullArgument occurrences="3">
       <code>null</code>
       <code>null</code>
       <code>null</code>
     </NullArgument>
-    <UndefinedThisPropertyAssignment occurrences="2">
-      <code>$this-&gt;_digest</code>
-      <code>$this-&gt;_path</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="1">
-      <code>$this-&gt;_digest</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/Adapter/Http/AuthTest.php">
     <ArgumentTypeCoercion occurrences="1">
@@ -931,42 +921,6 @@
       <code>Wrapper</code>
       <code>Wrapper</code>
     </PropertyNotSetInConstructor>
-  </file>
-  <file src="test/AuthenticationServiceTest.php">
-    <MixedAssignment occurrences="1">
-      <code>$ret</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>Result</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="12">
-      <code>authenticate</code>
-      <code>clearIdentity</code>
-      <code>getAdapter</code>
-      <code>getAdapter</code>
-      <code>getIdentity</code>
-      <code>getIdentity</code>
-      <code>getIdentity</code>
-      <code>getStorage</code>
-      <code>hasIdentity</code>
-      <code>hasIdentity</code>
-      <code>hasIdentity</code>
-      <code>setAdapter</code>
-    </MixedMethodCall>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;auth-&gt;authenticate($adapter)</code>
-    </MixedReturnStatement>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;auth</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="6">
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-      <code>$this-&gt;auth</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/TestAsset/Wrapper.php">
     <PropertyNotSetInConstructor occurrences="6">
