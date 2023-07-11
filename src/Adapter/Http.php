@@ -57,14 +57,14 @@ class Http implements AdapterInterface
     /**
      * Object that looks up user credentials for the Basic scheme
      *
-     * @var Http\ResolverInterface
+     * @var Http\ResolverInterface|null
      */
     protected $basicResolver;
 
     /**
      * Object that looks up user credentials for the Digest scheme
      *
-     * @var Http\ResolverInterface
+     * @var Http\ResolverInterface|null
      */
     protected $digestResolver;
 
@@ -251,7 +251,7 @@ class Http implements AdapterInterface
     /**
      * Getter for the basicResolver property
      *
-     * @return Http\ResolverInterface
+     * @return Http\ResolverInterface|null
      */
     public function getBasicResolver()
     {
@@ -273,7 +273,7 @@ class Http implements AdapterInterface
     /**
      * Getter for the digestResolver property
      *
-     * @return Http\ResolverInterface
+     * @return Http\ResolverInterface|null
      */
     public function getDigestResolver()
     {

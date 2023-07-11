@@ -9,38 +9,20 @@ use Laminas\Authentication\Adapter\Http\Exception\ExceptionInterface;
 use Laminas\Authentication\Result;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group      Laminas_Auth
- */
 class ApacheResolverTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * Path to test files
-     *
-     * @var string
-     */
-    protected $_filesPath;
-
     /**
      * Path to a valid file
-     *
-     * @var string
      */
-    protected $_validPath;
+    private string $validPath;
 
     /**
      * Invalid path; does not exist
-     *
-     * @var string
      */
-    protected $_badPath;
-
-    /**
-     * @var Apache
-     */
-    protected $_apache;
-    // @codingStandardsIgnoreEnd
+    private string $badPath;
+    private Apache $apache;
+    private string $path;
+    private string $digest;
 
     /**
      * Sets the paths to files used in this test, and creates a shared resolver instance
@@ -48,11 +30,11 @@ class ApacheResolverTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->_path      = __DIR__ . '/TestAsset';
-        $this->_validPath = $this->_path . '/htbasic.plaintext';
-        $this->_digest    = $this->_path . '/htdigest';
-        $this->_apache    = new Apache($this->_validPath);
-        $this->_badPath   = 'invalid path';
+        $this->path      = __DIR__ . '/TestAsset';
+        $this->validPath = $this->path . '/htbasic.plaintext';
+        $this->digest    = $this->path . '/htdigest';
+        $this->apache    = new Apache($this->validPath);
+        $this->badPath   = 'invalid path';
     }
 
     /**
@@ -62,8 +44,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testSetFileValid()
     {
-        $this->_apache->setFile($this->_validPath);
-        $this->assertEquals($this->_validPath, $this->_apache->getFile());
+        $this->apache->setFile($this->validPath);
+        $this->assertEquals($this->validPath, $this->apache->getFile());
     }
 
     /**
@@ -75,7 +57,7 @@ class ApacheResolverTest extends TestCase
     {
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Path not readable');
-        $this->_apache->setFile($this->_badPath);
+        $this->apache->setFile($this->badPath);
     }
 
     /**
@@ -85,8 +67,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testConstructValid()
     {
-        $apache = new Apache($this->_validPath);
-        $this->assertEquals($this->_validPath, $apache->getFile());
+        $apache = new Apache($this->validPath);
+        $this->assertEquals($this->validPath, $apache->getFile());
     }
 
     /**
@@ -98,7 +80,7 @@ class ApacheResolverTest extends TestCase
     {
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('Path not readable');
-        new Apache($this->_badPath);
+        new Apache($this->badPath);
     }
 
     /**
@@ -124,8 +106,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testResolveValidBasic(string $file): void
     {
-        $this->_apache->setFile($file);
-        $result = $this->_apache->resolve('test', null, 'password');
+        $this->apache->setFile($file);
+        $result = $this->apache->resolve('test', null, 'password');
         $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid());
     }
@@ -138,8 +120,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testResolveValidBasicWithRealm(string $file): void
     {
-        $this->_apache->setFile($file);
-        $result = $this->_apache->resolve('test', 'realm', 'password');
+        $this->apache->setFile($file);
+        $result = $this->apache->resolve('test', 'realm', 'password');
         $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid());
     }
@@ -151,8 +133,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testResolveNoUsers(string $file): void
     {
-        $this->_apache->setFile($file);
-        $result = $this->_apache->resolve('foo', null, 'password');
+        $this->apache->setFile($file);
+        $result = $this->apache->resolve('foo', null, 'password');
         $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
     }
@@ -164,8 +146,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testResolveNoValidPassword(string $file): void
     {
-        $this->_apache->setFile($file);
-        $result = $this->_apache->resolve('test', null, 'bar');
+        $this->apache->setFile($file);
+        $result = $this->apache->resolve('test', null, 'bar');
         $this->assertInstanceOf(Result::class, $result);
         $this->assertFalse($result->isValid());
     }
@@ -175,8 +157,8 @@ class ApacheResolverTest extends TestCase
      */
     public function testResolveValidDigest(): void
     {
-        $this->_apache->setFile($this->_digest);
-        $result = $this->_apache->resolve('test', 'auth', 'password');
+        $this->apache->setFile($this->digest);
+        $result = $this->apache->resolve('test', 'auth', 'password');
         $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isValid());
     }
