@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="src/Adapter/AdapterInterface.php">
     <InvalidThrow occurrences="1">
       <code>ExceptionInterface</code>
@@ -878,6 +878,11 @@
       <code>AuthenticationResult</code>
     </ImplementedReturnTypeMismatch>
   </file>
+  <file src="test/Adapter/HttpTest.php">
+    <DeprecatedMethod occurrences="1">
+      <code>expectDeprecation</code>
+    </DeprecatedMethod>
+  </file>
   <file src="test/Adapter/Ldap/OfflineTest.php">
     <UndefinedMethod occurrences="2">
       <code>getPassword</code>
@@ -918,14 +923,10 @@
       <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/TestAsset/Wrapper.php">
     <PropertyNotSetInConstructor occurrences="6">
-      <code>Wrapper</code>
-      <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
       <code>Wrapper</code>
