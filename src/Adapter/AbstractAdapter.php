@@ -6,17 +6,17 @@ namespace Laminas\Authentication\Adapter;
 
 abstract class AbstractAdapter implements ValidatableAdapterInterface
 {
-    /** @var mixed */
+    /** @var mixed|null */
     protected $credential;
 
-    /** @var mixed */
+    /** @var mixed|null */
     protected $identity;
 
     /**
      * Returns the credential of the account being authenticated, or
      * NULL if none is set.
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function getCredential()
     {
@@ -40,7 +40,7 @@ abstract class AbstractAdapter implements ValidatableAdapterInterface
      * Returns the identity of the account being authenticated, or
      * NULL if none is set.
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function getIdentity()
     {

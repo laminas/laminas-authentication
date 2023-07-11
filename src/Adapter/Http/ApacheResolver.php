@@ -27,14 +27,14 @@ class ApacheResolver implements ResolverInterface
     /**
      * Path to credentials file
      *
-     * @var string
+     * @var string|null
      */
     protected $file;
 
     /**
      * Apache password object
      *
-     * @var ApachePassword
+     * @var ApachePassword|null
      */
     protected $apachePassword;
 
@@ -70,7 +70,7 @@ class ApacheResolver implements ResolverInterface
     /**
      * Returns the path to the credentials file
      *
-     * @return string
+     * @return string|null
      */
     public function getFile()
     {

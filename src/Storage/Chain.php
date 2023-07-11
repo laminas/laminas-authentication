@@ -13,7 +13,7 @@ class Chain implements StorageInterface
      * placed in the priority queue with a higher priority is always used
      * before using a storage with a lower priority.
      *
-     * @var PriorityQueue
+     * @var PriorityQueue<StorageInterface, int>
      */
     protected $storageChain;
 
@@ -22,6 +22,7 @@ class Chain implements StorageInterface
      */
     public function __construct()
     {
+        /** @psalm-var PriorityQueue<StorageInterface, int> */
         $this->storageChain = new PriorityQueue();
     }
 

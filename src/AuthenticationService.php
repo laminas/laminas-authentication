@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Laminas\Authentication;
 
+use function assert;
+
 class AuthenticationService implements AuthenticationServiceInterface
 {
     /**
      * Persistent storage handler
      *
-     * @var Storage\StorageInterface
+     * @var Storage\StorageInterface|null
      */
     protected $storage;
 
     /**
      * Authentication adapter
      *
-     * @var Adapter\AdapterInterface
+     * @var Adapter\AdapterInterface|null
      */
     protected $adapter;
 
@@ -68,6 +70,8 @@ class AuthenticationService implements AuthenticationServiceInterface
         if (null === $this->storage) {
             $this->setStorage(new Storage\Session());
         }
+
+        assert($this->storage !== null);
 
         return $this->storage;
     }
@@ -135,7 +139,7 @@ class AuthenticationService implements AuthenticationServiceInterface
         $storage = $this->getStorage();
 
         if ($storage->isEmpty()) {
-            return;
+            return null;
         }
 
         return $storage->read();
