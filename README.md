@@ -1,7 +1,7 @@
 # laminas-authentication
 
-[![Build Status](https://travis-ci.com/laminas/laminas-authentication.svg?branch=master)](https://travis-ci.com/laminas/laminas-authentication)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-authentication/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-authentication?branch=master)
+[![Continuous Integration](https://github.com/laminas/laminas-authentication/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-authentication/actions/workflows/continuous-integration.yml)
+[![Type Coverage](https://shepherd.dev/github/laminas/laminas-authentication/coverage.svg)](https://shepherd.dev/github/laminas/laminas-authentication)
 
 > ## 🇷🇺 Русским гражданам
 >
