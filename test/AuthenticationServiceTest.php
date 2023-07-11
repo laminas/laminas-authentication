@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace LaminasTest\Authentication;
 
 use Laminas\Authentication\AuthenticationService;
+use Laminas\Authentication\Exception\RuntimeException;
 use Laminas\Authentication\Result;
 use Laminas\Authentication\Storage\Session;
+use Laminas\Authentication\Storage\StorageInterface;
 use PHPUnit\Framework\TestCase;
 
 class AuthenticationServiceTest extends TestCase
@@ -20,10 +22,8 @@ class AuthenticationServiceTest extends TestCase
 
     /**
      * Ensures that getStorage() returns Laminas_Auth_Storage_Session
-     *
-     * @return void
      */
-    public function testGetStorage()
+    public function testGetStorage(): void
     {
         $storage = $this->auth->getStorage();
         $this->assertInstanceOf(Session::class, $storage);
@@ -40,10 +40,8 @@ class AuthenticationServiceTest extends TestCase
 
     /**
      * Ensures expected behavior for successful authentication
-     *
-     * @return void
      */
-    public function testAuthenticate()
+    public function testAuthenticate(): void
     {
         $result = $this->authenticate();
         $this->assertInstanceOf(Result::class, $result);
@@ -61,10 +59,8 @@ class AuthenticationServiceTest extends TestCase
 
     /**
      * Ensures expected behavior for clearIdentity()
-     *
-     * @return void
      */
-    public function testClearIdentity()
+    public function testClearIdentity(): void
     {
         $this->authenticate();
         $this->auth->clearIdentity();
@@ -78,5 +74,25 @@ class AuthenticationServiceTest extends TestCase
             $adapter = new TestAsset\ValidatableAdapter();
         }
         return $this->auth->authenticate($adapter);
+    }
+
+    public function testThatIdentityIsNullWhenStorageIsEmpty(): void
+    {
+        $storage = $this->createMock(StorageInterface::class);
+        $storage->expects(self::once())
+            ->method('isEmpty')
+            ->willReturn(true);
+
+        $service = new AuthenticationService($storage, new TestAsset\ValidatableAdapter());
+
+        self::assertNull($service->getIdentity());
+    }
+
+    public function testAnExceptionShouldBeThrownWhenAuthenticatingWithoutAnAdapterPresent(): void
+    {
+        $service = new AuthenticationService();
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('An adapter must be set or passed prior to calling authenticate()');
+        $service->authenticate();
     }
 }
