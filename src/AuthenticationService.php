@@ -132,7 +132,7 @@ class AuthenticationService implements AuthenticationServiceInterface
     /**
      * Returns the identity from storage or null if no identity is available
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function getIdentity()
     {
