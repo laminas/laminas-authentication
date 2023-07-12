@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
-use Laminas\Authentication\Adapter;
 use Laminas\Authentication\Adapter\DbTable\CallbackCheckAdapter;
+use Laminas\Authentication\Adapter\DbTable\Exception\InvalidArgumentException;
 use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
@@ -51,7 +51,7 @@ class CallbackCheckAdapterTest extends TestCase
             $this->markTestSkipped('SQLite PDO driver is not available');
         }
 
-        $this->_setupDbAdapter();
+        $this->setupDbAdapter();
         $this->setupAuthAdapter();
     }
 
@@ -94,9 +94,15 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateSuccessWithCallback(): void
     {
-        $adapter = new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, function ($a, $b) {
-            return $a === $b;
-        });
+        $adapter = new CallbackCheckAdapter(
+            $this->db(),
+            'users',
+            'username',
+            'password',
+            function ($a, $b) {
+                return $a === $b;
+            }
+        );
         $adapter->setIdentity('my_username');
         $adapter->setCredential('my_password');
         $result = $adapter->authenticate();
@@ -108,7 +114,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateCallbackThrowsException(): void
     {
-        $this->expectException(Adapter\Dbtable\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback provided');
         $this->adapter()->setCredentialValidationCallback('This is not a valid callback');
     }
@@ -245,7 +251,7 @@ class CallbackCheckAdapterTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A table must be supplied for');
-        $adapter = new Adapter\DbTable($this->db());
+        $adapter = new CallbackCheckAdapter($this->db());
         $adapter->authenticate();
     }
 
@@ -256,7 +262,7 @@ class CallbackCheckAdapterTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('An identity column must be supplied for the');
-        $adapter = new Adapter\DbTable($this->db(), 'users');
+        $adapter = new CallbackCheckAdapter($this->db(), 'users');
         $adapter->authenticate();
     }
 
@@ -267,7 +273,7 @@ class CallbackCheckAdapterTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('A credential column must be supplied');
-        $adapter = new Adapter\DbTable($this->db(), 'users', 'username');
+        $adapter = new CallbackCheckAdapter($this->db(), 'users', 'username');
         $adapter->authenticate();
     }
 
@@ -369,10 +375,9 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertEquals('my_username', $result2->getIdentity());
     }
 
-    // @codingStandardsIgnoreStart
-    protected function _setupDbAdapter($optionalParams = []): void
+    /** @param array<array-key, mixed> $optionalParams */
+    protected function setupDbAdapter($optionalParams = []): void
     {
-        // @codingStandardsIgnoreEnd
         $params = [
             'driver' => 'pdo_sqlite',
             'dbname' => getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_DATABASE'),
