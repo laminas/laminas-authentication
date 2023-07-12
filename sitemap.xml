@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/intro/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/storage/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/validator/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/digest/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/http/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/intro/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/ldap/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/dbtable/callback-check/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/dbtable/credential-treatment/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-authentication/adapter/dbtable/intro/</loc>
-         <lastmod>2023-07-11</lastmod>
+         <lastmod>2023-07-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
