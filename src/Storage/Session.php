@@ -29,22 +29,22 @@ class Session implements StorageInterface
     /**
      * Session namespace
      *
-     * @var mixed
+     * @var string
      */
     protected $namespace = self::NAMESPACE_DEFAULT;
 
     /**
      * Session object member
      *
-     * @var mixed
+     * @var string
      */
     protected $member = self::MEMBER_DEFAULT;
 
     /**
      * Sets session storage options and initializes session namespace object
      *
-     * @param  mixed $namespace
-     * @param  mixed $member
+     * @param  string|null $namespace
+     * @param  string|null $member
      */
     public function __construct($namespace = null, $member = null, ?SessionManager $manager = null)
     {

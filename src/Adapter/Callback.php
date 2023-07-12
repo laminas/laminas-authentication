@@ -20,11 +20,11 @@ use function is_callable;
  */
 class Callback extends AbstractAdapter
 {
-    /** @var callable */
+    /** @var callable(mixed, mixed): mixed|false */
     protected $callback;
 
     /**
-     * @param callable $callback The authentication callback
+     * @param callable(mixed, mixed): mixed|false $callback The authentication callback
      */
     public function __construct($callback = null)
     {
@@ -62,7 +62,7 @@ class Callback extends AbstractAdapter
     /**
      * Gets the value of callback.
      *
-     * @return null|callable
+     * @return null|(callable(mixed, mixed): mixed|false)
      */
     public function getCallback()
     {
@@ -72,7 +72,7 @@ class Callback extends AbstractAdapter
     /**
      * Sets the value of callback.
      *
-     * @param callable $callback the callback
+     * @param callable(mixed, mixed): mixed|false $callback the callback
      * @throws InvalidArgumentException
      * @return void
      */

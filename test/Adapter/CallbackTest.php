@@ -14,27 +14,9 @@ use function array_map;
 
 class CallbackTest extends TestCase
 {
-    /**
-     * Callback authentication adapter
-     *
-     * @var Callback
-     */
-    protected $adapter;
+    private Callback $adapter;
 
-    /**
-     * Set up test configuration
-     */
     public function setUp(): void
-    {
-        $this->setupAuthAdapter();
-    }
-
-    public function tearDown(): void
-    {
-        $this->adapter = null;
-    }
-
-    protected function setupAuthAdapter(): void
     {
         $this->adapter = new Callback();
     }
@@ -89,10 +71,9 @@ class CallbackTest extends TestCase
         $adapter = $this->adapter;
         $adapter->setIdentity('testIdentity');
         $adapter->setCredential('testCredential');
-        $that     = $this;
-        $callback = function ($identity, $credential) use ($that, $adapter): void {
-            $that->assertEquals($identity, $adapter->getIdentity());
-            $that->assertEquals($credential, $adapter->getCredential());
+        $callback = function (mixed $identity, mixed $credential) use ($adapter): void {
+            self::assertEquals($identity, $adapter->getIdentity());
+            self::assertEquals($credential, $adapter->getCredential());
         };
         $this->adapter->setCallback($callback);
         $this->adapter->authenticate();
@@ -103,16 +84,15 @@ class CallbackTest extends TestCase
      */
     public function testAuthenticateResultIfCallbackThrows(): void
     {
-        $adapter   = $this->adapter;
         $exception = new Exception('Callback Exception');
         $callback  = function () use ($exception): void {
             throw $exception;
         };
-        $adapter->setCallback($callback);
-        $result = $adapter->authenticate();
-        $this->assertFalse($result->isValid());
-        $this->assertEquals(Result::FAILURE_UNCATEGORIZED, $result->getCode());
-        $this->assertEquals([$exception->getMessage()], $result->getMessages());
+        $this->adapter->setCallback($callback);
+        $result = $this->adapter->authenticate();
+        self::assertFalse($result->isValid());
+        self::assertEquals(Result::FAILURE_UNCATEGORIZED, $result->getCode());
+        self::assertEquals([$exception->getMessage()], $result->getMessages());
     }
 
     /**
@@ -120,22 +100,14 @@ class CallbackTest extends TestCase
      */
     public function testAuthenticateResultIfCallbackReturnsFalsy(): void
     {
-        $that        = $this;
-        $adapter     = $this->adapter;
         $falsyValues = [false, null, '', '0', [], 0, 0.0];
-        array_map(function ($falsy) use ($that, $adapter) {
-            $callback = /**
-            $callback =  * @return array|false|float|int|null|string
-            $callback =  * @psalm-return array<empty, empty>|false|float|int|null|string
-             */
-            function () use ($falsy) {
-                return $falsy;
-            };
-            $adapter->setCallback($callback);
-            $result = $adapter->authenticate();
-            $that->assertFalse($result->isValid());
-            $that->assertEquals(Result::FAILURE, $result->getCode());
-            $that->assertEquals(['Authentication failure'], $result->getMessages());
+        array_map(function ($falsy) {
+            $callback = static fn (): mixed => $falsy;
+            $this->adapter->setCallback($callback);
+            $result   = $this->adapter->authenticate();
+            self::assertFalse($result->isValid());
+            self::assertEquals(Result::FAILURE, $result->getCode());
+            self::assertEquals(['Authentication failure'], $result->getMessages());
         }, $falsyValues);
     }
 
@@ -150,9 +122,9 @@ class CallbackTest extends TestCase
         };
         $adapter->setCallback($callback);
         $result = $adapter->authenticate();
-        $this->assertTrue($result->isValid());
-        $this->assertEquals(Result::SUCCESS, $result->getCode());
-        $this->assertEquals('identity', $result->getIdentity());
-        $this->assertEquals(['Authentication success'], $result->getMessages());
+        self::assertTrue($result->isValid());
+        self::assertEquals(Result::SUCCESS, $result->getCode());
+        self::assertEquals('identity', $result->getIdentity());
+        self::assertEquals(['Authentication success'], $result->getMessages());
     }
 }
