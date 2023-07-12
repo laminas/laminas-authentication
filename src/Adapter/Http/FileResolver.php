@@ -23,7 +23,7 @@ class FileResolver implements ResolverInterface
     /**
      * Path to credentials file
      *
-     * @var string
+     * @var string|null
      */
     protected $file;
 
@@ -59,7 +59,7 @@ class FileResolver implements ResolverInterface
     /**
      * Returns the path to the credentials file
      *
-     * @return string
+     * @return string|null
      */
     public function getFile()
     {

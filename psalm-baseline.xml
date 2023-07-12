@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
-  <file src="src/Adapter/AdapterInterface.php">
-    <InvalidThrow occurrences="1">
-      <code>ExceptionInterface</code>
-    </InvalidThrow>
-  </file>
   <file src="src/Adapter/Callback.php">
     <MixedAssignment occurrences="1">
       <code>$identity</code>
@@ -118,9 +113,6 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/Digest.php">
-    <InvalidThrow occurrences="1">
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
     <LessSpecificReturnStatement occurrences="2">
       <code>$this-&gt;setCredential($password)</code>
       <code>$this-&gt;setIdentity($username)</code>
@@ -148,10 +140,6 @@
       <code>$result instanceof Authentication\Result</code>
       <code>empty($this-&gt;response)</code>
     </DocblockTypeContradiction>
-    <InvalidThrow occurrences="2">
-      <code>Exception\ExceptionInterface</code>
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
     <MixedArgument occurrences="11">
       <code>$authHeader</code>
       <code>$config['accept_schemes']</code>
@@ -236,39 +224,26 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Adapter/Http/ApacheResolver.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>empty($this-&gt;apachePassword)</code>
-    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>AuthResult</code>
     </ImplementedReturnTypeMismatch>
-    <InvalidThrow occurrences="1">
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
     <MixedArgument occurrences="1">
       <code>$matchedHash</code>
     </MixedArgument>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$apachePassword</code>
-      <code>$file</code>
-    </PropertyNotSetInConstructor>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;file</code>
+    </PossiblyNullArgument>
   </file>
   <file src="src/Adapter/Http/FileResolver.php">
-    <InvalidThrow occurrences="1">
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$file</code>
-    </PropertyNotSetInConstructor>
+    <PossiblyNullArgument occurrences="1">
+      <code>$this-&gt;file</code>
+    </PossiblyNullArgument>
   </file>
   <file src="src/Adapter/Ldap.php">
     <DocblockTypeContradiction occurrences="2">
       <code>$this-&gt;ldap === null</code>
       <code>[]</code>
     </DocblockTypeContradiction>
-    <InvalidThrow occurrences="1">
-      <code>Exception\ExceptionInterface</code>
-    </InvalidThrow>
     <LessSpecificReturnStatement occurrences="2">
       <code>$this-&gt;setCredential($password)</code>
       <code>$this-&gt;setIdentity($username)</code>
@@ -326,58 +301,15 @@
       <code>LaminasLdap\Filter::andFilter($groupName, $membership)</code>
     </TooManyArguments>
   </file>
-  <file src="src/AuthenticationService.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>null === $this-&gt;storage</code>
-    </DocblockTypeContradiction>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$adapter</code>
-      <code>$storage</code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/Result.php">
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(int) $code</code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Storage/Chain.php">
-    <MixedAssignment occurrences="6">
-      <code>$higherPriorityStorage</code>
-      <code>$storage</code>
-      <code>$storage</code>
-      <code>$storage</code>
+    <MixedAssignment occurrences="1">
       <code>$storageValue</code>
-      <code>$storageWithHigherPriority[]</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="6">
-      <code>clear</code>
-      <code>isEmpty</code>
-      <code>read</code>
-      <code>read</code>
-      <code>write</code>
-      <code>write</code>
-    </MixedMethodCall>
-  </file>
-  <file src="src/Storage/Session.php">
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;namespace</code>
-    </MixedArgument>
-    <MixedInferredReturnType occurrences="2">
-      <code>string</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;member</code>
-      <code>$this-&gt;namespace</code>
-    </MixedReturnStatement>
-  </file>
-  <file src="src/Storage/StorageInterface.php">
-    <InvalidThrow occurrences="4">
-      <code>ExceptionInterface</code>
-      <code>ExceptionInterface</code>
-      <code>ExceptionInterface</code>
-      <code>ExceptionInterface</code>
-    </InvalidThrow>
   </file>
   <file src="src/Validator/Authentication.php">
     <DocblockTypeContradiction occurrences="3">
@@ -408,38 +340,15 @@
       <code>is_object($adapter)</code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="test/Adapter/CallbackTest.php">
-    <MissingClosureParamType occurrences="2">
-      <code>$credential</code>
-      <code>$identity</code>
-    </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="1">
-      <code>function () use ($falsy) {</code>
-    </MissingClosureReturnType>
-    <PossiblyNullPropertyAssignmentValue occurrences="1">
-      <code>null</code>
-    </PossiblyNullPropertyAssignmentValue>
-  </file>
   <file src="test/Adapter/DbTable/CallbackCheckAdapterTest.php">
-    <DeprecatedClass occurrences="6">
-      <code>\Laminas\Authentication\Adapter\DbTable</code>
-      <code>new Adapter\DbTable($this-&gt;_db)</code>
-      <code>new Adapter\DbTable($this-&gt;_db, 'users')</code>
-      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username')</code>
-      <code>protected $_adapter = null;</code>
+    <DeprecatedClass occurrences="4">
+      <code>new Adapter\DbTable($this-&gt;db())</code>
+      <code>new Adapter\DbTable($this-&gt;db(), 'users')</code>
+      <code>new Adapter\DbTable($this-&gt;db(), 'users', 'username')</code>
     </DeprecatedClass>
-    <InvalidClass occurrences="7">
+    <InvalidClass occurrences="1">
       <code>Adapter\Dbtable\Exception\InvalidArgumentException</code>
-      <code>Adapter\Dbtable\Exception\RuntimeException</code>
-      <code>Adapter\Dbtable\Exception\RuntimeException</code>
-      <code>Adapter\Dbtable\Exception\RuntimeException</code>
-      <code>Adapter\Dbtable\Exception\RuntimeException</code>
-      <code>Adapter\Dbtable\Exception\RuntimeException</code>
-      <code>Adapter\Dbtable\Exception\RuntimeException</code>
     </InvalidClass>
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>new Adapter\DbTable\CallbackCheckAdapter($this-&gt;_db, 'users', 'username', 'password')</code>
-    </InvalidPropertyAssignmentValue>
     <MissingClosureParamType occurrences="2">
       <code>$a</code>
       <code>$b</code>
@@ -460,24 +369,13 @@
     <PossiblyInvalidPropertyFetch occurrences="1">
       <code>$resultRow-&gt;username</code>
     </PossiblyInvalidPropertyFetch>
-    <PossiblyNullPropertyAssignmentValue occurrences="5">
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-    </PossiblyNullPropertyAssignmentValue>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$this-&gt;_db instanceof DbAdapter</code>
-    </RedundantConditionGivenDocblockType>
     <TooManyArguments occurrences="1"/>
     <UndefinedInterfaceMethod occurrences="1">
       <code>$lastWherePart</code>
     </UndefinedInterfaceMethod>
-    <UndefinedMethod occurrences="3">
+    <UndefinedMethod occurrences="2">
       <code>setAmbiguityIdentity</code>
       <code>setAmbiguityIdentity</code>
-      <code>setCredentialValidationCallback</code>
     </UndefinedMethod>
   </file>
   <file src="test/Adapter/DbTable/CredentialTreatmentAdapterDb2Test.php">
@@ -676,7 +574,6 @@
     </DeprecatedClass>
   </file>
   <file src="test/Adapter/DigestTest.php">
-    <InvalidCatch occurrences="2"/>
     <MixedArgument occurrences="3">
       <code>$messages[0]</code>
       <code>$messages[0]</code>
@@ -700,10 +597,6 @@
     </MixedAssignment>
   </file>
   <file src="test/Adapter/Http/ApacheResolverTest.php">
-    <InvalidArgument occurrences="2">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
     <NullArgument occurrences="3">
       <code>null</code>
       <code>null</code>
@@ -788,24 +681,10 @@
       <code>$status</code>
     </UnusedVariable>
   </file>
-  <file src="test/Adapter/Http/FileResolverTest.php">
-    <InvalidArgument occurrences="4">
-      <code>Http\Exception\ExceptionInterface::class</code>
-      <code>Http\Exception\ExceptionInterface::class</code>
-      <code>Http\Exception\ExceptionInterface::class</code>
-      <code>Http\Exception\ExceptionInterface::class</code>
-    </InvalidArgument>
-    <InvalidCatch occurrences="5"/>
-  </file>
   <file src="test/Adapter/Http/ObjectTest.php">
     <InternalMethod occurrences="1">
       <code>addToAssertionCount</code>
     </InternalMethod>
-    <InvalidArgument occurrences="2">
-      <code>Adapter\Exception\ExceptionInterface::class</code>
-      <code>Adapter\Exception\ExceptionInterface::class</code>
-    </InvalidArgument>
-    <InvalidCatch occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$this-&gt;$cfgProperty</code>
     </MixedArgument>
@@ -878,11 +757,6 @@
       <code>AuthenticationResult</code>
     </ImplementedReturnTypeMismatch>
   </file>
-  <file src="test/Adapter/HttpTest.php">
-    <DeprecatedMethod occurrences="1">
-      <code>expectDeprecation</code>
-    </DeprecatedMethod>
-  </file>
   <file src="test/Adapter/Ldap/OfflineTest.php">
     <UndefinedMethod occurrences="2">
       <code>getPassword</code>
@@ -914,16 +788,6 @@
       <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
       <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
     </PossiblyFalseOperand>
-  </file>
-  <file src="test/Adapter/TestAsset/Wrapper.php">
-    <PropertyNotSetInConstructor occurrences="6">
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="test/TestAsset/Wrapper.php">
     <PropertyNotSetInConstructor occurrences="6">

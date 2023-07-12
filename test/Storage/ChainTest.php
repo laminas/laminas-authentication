@@ -17,7 +17,7 @@ class ChainTest extends TestCase
     public const ID = 1337;
 
     /**
-     * Ensure chain without storage behavious as empty storage.
+     * Ensure chain without storage behaves as empty storage.
      */
     public function testEmptyChain(): void
     {

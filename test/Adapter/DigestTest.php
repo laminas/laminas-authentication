@@ -10,35 +10,15 @@ use PHPUnit\Framework\TestCase;
 
 use function count;
 
-/**
- * @group      Laminas_Auth
- */
 class DigestTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
-    /**
-     * Path to test files
-     *
-     * @var string
-     */
-    protected $_filesPath;
-    // @codingStandardsIgnoreEnd
-
-    /**
-     * Sets the path to test files
-     */
-    public function setUp(): void
-    {
-        $this->_filesPath = __DIR__ . '/TestAsset/Digest';
-    }
+    protected string $filesPath = __DIR__ . '/TestAsset/Digest';
 
     /**
      * Ensures that the adapter throws an exception when authentication is attempted before
      * setting a required option
-     *
-     * @return void
      */
-    public function testOptionRequiredException()
+    public function testOptionRequiredException(): void
     {
         $adapter = new Adapter\Digest();
         try {
@@ -52,10 +32,8 @@ class DigestTest extends TestCase
 
     /**
      * Ensures that an exception is thrown upon authenticating against a nonexistent file
-     *
-     * @return void
      */
-    public function testFileNonExistentException()
+    public function testFileNonExistentException(): void
     {
         $adapter = new Adapter\Digest('nonexistent', 'realm', 'username', 'password');
         try {
@@ -69,12 +47,10 @@ class DigestTest extends TestCase
 
     /**
      * Ensures expected behavior upon realm not found for existing user
-     *
-     * @return void
      */
-    public function testUserExistsRealmNonexistent()
+    public function testUserExistsRealmNonexistent(): void
     {
-        $filename = "$this->_filesPath/htdigest.1";
+        $filename = "$this->filesPath/htdigest.1";
         $realm    = 'Nonexistent Realm';
         $username = 'someUser';
         $password = 'somePassword';
@@ -97,12 +73,10 @@ class DigestTest extends TestCase
 
     /**
      * Ensures expected behavior upon user not found in existing realm
-     *
-     * @return void
      */
-    public function testUserNonexistentRealmExists()
+    public function testUserNonexistentRealmExists(): void
     {
-        $filename = "$this->_filesPath/htdigest.1";
+        $filename = "$this->filesPath/htdigest.1";
         $realm    = 'Some Realm';
         $username = 'nonexistentUser';
         $password = 'somePassword';
@@ -125,12 +99,10 @@ class DigestTest extends TestCase
 
     /**
      * Ensures expected behavior upon incorrect password
-     *
-     * @return void
      */
-    public function testIncorrectPassword()
+    public function testIncorrectPassword(): void
     {
-        $filename = "$this->_filesPath/htdigest.1";
+        $filename = "$this->filesPath/htdigest.1";
         $realm    = 'Some Realm';
         $username = 'someUser';
         $password = 'incorrectPassword';
@@ -153,12 +125,10 @@ class DigestTest extends TestCase
 
     /**
      * Ensures that successful authentication works as expected
-     *
-     * @return void
      */
-    public function testAuthenticationSuccess()
+    public function testAuthenticationSuccess(): void
     {
-        $filename = "$this->_filesPath/htdigest.1";
+        $filename = "$this->filesPath/htdigest.1";
         $realm    = 'Some Realm';
         $username = 'someUser';
         $password = 'somePassword';
@@ -179,10 +149,8 @@ class DigestTest extends TestCase
 
     /**
      * Ensures that getFilename() returns expected default value
-     *
-     * @return void
      */
-    public function testGetFilename()
+    public function testGetFilename(): void
     {
         $adapter = new Adapter\Digest();
         $this->assertEquals(null, $adapter->getFilename());
@@ -190,10 +158,8 @@ class DigestTest extends TestCase
 
     /**
      * Ensures that getRealm() returns expected default value
-     *
-     * @return void
      */
-    public function testGetRealm()
+    public function testGetRealm(): void
     {
         $adapter = new Adapter\Digest();
         $this->assertEquals(null, $adapter->getRealm());
@@ -201,10 +167,8 @@ class DigestTest extends TestCase
 
     /**
      * Ensures that getUsername() returns expected default value
-     *
-     * @return void
      */
-    public function testGetUsername()
+    public function testGetUsername(): void
     {
         $adapter = new Adapter\Digest();
         $this->assertEquals(null, $adapter->getUsername());
@@ -212,10 +176,8 @@ class DigestTest extends TestCase
 
     /**
      * Ensures that getPassword() returns expected default value
-     *
-     * @return void
      */
-    public function testGetPassword()
+    public function testGetPassword(): void
     {
         $adapter = new Adapter\Digest();
         $this->assertEquals(null, $adapter->getPassword());
