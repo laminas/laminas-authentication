@@ -234,13 +234,13 @@ they have followed a verification process.
 ```php
 use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 
-// The active field value of an account is equal to "TRUE"
+// The active field value of an account is equal to the sql boolean literal TRUE
 $adapter = new AuthAdapter(
     $db,
     'users',
     'username',
     'password',
-    'PASSWORD(?) AND active = "TRUE"'
+    'PASSWORD(?) AND active = TRUE'
 );
 ```
 
@@ -339,7 +339,7 @@ $adapter = new AuthAdapter(
 
 // Now retrieve the Select instance and modify it:
 $select = $adapter->getDbSelect();
-$select->where('active = "TRUE"');
+$select->where('active = TRUE');
 
 // Authenticate; this will include "users.active = TRUE" in the WHERE clause:
 $adapter->authenticate();
