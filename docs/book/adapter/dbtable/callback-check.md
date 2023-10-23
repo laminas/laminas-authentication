@@ -225,7 +225,7 @@ $adapter = new AuthAdapter(
 
 // Now retrieve the Select instance and modify it:
 $select = $adapter->getDbSelect();
-$select->where('active = "TRUE"');
+$select->where('active = TRUE');
 
 // Authenticate; this will include "users.active = TRUE" in the WHERE clause:
 $adapter->authenticate();
