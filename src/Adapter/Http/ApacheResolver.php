@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Result as AuthResult;
-use Laminas\Crypt\Password\Apache as ApachePassword;
 use Laminas\Stdlib\ErrorHandler;
 
+use function assert;
 use function ctype_print;
 use function fclose;
 use function fgetcsv;
 use function fopen;
 use function is_readable;
+use function is_string;
 use function strpos;
 
 use const E_WARNING;
@@ -33,6 +34,8 @@ class ApacheResolver implements ResolverInterface
 
     /**
      * Apache password object
+     *
+     * @deprecated Support for Laminas\Crypt will be removed in version 3 of this component
      *
      * @var ApachePassword|null
      */
@@ -79,6 +82,8 @@ class ApacheResolver implements ResolverInterface
 
     /**
      * Returns the Apache Password object
+     *
+     * @deprecated Support for Laminas\Crypt will be removed in version 3 of this component
      *
      * @return ApachePassword
      */
@@ -157,18 +162,14 @@ class ApacheResolver implements ResolverInterface
             );
         }
 
+        assert(is_string($matchedHash));
+
         // Plaintext password
         if ($matchedHash === $password) {
             return new AuthResult(AuthResult::SUCCESS, $username);
         }
 
-        $apache = $this->getApachePassword();
-        $apache->setUserName($username);
-        if (! empty($realm)) {
-            $apache->setAuthName($realm);
-        }
-
-        if ($apache->verify($password, $matchedHash)) {
+        if (ApachePassword::verify($password, $matchedHash, $username, $realm)) {
             return new AuthResult(AuthResult::SUCCESS, $username);
         }
 
