@@ -176,9 +176,6 @@
       <code>$data['uri']</code>
       <code>$userAgent</code>
     </MixedOperand>
-    <PossiblyFalseArgument occurrences="1">
-      <code>$result</code>
-    </PossiblyFalseArgument>
     <PossiblyInvalidArrayAccess occurrences="12">
       <code>$data['cnonce']</code>
       <code>$data['cnonce']</code>
@@ -224,12 +221,14 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Adapter/Http/ApacheResolver.php">
+    <DeprecatedProperty occurrences="3">
+      <code>$this-&gt;apachePassword</code>
+      <code>$this-&gt;apachePassword</code>
+      <code>$this-&gt;apachePassword</code>
+    </DeprecatedProperty>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>AuthResult</code>
     </ImplementedReturnTypeMismatch>
-    <MixedArgument occurrences="1">
-      <code>$matchedHash</code>
-    </MixedArgument>
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;file</code>
     </PossiblyNullArgument>
