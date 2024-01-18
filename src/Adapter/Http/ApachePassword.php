@@ -36,9 +36,10 @@ final class ApachePassword
     public static function verify(string $password, string $hash, string|null $username, string|null $realm): bool
     {
         if (str_starts_with($hash, '{SHA}')) {
-            $hash2 = '{SHA}' . base64_encode(sha1($password, true));
-
-            return hash_equals($hash, $hash2);
+            return hash_equals(
+                base64_decode(substr($hash, 5), true),
+                sha1($password, true)
+            );
         }
 
         if (str_starts_with($hash, '$apr1$')) {
