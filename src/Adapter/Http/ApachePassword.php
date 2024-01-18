@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter\Http;
 
+use function base64_decode;
 use function base64_encode;
 use function chr;
 use function count;
@@ -21,6 +22,7 @@ use function str_starts_with;
 use function strpos;
 use function strrev;
 use function strtr;
+use function substr;
 
 /** @internal */
 final class ApachePassword
