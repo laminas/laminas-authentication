@@ -31,7 +31,6 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.4.0",
-        "laminas/laminas-crypt": "^2.6.0 || ^3.11.0",
         "laminas/laminas-db": "^2.18.0",
         "laminas/laminas-http": "^2.18.0",
         "laminas/laminas-ldap": "^2.17",
@@ -44,7 +43,6 @@
         "vimeo/psalm": "^4.30.0"
     },
     "suggest": {
-        "laminas/laminas-crypt": "Laminas\\Crypt component",
         "laminas/laminas-db": "Laminas\\Db component",
         "laminas/laminas-http": "Laminas\\Http component",
         "laminas/laminas-ldap": "Laminas\\Ldap component",
