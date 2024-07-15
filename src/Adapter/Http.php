@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication;
-use Laminas\Crypt\Utils as CryptUtils;
 use Laminas\Http\Request as HTTPRequest;
 use Laminas\Http\Response as HTTPResponse;
 use Laminas\Uri\UriFactory;
@@ -17,6 +16,7 @@ use function ctype_print;
 use function ctype_xdigit;
 use function explode;
 use function hash;
+use function hash_equals;
 use function implode;
 use function in_array;
 use function is_array;
@@ -539,7 +539,7 @@ class Http implements AdapterInterface
         if (
             ! $result instanceof Authentication\Result
             && ! is_array($result)
-            && CryptUtils::compareStrings($result, $password)
+            && hash_equals((string) $result, $password)
         ) {
             $identity = ['username' => $username, 'realm' => $this->realm];
             return new Authentication\Result(Authentication\Result::SUCCESS, $identity);
@@ -635,7 +635,7 @@ class Http implements AdapterInterface
 
         // If our digest matches the client's let them in, otherwise return
         // a 401 code and exit to prevent access to the protected resource.
-        if (CryptUtils::compareStrings($digest, $data['response'])) {
+        if (hash_equals($digest, $data['response'])) {
             $identity = ['username' => $data['username'], 'realm' => $data['realm']];
             return new Authentication\Result(Authentication\Result::SUCCESS, $identity);
         }

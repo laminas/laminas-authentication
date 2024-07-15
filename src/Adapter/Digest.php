@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication\Result as AuthenticationResult;
-use Laminas\Crypt\Utils as CryptUtils;
 use Laminas\Stdlib\ErrorHandler;
 
 use function fgets;
 use function fopen;
+use function hash_equals;
 use function md5;
 use function strpos;
 use function substr;
@@ -190,7 +190,7 @@ class Digest extends AbstractAdapter
             }
             if (0 === strpos($line, $id)) {
                 if (
-                    CryptUtils::compareStrings(
+                    hash_equals(
                         substr($line, -32),
                         md5("$this->identity:$this->realm:$this->credential")
                     )
