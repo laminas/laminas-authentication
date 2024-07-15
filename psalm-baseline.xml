@@ -798,4 +798,12 @@
       <code>Wrapper</code>
     </PropertyNotSetInConstructor>
   </file>
+  <file src="test/Validator/AuthenticationTest.php">
+    <DeprecatedMethod occurrences="4">
+      <code>getMessageTemplates</code>
+      <code>getMessageTemplates</code>
+      <code>getMessageTemplates</code>
+      <code>getOption</code>
+    </DeprecatedMethod>
+  </file>
 </files>
