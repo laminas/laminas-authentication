@@ -205,7 +205,6 @@ class AuthenticationTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $r = new ReflectionProperty($this->validator, 'messageTemplates');
-        $r->setAccessible(true);
         $this->assertEquals($this->validator->getOption('messageTemplates'), $r->getValue($this->validator));
     }
 

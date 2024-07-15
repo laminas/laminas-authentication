@@ -1,809 +1,889 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/Adapter/Callback.php">
-    <MixedAssignment occurrences="1">
-      <code>$identity</code>
+    <MixedAssignment>
+      <code><![CDATA[$identity]]></code>
     </MixedAssignment>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$callback</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$callback]]></code>
     </PropertyNotSetInConstructor>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! $callback]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/Adapter/DbTable.php">
-    <PropertyNotSetInConstructor occurrences="7">
-      <code>DbTable</code>
-      <code>DbTable</code>
-      <code>DbTable</code>
-      <code>DbTable</code>
-      <code>DbTable</code>
-      <code>DbTable</code>
-      <code>DbTable</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[DbTable]]></code>
+      <code><![CDATA[DbTable]]></code>
+      <code><![CDATA[DbTable]]></code>
+      <code><![CDATA[DbTable]]></code>
+      <code><![CDATA[DbTable]]></code>
+      <code><![CDATA[DbTable]]></code>
+      <code><![CDATA[DbTable]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/DbTable/AbstractAdapter.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>$this-&gt;dbSelect === null</code>
+    <DocblockTypeContradiction>
+      <code><![CDATA[$this->dbSelect === null]]></code>
     </DocblockTypeContradiction>
-    <InvalidReturnStatement occurrences="1">
-      <code>$authResult</code>
+    <InvalidReturnStatement>
+      <code><![CDATA[$authResult]]></code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>AuthenticationResult</code>
+    <InvalidReturnType>
+      <code><![CDATA[AuthenticationResult]]></code>
     </InvalidReturnType>
-    <MixedArgument occurrences="3">
-      <code>$identity</code>
-      <code>$this-&gt;authenticateResultInfo['code']</code>
-      <code>$this-&gt;authenticateResultInfo['messages']</code>
+    <MixedArgument>
+      <code><![CDATA[$identity]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['code']]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['messages']]]></code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="2">
-      <code>$row['LAMINAS_AUTH_CREDENTIAL_MATCH']</code>
-      <code>$row['LAMINAS_AUTH_CREDENTIAL_MATCH']</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$row['LAMINAS_AUTH_CREDENTIAL_MATCH']]]></code>
+      <code><![CDATA[$row['LAMINAS_AUTH_CREDENTIAL_MATCH']]]></code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="3">
-      <code>$row['laminas_auth_credential_match']</code>
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+    <MixedArrayAssignment>
+      <code><![CDATA[$row['laminas_auth_credential_match']]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
     </MixedArrayAssignment>
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;resultRow[$returnColumn]</code>
+    <MixedArrayOffset>
+      <code><![CDATA[$this->resultRow[$returnColumn]]]></code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="7">
-      <code>$identity</code>
-      <code>$resultIdentities[]</code>
-      <code>$resultValue</code>
-      <code>$resultValue</code>
-      <code>$returnColumn</code>
-      <code>$row</code>
-      <code>$row['laminas_auth_credential_match']</code>
+    <MixedAssignment>
+      <code><![CDATA[$identity]]></code>
+      <code><![CDATA[$resultIdentities[]]]></code>
+      <code><![CDATA[$resultValue]]></code>
+      <code><![CDATA[$resultValue]]></code>
+      <code><![CDATA[$returnColumn]]></code>
+      <code><![CDATA[$row]]></code>
+      <code><![CDATA[$row['laminas_auth_credential_match']]]></code>
     </MixedAssignment>
-    <PropertyNotSetInConstructor occurrences="6">
-      <code>$authenticateResultInfo</code>
-      <code>$credentialColumn</code>
-      <code>$dbSelect</code>
-      <code>$identityColumn</code>
-      <code>$resultRow</code>
-      <code>$tableName</code>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code><![CDATA[bool]]></code>
+    </PossiblyUnusedReturnValue>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$authenticateResultInfo]]></code>
+      <code><![CDATA[$credentialColumn]]></code>
+      <code><![CDATA[$dbSelect]]></code>
+      <code><![CDATA[$identityColumn]]></code>
+      <code><![CDATA[$resultRow]]></code>
+      <code><![CDATA[$tableName]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType occurrences="3">
-      <code>(string) $this-&gt;credentialColumn</code>
-      <code>(string) $this-&gt;identityColumn</code>
-      <code>(string) $this-&gt;tableName</code>
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(string) $this->credentialColumn]]></code>
+      <code><![CDATA[(string) $this->identityColumn]]></code>
+      <code><![CDATA[(string) $this->tableName]]></code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_bool($flag)</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[is_bool($flag)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Adapter/DbTable/CallbackCheckAdapter.php">
-    <MissingClosureParamType occurrences="2">
-      <code>$a</code>
-      <code>$b</code>
+    <MissingClosureParamType>
+      <code><![CDATA[$a]]></code>
+      <code><![CDATA[$b]]></code>
     </MissingClosureParamType>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;identity</code>
+    <MixedArgument>
+      <code><![CDATA[$this->identity]]></code>
     </MixedArgument>
-    <MixedArrayAssignment occurrences="3">
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+    <MixedArrayAssignment>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
     </MixedArrayAssignment>
-    <PropertyNotSetInConstructor occurrences="6">
-      <code>CallbackCheckAdapter</code>
-      <code>CallbackCheckAdapter</code>
-      <code>CallbackCheckAdapter</code>
-      <code>CallbackCheckAdapter</code>
-      <code>CallbackCheckAdapter</code>
-      <code>CallbackCheckAdapter</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[CallbackCheckAdapter]]></code>
+      <code><![CDATA[CallbackCheckAdapter]]></code>
+      <code><![CDATA[CallbackCheckAdapter]]></code>
+      <code><![CDATA[CallbackCheckAdapter]]></code>
+      <code><![CDATA[CallbackCheckAdapter]]></code>
+      <code><![CDATA[CallbackCheckAdapter]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/DbTable/CredentialTreatmentAdapter.php">
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;identity</code>
+    <MixedArgument>
+      <code><![CDATA[$this->identity]]></code>
     </MixedArgument>
-    <MixedArrayAssignment occurrences="2">
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
-      <code>$this-&gt;authenticateResultInfo['messages'][]</code>
+    <MixedArrayAssignment>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
+      <code><![CDATA[$this->authenticateResultInfo['messages'][]]]></code>
     </MixedArrayAssignment>
-    <PropertyNotSetInConstructor occurrences="7">
-      <code>$credentialTreatment</code>
-      <code>CredentialTreatmentAdapter</code>
-      <code>CredentialTreatmentAdapter</code>
-      <code>CredentialTreatmentAdapter</code>
-      <code>CredentialTreatmentAdapter</code>
-      <code>CredentialTreatmentAdapter</code>
-      <code>CredentialTreatmentAdapter</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$credentialTreatment]]></code>
+      <code><![CDATA[CredentialTreatmentAdapter]]></code>
+      <code><![CDATA[CredentialTreatmentAdapter]]></code>
+      <code><![CDATA[CredentialTreatmentAdapter]]></code>
+      <code><![CDATA[CredentialTreatmentAdapter]]></code>
+      <code><![CDATA[CredentialTreatmentAdapter]]></code>
+      <code><![CDATA[CredentialTreatmentAdapter]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/Digest.php">
-    <LessSpecificReturnStatement occurrences="2">
-      <code>$this-&gt;setCredential($password)</code>
-      <code>$this-&gt;setIdentity($username)</code>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$this->setCredential($password)]]></code>
+      <code><![CDATA[$this->setIdentity($username)]]></code>
     </LessSpecificReturnStatement>
-    <MixedInferredReturnType occurrences="2">
-      <code>string|null</code>
-      <code>string|null</code>
+    <MixedInferredReturnType>
+      <code><![CDATA[string|null]]></code>
+      <code><![CDATA[string|null]]></code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;getCredential()</code>
-      <code>$this-&gt;getIdentity()</code>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->getCredential()]]></code>
+      <code><![CDATA[$this->getIdentity()]]></code>
     </MixedReturnStatement>
-    <MoreSpecificReturnType occurrences="2">
-      <code>self</code>
-      <code>self</code>
+    <MoreSpecificReturnType>
+      <code><![CDATA[self]]></code>
+      <code><![CDATA[self]]></code>
     </MoreSpecificReturnType>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$filename</code>
-      <code>$realm</code>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[setPassword]]></code>
+      <code><![CDATA[setUsername]]></code>
+    </PossiblyUnusedMethod>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$filename]]></code>
+      <code><![CDATA[$realm]]></code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Adapter/Http.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>$auth === false</code>
-      <code>$result instanceof Authentication\Result</code>
-      <code>empty($this-&gt;response)</code>
+    <DocblockTypeContradiction>
+      <code><![CDATA[$auth === false]]></code>
+      <code><![CDATA[$result instanceof Authentication\Result]]></code>
+      <code><![CDATA[empty($this->request)]]></code>
+      <code><![CDATA[empty($this->response)]]></code>
+      <code><![CDATA[empty($this->response)]]></code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="11">
-      <code>$authHeader</code>
-      <code>$config['accept_schemes']</code>
-      <code>$config['digest_domains']</code>
-      <code>$config['digest_domains']</code>
-      <code>$config['realm']</code>
-      <code>$config['realm']</code>
-      <code>$config['realm']</code>
-      <code>$data['realm']</code>
-      <code>$data['response']</code>
-      <code>$data['username']</code>
-      <code>$userAgent</code>
+    <MixedArgument>
+      <code><![CDATA[$authHeader]]></code>
+      <code><![CDATA[$config['accept_schemes']]]></code>
+      <code><![CDATA[$config['digest_domains']]]></code>
+      <code><![CDATA[$config['digest_domains']]]></code>
+      <code><![CDATA[$config['realm']]]></code>
+      <code><![CDATA[$config['realm']]]></code>
+      <code><![CDATA[$config['realm']]]></code>
+      <code><![CDATA[$data['realm']]]></code>
+      <code><![CDATA[$data['response']]]></code>
+      <code><![CDATA[$data['username']]]></code>
+      <code><![CDATA[$userAgent]]></code>
     </MixedArgument>
-    <MixedAssignment occurrences="6">
-      <code>$authHeader</code>
-      <code>$this-&gt;domains</code>
-      <code>$this-&gt;realm</code>
-      <code>$userAgent</code>
-      <code>$userAgent</code>
-      <code>$userAgentHeader</code>
+    <MixedAssignment>
+      <code><![CDATA[$authHeader]]></code>
+      <code><![CDATA[$this->domains]]></code>
+      <code><![CDATA[$this->realm]]></code>
+      <code><![CDATA[$userAgent]]></code>
+      <code><![CDATA[$userAgent]]></code>
+      <code><![CDATA[$userAgentHeader]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="3">
-      <code>getFieldValue</code>
-      <code>getFieldValue</code>
-      <code>getFieldValue</code>
+    <MixedMethodCall>
+      <code><![CDATA[getFieldValue]]></code>
+      <code><![CDATA[getFieldValue]]></code>
+      <code><![CDATA[getFieldValue]]></code>
     </MixedMethodCall>
-    <MixedOperand occurrences="8">
-      <code>$data['cnonce']</code>
-      <code>$data['cnonce']</code>
-      <code>$data['nc']</code>
-      <code>$data['nonce']</code>
-      <code>$data['nonce']</code>
-      <code>$data['qop']</code>
-      <code>$data['uri']</code>
-      <code>$userAgent</code>
+    <MixedOperand>
+      <code><![CDATA[$data['cnonce']]]></code>
+      <code><![CDATA[$data['cnonce']]]></code>
+      <code><![CDATA[$data['nc']]]></code>
+      <code><![CDATA[$data['nonce']]]></code>
+      <code><![CDATA[$data['nonce']]]></code>
+      <code><![CDATA[$data['qop']]]></code>
+      <code><![CDATA[$data['uri']]]></code>
+      <code><![CDATA[$userAgent]]></code>
     </MixedOperand>
-    <PossiblyInvalidArrayAccess occurrences="12">
-      <code>$data['cnonce']</code>
-      <code>$data['cnonce']</code>
-      <code>$data['nc']</code>
-      <code>$data['nonce']</code>
-      <code>$data['nonce']</code>
-      <code>$data['nonce']</code>
-      <code>$data['opaque']</code>
-      <code>$data['qop']</code>
-      <code>$data['realm']</code>
-      <code>$data['response']</code>
-      <code>$data['uri']</code>
-      <code>$data['username']</code>
+    <PossiblyInvalidArrayAccess>
+      <code><![CDATA[$data['cnonce']]]></code>
+      <code><![CDATA[$data['cnonce']]]></code>
+      <code><![CDATA[$data['nc']]]></code>
+      <code><![CDATA[$data['nonce']]]></code>
+      <code><![CDATA[$data['nonce']]]></code>
+      <code><![CDATA[$data['nonce']]]></code>
+      <code><![CDATA[$data['opaque']]]></code>
+      <code><![CDATA[$data['qop']]]></code>
+      <code><![CDATA[$data['realm']]]></code>
+      <code><![CDATA[$data['response']]]></code>
+      <code><![CDATA[$data['uri']]]></code>
+      <code><![CDATA[$data['username']]]></code>
     </PossiblyInvalidArrayAccess>
-    <PossiblyInvalidMethodCall occurrences="5">
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>has</code>
-      <code>has</code>
+    <PossiblyInvalidMethodCall>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </PossiblyInvalidMethodCall>
-    <PossiblyInvalidOperand occurrences="2">
-      <code>$ha1</code>
-      <code>$ha1</code>
+    <PossiblyInvalidOperand>
+      <code><![CDATA[$ha1]]></code>
+      <code><![CDATA[$ha1]]></code>
     </PossiblyInvalidOperand>
-    <PossiblyUndefinedMethod occurrences="5">
-      <code>get</code>
-      <code>get</code>
-      <code>get</code>
-      <code>has</code>
-      <code>has</code>
+    <PossiblyUndefinedArrayOffset>
+      <code><![CDATA[$password]]></code>
+    </PossiblyUndefinedArrayOffset>
+    <PossiblyUndefinedMethod>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </PossiblyUndefinedMethod>
-    <PropertyNotSetInConstructor occurrences="6">
-      <code>$algo</code>
-      <code>$domains</code>
-      <code>$nonceTimeout</code>
-      <code>$request</code>
-      <code>$response</code>
-      <code>$useOpaque</code>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[_challengeClient]]></code>
+      <code><![CDATA[getRequest]]></code>
+      <code><![CDATA[getResponse]]></code>
+    </PossiblyUnusedMethod>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$algo]]></code>
+      <code><![CDATA[$domains]]></code>
+      <code><![CDATA[$nonceTimeout]]></code>
+      <code><![CDATA[$request]]></code>
+      <code><![CDATA[$response]]></code>
+      <code><![CDATA[$useOpaque]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$result instanceof Authentication\Result</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[$result instanceof Authentication\Result]]></code>
     </RedundantConditionGivenDocblockType>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+      <code><![CDATA[empty($temp[1])]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/Adapter/Http/ApachePassword.php">
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! $realm]]></code>
+      <code><![CDATA[! $username]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/Adapter/Http/ApacheResolver.php">
-    <DeprecatedProperty occurrences="3">
-      <code>$this-&gt;apachePassword</code>
-      <code>$this-&gt;apachePassword</code>
-      <code>$this-&gt;apachePassword</code>
+    <DeprecatedProperty>
+      <code><![CDATA[$this->apachePassword]]></code>
+      <code><![CDATA[$this->apachePassword]]></code>
+      <code><![CDATA[$this->apachePassword]]></code>
     </DeprecatedProperty>
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>AuthResult</code>
+    <ImplementedReturnTypeMismatch>
+      <code><![CDATA[AuthResult]]></code>
     </ImplementedReturnTypeMismatch>
-    <PossiblyNullArgument occurrences="1">
-      <code>$this-&gt;file</code>
+    <PossiblyNullArgument>
+      <code><![CDATA[$this->file]]></code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getApachePassword]]></code>
+    </PossiblyUnusedMethod>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[empty($password)]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/Adapter/Http/FileResolver.php">
-    <PossiblyNullArgument occurrences="1">
-      <code>$this-&gt;file</code>
+    <PossiblyNullArgument>
+      <code><![CDATA[$this->file]]></code>
     </PossiblyNullArgument>
   </file>
   <file src="src/Adapter/Ldap.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>$this-&gt;ldap === null</code>
-      <code>[]</code>
+    <DocblockTypeContradiction>
+      <code><![CDATA[$this->ldap === null]]></code>
+      <code><![CDATA[[]]]></code>
     </DocblockTypeContradiction>
-    <LessSpecificReturnStatement occurrences="2">
-      <code>$this-&gt;setCredential($password)</code>
-      <code>$this-&gt;setIdentity($username)</code>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$this->setCredential($password)]]></code>
+      <code><![CDATA[$this->setIdentity($username)]]></code>
     </LessSpecificReturnStatement>
-    <MixedArgument occurrences="13">
-      <code>$adapterOptions['group']</code>
-      <code>$adapterOptions['groupAttr']</code>
-      <code>$adapterOptions['groupDn']</code>
-      <code>$adapterOptions['groupScope']</code>
-      <code>$adapterOptions['memberAttr']</code>
-      <code>$omitAttribs</code>
-      <code>$password</code>
-      <code>$password</code>
-      <code>$password</code>
-      <code>$returnAttribs</code>
-      <code>$username</code>
-      <code>$value</code>
-      <code>$value</code>
+    <MixedArgument>
+      <code><![CDATA[$adapterOptions['group']]]></code>
+      <code><![CDATA[$adapterOptions['groupAttr']]]></code>
+      <code><![CDATA[$adapterOptions['groupDn']]]></code>
+      <code><![CDATA[$adapterOptions['groupScope']]]></code>
+      <code><![CDATA[$adapterOptions['memberAttr']]]></code>
+      <code><![CDATA[$omitAttribs]]></code>
+      <code><![CDATA[$password]]></code>
+      <code><![CDATA[$password]]></code>
+      <code><![CDATA[$password]]></code>
+      <code><![CDATA[$returnAttribs]]></code>
+      <code><![CDATA[$username]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
-    <MixedAssignment occurrences="8">
-      <code>$groupFilter</code>
-      <code>$name</code>
-      <code>$name</code>
-      <code>$password</code>
-      <code>$username</code>
-      <code>$val</code>
-      <code>$value</code>
-      <code>$value</code>
+    <MixedAssignment>
+      <code><![CDATA[$groupFilter]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$password]]></code>
+      <code><![CDATA[$username]]></code>
+      <code><![CDATA[$val]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>string</code>
-      <code>string|null</code>
-      <code>string|null</code>
+    <MixedInferredReturnType>
+      <code><![CDATA[string]]></code>
+      <code><![CDATA[string|null]]></code>
+      <code><![CDATA[string|null]]></code>
     </MixedInferredReturnType>
-    <MixedOperand occurrences="1">
-      <code>$val</code>
+    <MixedOperand>
+      <code><![CDATA[$val]]></code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="3">
-      <code>$name ? $name : ''</code>
-      <code>$this-&gt;getCredential()</code>
-      <code>$this-&gt;getIdentity()</code>
+    <MixedReturnStatement>
+      <code><![CDATA[$name ? $name : '']]></code>
+      <code><![CDATA[$name ? $name : '']]></code>
+      <code><![CDATA[$this->getCredential()]]></code>
+      <code><![CDATA[$this->getIdentity()]]></code>
     </MixedReturnStatement>
-    <MoreSpecificReturnType occurrences="2">
-      <code>self</code>
-      <code>self</code>
+    <MoreSpecificReturnType>
+      <code><![CDATA[self]]></code>
+      <code><![CDATA[self]]></code>
     </MoreSpecificReturnType>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$authenticatedDn</code>
-      <code>$ldap</code>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getOptions]]></code>
+    </PossiblyUnusedMethod>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$authenticatedDn]]></code>
+      <code><![CDATA[$ldap]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_array($options)</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[is_array($options)]]></code>
     </RedundantConditionGivenDocblockType>
-    <TooManyArguments occurrences="1">
-      <code>LaminasLdap\Filter::andFilter($groupName, $membership)</code>
+    <TooManyArguments>
+      <code><![CDATA[LaminasLdap\Filter::andFilter($groupName, $membership)]]></code>
     </TooManyArguments>
   </file>
   <file src="src/Result.php">
-    <RedundantCastGivenDocblockType occurrences="1">
-      <code>(int) $code</code>
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(int) $code]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Storage/Chain.php">
-    <MixedAssignment occurrences="1">
-      <code>$storageValue</code>
+    <MixedAssignment>
+      <code><![CDATA[$storageValue]]></code>
     </MixedAssignment>
   </file>
+  <file src="src/Storage/Session.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getMember]]></code>
+      <code><![CDATA[getNamespace]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="src/Validator/Authentication.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>$this-&gt;credential === null</code>
-      <code>$this-&gt;identity === null</code>
-      <code>gettype($adapter)</code>
+    <DocblockTypeContradiction>
+      <code><![CDATA[$this->credential === null]]></code>
+      <code><![CDATA[$this->identity === null]]></code>
+      <code><![CDATA[gettype($adapter)]]></code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="3">
-      <code>$options['adapter']</code>
-      <code>$options['service']</code>
-      <code>static::CODE_MAP</code>
+    <MixedArgument>
+      <code><![CDATA[$options['adapter']]]></code>
+      <code><![CDATA[$options['service']]]></code>
+      <code><![CDATA[static::CODE_MAP]]></code>
     </MixedArgument>
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;messageTemplates[static::GENERAL]</code>
+    <MixedArrayOffset>
+      <code><![CDATA[$this->messageTemplates[static::GENERAL]]]></code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="5">
-      <code>$code</code>
-      <code>$credential</code>
-      <code>$identity</code>
-      <code>$this-&gt;credential</code>
-      <code>$this-&gt;identity</code>
+    <MixedAssignment>
+      <code><![CDATA[$code]]></code>
+      <code><![CDATA[$credential]]></code>
+      <code><![CDATA[$identity]]></code>
+      <code><![CDATA[$this->credential]]></code>
+      <code><![CDATA[$this->identity]]></code>
     </MixedAssignment>
-    <PropertyNotSetInConstructor occurrences="2">
-      <code>$credential</code>
-      <code>$identity</code>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$credential]]></code>
+      <code><![CDATA[$identity]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_object($adapter)</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[is_object($adapter)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Adapter/DbTable/CallbackCheckAdapterTest.php">
-    <DeprecatedClass occurrences="4">
-      <code>new Adapter\DbTable($this-&gt;db())</code>
-      <code>new Adapter\DbTable($this-&gt;db(), 'users')</code>
-      <code>new Adapter\DbTable($this-&gt;db(), 'users', 'username')</code>
+    <DeprecatedClass>
+      <code><![CDATA[new Adapter\DbTable($this->db())]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users')]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username')]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, function ($a, $b) {
+            return $a === $b;
+        })]]></code>
     </DeprecatedClass>
-    <InvalidClass occurrences="1">
-      <code>Adapter\Dbtable\Exception\InvalidArgumentException</code>
+    <InvalidClass>
+      <code><![CDATA[Adapter\Dbtable\Exception\InvalidArgumentException]]></code>
     </InvalidClass>
-    <MissingClosureParamType occurrences="2">
-      <code>$a</code>
-      <code>$b</code>
+    <MissingClosureParamType>
+      <code><![CDATA[$a]]></code>
+      <code><![CDATA[$b]]></code>
     </MissingClosureParamType>
-    <MissingParamType occurrences="1">
-      <code>$optionalParams</code>
+    <MissingParamType>
+      <code><![CDATA[$optionalParams]]></code>
     </MissingParamType>
-    <MixedArrayAccess occurrences="1">
-      <code>$expressionData[0]</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$expressionData[0]]]></code>
+      <code><![CDATA[$expressionData[0][0]]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="2">
-      <code>$expressionData</code>
-      <code>$params['options']</code>
+    <MixedAssignment>
+      <code><![CDATA[$expressionData]]></code>
+      <code><![CDATA[$params['options']]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>getExpressionData</code>
+    <MixedMethodCall>
+      <code><![CDATA[getExpressionData]]></code>
     </MixedMethodCall>
-    <PossiblyInvalidPropertyFetch occurrences="1">
-      <code>$resultRow-&gt;username</code>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[$resultRow->username]]></code>
     </PossiblyInvalidPropertyFetch>
-    <TooManyArguments occurrences="1"/>
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>$lastWherePart</code>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
+    </RiskyTruthyFalsyComparison>
+    <TooManyArguments>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, function ($a, $b) {
+            return $a === $b;
+        })]]></code>
+    </TooManyArguments>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[$lastWherePart]]></code>
     </UndefinedInterfaceMethod>
-    <UndefinedMethod occurrences="2">
-      <code>setAmbiguityIdentity</code>
-      <code>setAmbiguityIdentity</code>
+    <UndefinedMethod>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
     </UndefinedMethod>
   </file>
   <file src="test/Adapter/DbTable/CredentialTreatmentAdapterDb2Test.php">
-    <DeprecatedClass occurrences="5">
-      <code>DbTable</code>
-      <code>new Adapter\DbTable($this-&gt;db)</code>
-      <code>new Adapter\DbTable($this-&gt;db, $this-&gt;tableName, 'username', 'password', '?')</code>
-      <code>new Adapter\DbTable($this-&gt;db, 'users')</code>
-      <code>new Adapter\DbTable($this-&gt;db, 'users', 'username')</code>
+    <DeprecatedClass>
+      <code><![CDATA[new Adapter\DbTable($this->db)]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db, $this->tableName, 'username', 'password', '?')]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db, 'users')]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db, 'users', 'username')]]></code>
     </DeprecatedClass>
-    <MixedArgument occurrences="5">
-      <code>$result-&gt;getMessages()</code>
-      <code>$result-&gt;getMessages()</code>
-      <code>$result-&gt;getMessages()</code>
-      <code>$whereParts</code>
-      <code>$whereParts</code>
+    <MixedArgument>
+      <code><![CDATA[$result->getMessages()]]></code>
+      <code><![CDATA[$result->getMessages()]]></code>
+      <code><![CDATA[$result->getMessages()]]></code>
+      <code><![CDATA[$whereParts]]></code>
+      <code><![CDATA[$whereParts]]></code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="2">
-      <code>$expressionData[0]</code>
-      <code>$lastWherePart[1]</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$expressionData[0]]]></code>
+      <code><![CDATA[$expressionData[0][0]]]></code>
+      <code><![CDATA[$lastWherePart[1]]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="17">
-      <code>$expressionData</code>
-      <code>$lastWherePart</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result2</code>
-      <code>$resultRow</code>
-      <code>$resultRow</code>
-      <code>$resultRow</code>
-      <code>$select</code>
-      <code>$select</code>
-      <code>$selectAfterAuth</code>
-      <code>$whereParts</code>
+    <MixedAssignment>
+      <code><![CDATA[$expressionData]]></code>
+      <code><![CDATA[$lastWherePart]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result2]]></code>
+      <code><![CDATA[$resultRow]]></code>
+      <code><![CDATA[$resultRow]]></code>
+      <code><![CDATA[$resultRow]]></code>
+      <code><![CDATA[$select]]></code>
+      <code><![CDATA[$select]]></code>
+      <code><![CDATA[$selectAfterAuth]]></code>
+      <code><![CDATA[$whereParts]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="69">
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>authenticate</code>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getCode</code>
-      <code>getDbSelect</code>
-      <code>getDbSelect</code>
-      <code>getDbSelect</code>
-      <code>getDbSelect</code>
-      <code>getExpressionData</code>
-      <code>getIdentity</code>
-      <code>getIdentity</code>
-      <code>getMessages</code>
-      <code>getMessages</code>
-      <code>getMessages</code>
-      <code>getPredicates</code>
-      <code>getResultRowObject</code>
-      <code>getResultRowObject</code>
-      <code>getResultRowObject</code>
-      <code>isValid</code>
-      <code>isValid</code>
-      <code>isValid</code>
-      <code>isValid</code>
-      <code>isValid</code>
-      <code>setAmbiguityIdentity</code>
-      <code>setAmbiguityIdentity</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setCredential</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setIdentity</code>
-      <code>setTableName</code>
-      <code>where</code>
-      <code>where</code>
+    <MixedMethodCall>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[authenticate]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getCode]]></code>
+      <code><![CDATA[getDbSelect]]></code>
+      <code><![CDATA[getDbSelect]]></code>
+      <code><![CDATA[getDbSelect]]></code>
+      <code><![CDATA[getDbSelect]]></code>
+      <code><![CDATA[getExpressionData]]></code>
+      <code><![CDATA[getIdentity]]></code>
+      <code><![CDATA[getIdentity]]></code>
+      <code><![CDATA[getMessages]]></code>
+      <code><![CDATA[getMessages]]></code>
+      <code><![CDATA[getMessages]]></code>
+      <code><![CDATA[getPredicates]]></code>
+      <code><![CDATA[getResultRowObject]]></code>
+      <code><![CDATA[getResultRowObject]]></code>
+      <code><![CDATA[getResultRowObject]]></code>
+      <code><![CDATA[isValid]]></code>
+      <code><![CDATA[isValid]]></code>
+      <code><![CDATA[isValid]]></code>
+      <code><![CDATA[isValid]]></code>
+      <code><![CDATA[isValid]]></code>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setCredential]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setIdentity]]></code>
+      <code><![CDATA[setTableName]]></code>
+      <code><![CDATA[where]]></code>
+      <code><![CDATA[where]]></code>
     </MixedMethodCall>
-    <MixedPropertyFetch occurrences="2">
-      <code>$resultRow-&gt;USERNAME</code>
-      <code>$selectAfterAuth-&gt;where</code>
+    <MixedPropertyFetch>
+      <code><![CDATA[$resultRow->USERNAME]]></code>
+      <code><![CDATA[$selectAfterAuth->where]]></code>
     </MixedPropertyFetch>
-    <PossiblyFalsePropertyAssignmentValue occurrences="1"/>
-    <PossiblyNullPropertyAssignmentValue occurrences="1">
-      <code>null</code>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[getenv(
+            'TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE'
+        )]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyNullPropertyAssignmentValue>
+      <code><![CDATA[null]]></code>
     </PossiblyNullPropertyAssignmentValue>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$this-&gt;db instanceof DbAdapter</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[$this->db instanceof DbAdapter]]></code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedThisPropertyAssignment occurrences="4">
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')]]></code>
+    </RiskyTruthyFalsyComparison>
+    <UndefinedThisPropertyAssignment>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
     </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="15">
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
-      <code>$this-&gt;authAdapter</code>
+    <UndefinedThisPropertyFetch>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
+      <code><![CDATA[$this->authAdapter]]></code>
     </UndefinedThisPropertyFetch>
   </file>
   <file src="test/Adapter/DbTable/CredentialTreatmentAdapterTest.php">
-    <DeprecatedClass occurrences="6">
-      <code>\Laminas\Authentication\Adapter\DbTable</code>
-      <code>new Adapter\DbTable($this-&gt;_db)</code>
-      <code>new Adapter\DbTable($this-&gt;_db, 'users')</code>
-      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username')</code>
-      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username', 'password', '?')</code>
-      <code>protected $_adapter = null;</code>
+    <DeprecatedClass>
+      <code><![CDATA[\Laminas\Authentication\Adapter\DbTable]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->_db)]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->_db, 'users')]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->_db, 'users', 'username')]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->_db, 'users', 'username', 'password', '?')]]></code>
+      <code><![CDATA[protected $_adapter = null;]]></code>
     </DeprecatedClass>
-    <MissingParamType occurrences="1">
-      <code>$optionalParams</code>
+    <MissingParamType>
+      <code><![CDATA[$optionalParams]]></code>
     </MissingParamType>
-    <MixedArrayAccess occurrences="1">
-      <code>$expressionData[0]</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$expressionData[0]]]></code>
+      <code><![CDATA[$expressionData[0][0]]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="2">
-      <code>$expressionData</code>
-      <code>$params['options']</code>
+    <MixedAssignment>
+      <code><![CDATA[$expressionData]]></code>
+      <code><![CDATA[$params['options']]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>getExpressionData</code>
+    <MixedMethodCall>
+      <code><![CDATA[getExpressionData]]></code>
     </MixedMethodCall>
-    <PossiblyInvalidPropertyFetch occurrences="1">
-      <code>$resultRow-&gt;username</code>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[$resultRow->username]]></code>
     </PossiblyInvalidPropertyFetch>
-    <PossiblyNullPropertyAssignmentValue occurrences="5">
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
+    <PossiblyNullPropertyAssignmentValue>
+      <code><![CDATA[null]]></code>
+      <code><![CDATA[null]]></code>
+      <code><![CDATA[null]]></code>
+      <code><![CDATA[null]]></code>
+      <code><![CDATA[null]]></code>
     </PossiblyNullPropertyAssignmentValue>
-    <PropertyTypeCoercion occurrences="1">
-      <code>new Adapter\DbTable\CredentialTreatmentAdapter($this-&gt;_db, 'users', 'username', 'password')</code>
+    <PropertyTypeCoercion>
+      <code><![CDATA[new Adapter\DbTable\CredentialTreatmentAdapter($this->_db, 'users', 'username', 'password')]]></code>
     </PropertyTypeCoercion>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$this-&gt;_db instanceof DbAdapter</code>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[$this->_db instanceof DbAdapter]]></code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>$lastWherePart</code>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
+    </RiskyTruthyFalsyComparison>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[$lastWherePart]]></code>
     </UndefinedInterfaceMethod>
-    <UndefinedMethod occurrences="2">
-      <code>setAmbiguityIdentity</code>
-      <code>setAmbiguityIdentity</code>
+    <UndefinedMethod>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
     </UndefinedMethod>
   </file>
   <file src="test/Adapter/DbTableTest.php">
-    <DeprecatedClass occurrences="1">
-      <code>new Adapter\DbTable($this-&gt;_db, 'users', 'username', 'password')</code>
+    <DeprecatedClass>
+      <code><![CDATA[new Adapter\DbTable($this->_db, 'users', 'username', 'password')]]></code>
     </DeprecatedClass>
   </file>
   <file src="test/Adapter/DigestTest.php">
-    <MixedArgument occurrences="3">
-      <code>$messages[0]</code>
-      <code>$messages[0]</code>
-      <code>$messages[0]</code>
+    <MixedArgument>
+      <code><![CDATA[$messages[0]]]></code>
+      <code><![CDATA[$messages[0]]]></code>
+      <code><![CDATA[$messages[0]]]></code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="8">
-      <code>$identity['realm']</code>
-      <code>$identity['realm']</code>
-      <code>$identity['realm']</code>
-      <code>$identity['realm']</code>
-      <code>$identity['username']</code>
-      <code>$identity['username']</code>
-      <code>$identity['username']</code>
-      <code>$identity['username']</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$identity['realm']]]></code>
+      <code><![CDATA[$identity['realm']]]></code>
+      <code><![CDATA[$identity['realm']]]></code>
+      <code><![CDATA[$identity['realm']]]></code>
+      <code><![CDATA[$identity['username']]]></code>
+      <code><![CDATA[$identity['username']]]></code>
+      <code><![CDATA[$identity['username']]]></code>
+      <code><![CDATA[$identity['username']]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="4">
-      <code>$identity</code>
-      <code>$identity</code>
-      <code>$identity</code>
-      <code>$identity</code>
+    <MixedAssignment>
+      <code><![CDATA[$identity]]></code>
+      <code><![CDATA[$identity]]></code>
+      <code><![CDATA[$identity]]></code>
+      <code><![CDATA[$identity]]></code>
     </MixedAssignment>
   </file>
   <file src="test/Adapter/Http/ApacheResolverTest.php">
-    <NullArgument occurrences="3">
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
+    <NullArgument>
+      <code><![CDATA[null]]></code>
+      <code><![CDATA[null]]></code>
+      <code><![CDATA[null]]></code>
     </NullArgument>
   </file>
   <file src="test/Adapter/Http/AuthTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'ArrayIterator'</code>
+    <ArgumentTypeCoercion>
+      <code><![CDATA['ArrayIterator']]></code>
     </ArgumentTypeCoercion>
-    <InvalidPropertyAssignmentValue occurrences="2">
-      <code>new TestAsset\BasicAuthObjectResolver()</code>
-      <code>new TestAsset\BasicAuthObjectResolver()</code>
+    <InvalidPropertyAssignmentValue>
+      <code><![CDATA[new TestAsset\BasicAuthObjectResolver()]]></code>
+      <code><![CDATA[new TestAsset\BasicAuthObjectResolver()]]></code>
     </InvalidPropertyAssignmentValue>
-    <MixedArgument occurrences="6">
-      <code>$header</code>
-      <code>$header</code>
-      <code>$headers</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$wwwAuthenticate</code>
+    <MixedArgument>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$wwwAuthenticate]]></code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>$headers[0]</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$headers[0]]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="13">
-      <code>$header</code>
-      <code>$header</code>
-      <code>$headers</code>
-      <code>$headers</code>
-      <code>$headers</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$status</code>
-      <code>$status</code>
-      <code>$status</code>
-      <code>$status</code>
-      <code>$value</code>
-      <code>$wwwAuthenticate</code>
+    <MixedAssignment>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$wwwAuthenticate]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="6">
-      <code>get</code>
-      <code>get</code>
-      <code>getFieldValue</code>
-      <code>getFieldValue</code>
-      <code>has</code>
-      <code>has</code>
+    <MixedMethodCall>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getFieldValue]]></code>
+      <code><![CDATA[getFieldValue]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </MixedMethodCall>
-    <MixedOperand occurrences="12">
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_bothConfig['digest_domains']</code>
-      <code>$this-&gt;_bothConfig['realm']</code>
-      <code>$this-&gt;_bothConfig['realm']</code>
-      <code>$this-&gt;_bothConfig['realm']</code>
-      <code>$this-&gt;_digestConfig['realm']</code>
-      <code>$this-&gt;_digestConfig['realm']</code>
-      <code>$this-&gt;_digestConfig['realm']</code>
+    <MixedOperand>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_bothConfig['digest_domains']]]></code>
+      <code><![CDATA[$this->_bothConfig['realm']]]></code>
+      <code><![CDATA[$this->_bothConfig['realm']]]></code>
+      <code><![CDATA[$this->_bothConfig['realm']]]></code>
+      <code><![CDATA[$this->_digestConfig['realm']]]></code>
+      <code><![CDATA[$this->_digestConfig['realm']]]></code>
+      <code><![CDATA[$this->_digestConfig['realm']]]></code>
     </MixedOperand>
-    <PossiblyInvalidMethodCall occurrences="2">
-      <code>addHeaderLine</code>
-      <code>addHeaderLine</code>
+    <PossiblyInvalidMethodCall>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[addHeaderLine]]></code>
     </PossiblyInvalidMethodCall>
-    <PossiblyNullReference occurrences="4">
-      <code>get</code>
-      <code>get</code>
-      <code>has</code>
-      <code>has</code>
+    <PossiblyNullReference>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </PossiblyNullReference>
-    <PossiblyUndefinedMethod occurrences="2">
-      <code>addHeaderLine</code>
-      <code>addHeaderLine</code>
+    <PossiblyUndefinedMethod>
+      <code><![CDATA[addHeaderLine]]></code>
+      <code><![CDATA[addHeaderLine]]></code>
     </PossiblyUndefinedMethod>
-    <UnusedVariable occurrences="5">
-      <code>$basic</code>
-      <code>$digest</code>
-      <code>$headers</code>
-      <code>$result</code>
-      <code>$status</code>
+    <UnusedVariable>
+      <code><![CDATA[$basic]]></code>
+      <code><![CDATA[$digest]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$result]]></code>
+      <code><![CDATA[$status]]></code>
     </UnusedVariable>
   </file>
   <file src="test/Adapter/Http/ObjectTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
+    <InternalMethod>
+      <code><![CDATA[addToAssertionCount]]></code>
     </InternalMethod>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;$cfgProperty</code>
+    <MixedArgument>
+      <code><![CDATA[$this->$cfgProperty]]></code>
     </MixedArgument>
-    <MixedInferredReturnType occurrences="1">
-      <code>array</code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/Adapter/Http/ProxyTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'ArrayIterator'</code>
+    <ArgumentTypeCoercion>
+      <code><![CDATA['ArrayIterator']]></code>
     </ArgumentTypeCoercion>
-    <MixedArgument occurrences="6">
-      <code>$authHeader</code>
-      <code>$header</code>
-      <code>$header</code>
-      <code>$headers</code>
-      <code>$value</code>
-      <code>$value</code>
+    <MixedArgument>
+      <code><![CDATA[$authHeader]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>$headers[0]</code>
+    <MixedArrayAccess>
+      <code><![CDATA[$headers[0]]]></code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="12">
-      <code>$authHeader</code>
-      <code>$header</code>
-      <code>$header</code>
-      <code>$headers</code>
-      <code>$headers</code>
-      <code>$headers</code>
-      <code>$headers</code>
-      <code>$status</code>
-      <code>$status</code>
-      <code>$status</code>
-      <code>$status</code>
-      <code>$value</code>
+    <MixedAssignment>
+      <code><![CDATA[$authHeader]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$header]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$headers]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$status]]></code>
+      <code><![CDATA[$value]]></code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="6">
-      <code>get</code>
-      <code>get</code>
-      <code>getFieldValue</code>
-      <code>getFieldValue</code>
-      <code>has</code>
-      <code>has</code>
+    <MixedMethodCall>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getFieldValue]]></code>
+      <code><![CDATA[getFieldValue]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </MixedMethodCall>
-    <MixedOperand occurrences="9">
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_basicConfig['realm']</code>
-      <code>$this-&gt;_bothConfig['digest_domains']</code>
-      <code>$this-&gt;_bothConfig['realm']</code>
-      <code>$this-&gt;_bothConfig['realm']</code>
-      <code>$this-&gt;_digestConfig['realm']</code>
-      <code>$this-&gt;_digestConfig['realm']</code>
-      <code>$this-&gt;_digestConfig['realm']</code>
+    <MixedOperand>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_basicConfig['realm']]]></code>
+      <code><![CDATA[$this->_bothConfig['digest_domains']]]></code>
+      <code><![CDATA[$this->_bothConfig['realm']]]></code>
+      <code><![CDATA[$this->_bothConfig['realm']]]></code>
+      <code><![CDATA[$this->_digestConfig['realm']]]></code>
+      <code><![CDATA[$this->_digestConfig['realm']]]></code>
+      <code><![CDATA[$this->_digestConfig['realm']]]></code>
     </MixedOperand>
-    <PossiblyNullReference occurrences="4">
-      <code>get</code>
-      <code>get</code>
-      <code>has</code>
-      <code>has</code>
+    <PossiblyNullReference>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[has]]></code>
+      <code><![CDATA[has]]></code>
     </PossiblyNullReference>
-    <UnusedVariable occurrences="3">
-      <code>$basic</code>
-      <code>$digest</code>
-      <code>$headers</code>
+    <UnusedVariable>
+      <code><![CDATA[$basic]]></code>
+      <code><![CDATA[$digest]]></code>
+      <code><![CDATA[$headers]]></code>
     </UnusedVariable>
   </file>
   <file src="test/Adapter/Http/TestAsset/BasicAuthObjectResolver.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>AuthenticationResult</code>
+    <ImplementedReturnTypeMismatch>
+      <code><![CDATA[AuthenticationResult]]></code>
     </ImplementedReturnTypeMismatch>
   </file>
   <file src="test/Adapter/Ldap/OfflineTest.php">
-    <UndefinedMethod occurrences="2">
-      <code>getPassword</code>
-      <code>getUsername</code>
+    <UndefinedMethod>
+      <code><![CDATA[getPassword]]></code>
+      <code><![CDATA[getUsername]]></code>
     </UndefinedMethod>
   </file>
   <file src="test/Adapter/Ldap/OnlineTest.php">
-    <MixedArgument occurrences="2">
-      <code>$messages[0]</code>
-      <code>$username</code>
+    <MixedArgument>
+      <code><![CDATA[$messages[0]]]></code>
+      <code><![CDATA[$username]]></code>
     </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$formName</code>
-      <code>$username</code>
+    <MixedAssignment>
+      <code><![CDATA[$formName]]></code>
+      <code><![CDATA[$username]]></code>
     </MixedAssignment>
-    <PossiblyFalseArgument occurrences="8">
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+    <PossiblyFalseArgument>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_PASSWORD')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
     </PossiblyFalseArgument>
-    <PossiblyFalseOperand occurrences="4">
-      <code>getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
-      <code>getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')</code>
+    <PossiblyFalseOperand>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
     </PossiblyFalseOperand>
-  </file>
-  <file src="test/TestAsset/Wrapper.php">
-    <PropertyNotSetInConstructor occurrences="6">
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-      <code>Wrapper</code>
-    </PropertyNotSetInConstructor>
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_LDAP_ONLINE_ENABLED')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_DOMAIN_NAME_SHORT')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ACCOUNT_FILTER_FORMAT')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_ALT_USERNAME')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_BIND_REQUIRES_DN')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_PORT')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_USE_SSL')]]></code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_LDAP_USE_START_TLS')]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="test/Validator/AuthenticationTest.php">
-    <DeprecatedMethod occurrences="4">
-      <code>getMessageTemplates</code>
-      <code>getMessageTemplates</code>
-      <code>getMessageTemplates</code>
-      <code>getOption</code>
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
     </DeprecatedMethod>
   </file>
 </files>
