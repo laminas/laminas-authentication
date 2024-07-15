@@ -49,13 +49,6 @@ class ObjectTest extends TestCase
     protected $_bothConfig;
 
     /**
-     * File resolver setup against with HTTP Basic auth file
-     *
-     * @var Http\FileResolver
-     */
-    protected $_basicResolver;
-
-    /**
      * File resolver setup against with HTTP Digest auth file
      *
      * @var Http\FileResolver
@@ -69,7 +62,6 @@ class ObjectTest extends TestCase
     public function setUp(): void
     {
         $this->_filesPath      = __DIR__ . '/TestAsset';
-        $this->_basicResolver  = new Http\FileResolver("$this->_filesPath/htbasic.1");
         $this->_digestResolver = new Http\FileResolver("$this->_filesPath/htdigest.3");
         $this->_basicConfig    = [
             'accept_schemes' => 'basic',
@@ -103,9 +95,9 @@ class ObjectTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array{0: array}>
      */
-    public function invalidConfigs()
+    public static function invalidConfigs(): array
     {
         return [
             'bad1' => [

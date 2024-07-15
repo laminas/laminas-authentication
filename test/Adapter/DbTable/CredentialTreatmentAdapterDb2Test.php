@@ -6,7 +6,6 @@ namespace LaminasTest\Authentication\Adapter\DbTable;
 
 use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
-use Laminas\Authentication\Adapter\DbTable;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
 use PHPUnit\Framework\TestCase;
@@ -30,13 +29,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
      * @var DbAdapter
      */
     protected $db;
-
-    /**
-     * Database table authentication adapter
-     *
-     * @var DbTable
-     */
-    protected $adapter;
 
     /**
      * Database adapter configuration
