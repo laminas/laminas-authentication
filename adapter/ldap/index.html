@@ -285,7 +285,7 @@
                         <i class="fa fa-search"></i> Search
                     </a>
                     <a href="https://github.com/laminas/laminas-authentication" class="header__link header__link--github" title="Go to repository of laminas-authentication">
-                        <i class="fa fa-github"></i> GitHub
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 
             </div>
@@ -435,7 +435,7 @@ this document provides more detail on the messages returned.</p>
 <p>You will note that the configuration contains information for multiple servers.
 When multiple server configuration is provided, the adapter will loop through
 each until one provides successful authentication.  The above configuration
-will instruct the adapter to attempt authenticattion against the OpenLDAP
+will instruct the adapter to attempt authentication against the OpenLDAP
 server <code>s0.foo.net</code> first, falling back to the Active Directory server
 <code>dc1.w.net</code>on failure.</p>
 <p>With servers in different domains, this configuration illustrates multi-domain
@@ -443,7 +443,7 @@ authentication. You can also have multiple servers in the same domain to
 provide redundancy.</p>
 <p>Note that in this case, even though OpenLDAP has no need for the short NetBIOS
 style domain name used by Windows, we provide it here for name canonicalization
-purposes (described in the <a href="#username-canonicalization">Username Canonicalization</a>
+purposes (described in the <a href="https://docs.laminas.dev/laminas-ldap/intro/#automatic-username-canonicalization-when-binding">Username Canonicalization</a>
 section below).</p>
 <p>A later section on <a href="#server-options">server options</a> details all available options)</p>
 <h2 id="the-api">The API</h2>
@@ -549,7 +549,7 @@ consists of the following options, which are passed, largely unmodified, to
 </tr>
 <tr>
 <td><code>accountCanonicalForm</code></td>
-<td>A value of 2, 3, or 4 indicating the form to which account names should be canonicalized after successful authentication. Values are as follows: 2 for traditional username style names (e.g., <code>alice</code>), 3 for backslash-style names (e.g., <code>FOO\alice</code>) or 4 for principal style usernames (e.g., <code>alice@foo.net</code>). The default value is 4 (e.g., <code>alice@foo.net</code>). For example, with a value of 3, the identity returned by <code>Laminas\Authentication\Result::getIdentity()</code> (and <code>Laminas\Authentication\AuthenticationService::getIdentity()</code>, if <code>Laminas\Authentication\AuthenticationService</code> was used) will always be <code>FOO\alice</code>, regardless of what form Alice supplied, whether it be <code>alice</code>, <code>alice@foo.net</code>, <code>FOO\alice</code>, <code>FoO\aLicE</code>, <code>foo.net\alice</code>, etc. See the <a href="https://docs.laminas.dev/laminas.ldap.introduction.html#account-name-canonicalization">Account Name Canonicalization</a> section in the laminas-ldap documentation for details. Note that when using multiple sets of server options it is recommended, but not required, that the same <code>accountCanonicalForm</code> be used with all server options so that the resulting usernames are always canonicalized to the same form (e.g., if you canonicalize to <code>EXAMPLE\username</code> with an AD server but to <code>username@example.com</code> with an OpenLDAP server, that may be awkward for the application’s high-level logic).</td>
+<td>A value of 2, 3, or 4 indicating the form to which account names should be canonicalized after successful authentication. Values are as follows: 2 for traditional username style names (e.g., <code>alice</code>), 3 for backslash-style names (e.g., <code>FOO\alice</code>) or 4 for principal style usernames (e.g., <code>alice@foo.net</code>). The default value is 4 (e.g., <code>alice@foo.net</code>). For example, with a value of 3, the identity returned by <code>Laminas\Authentication\Result::getIdentity()</code> (and <code>Laminas\Authentication\AuthenticationService::getIdentity()</code>, if <code>Laminas\Authentication\AuthenticationService</code> was used) will always be <code>FOO\alice</code>, regardless of what form Alice supplied, whether it be <code>alice</code>, <code>alice@foo.net</code>, <code>FOO\alice</code>, <code>FoO\aLicE</code>, <code>foo.net\alice</code>, etc. See the <a href="https://docs.laminas.dev/laminas-ldap/intro/#account-name-canonicalization">Account Name Canonicalization</a> section in the laminas-ldap documentation for details. Note that when using multiple sets of server options it is recommended, but not required, that the same <code>accountCanonicalForm</code> be used with all server options so that the resulting usernames are always canonicalized to the same form (e.g., if you canonicalize to <code>EXAMPLE\username</code> with an AD server but to <code>username@example.com</code> with an OpenLDAP server, that may be awkward for the application’s high-level logic).</td>
 </tr>
 <tr>
 <td><code>accountDomainName</code></td>
@@ -934,13 +934,13 @@ schema, the following options are noteworthy:</p>
                                 <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
                             </li>
                             <li class="support__list-item">
                                 <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
@@ -966,7 +966,7 @@ schema, the following options are noteworthy:</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-authentication/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2023 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
