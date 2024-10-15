@@ -136,7 +136,7 @@ class ApacheResolver implements ResolverInterface
 
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
-        while (($line = fgetcsv($fp, 512, ':')) !== false) {
+        while (($line = fgetcsv($fp, 512, ':', escape: "\\")) !== false) {
             if ($line[0] !== $username) {
                 continue;
             }
