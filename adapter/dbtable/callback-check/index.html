@@ -82,17 +82,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
-                                    </div>
-                                </div>
-                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
                                 <div class="row align-items-center">
@@ -390,9 +379,11 @@ perform additional credential verifications.</p>
 <li><code>credentialColumn</code>: This is the name of the database table column used to
   represent the credential. Under a simple identity and password authentication
   scheme, the credential value corresponds to the password.</li>
-<li><code>credentialValidationCallback</code>: A PHP callable to execute when the database returns matches. The callback will receive:</li>
+<li><code>credentialValidationCallback</code>: A PHP callable to execute when the database returns matches. The callback will receive:<ul>
 <li>the value of the <code>credentialColumn</code> returned from the database</li>
 <li>the credential that was used by the adapter during authentication</li>
+</ul>
+</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
 <p>Many databases do not provide functions that implement a cryptographically
@@ -759,7 +750,7 @@ $adapter-&gt;authenticate();</code></pre>
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>
