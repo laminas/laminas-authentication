@@ -14,7 +14,7 @@ access control with Laminas, please see the
 [laminas-permissions-rbac](https://github.com/laminas/laminas-permissions-rbac)
 components.
 
-> ### AuthenticationService
+> ## AuthenticationService
 >
 > There is no `Laminas\Authentication\Authentication` class; instead the class
 > `Laminas\Authentication\AuthenticationService` is provided. This class uses the
