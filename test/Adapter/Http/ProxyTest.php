@@ -330,17 +330,11 @@ class ProxyTest extends TestCase
         $request->setHeaders($headers);
 
         // Select an Authentication scheme
-        switch ($scheme) {
-            case 'basic':
-                $use = $this->_basicConfig;
-                break;
-            case 'digest':
-                $use = $this->_digestConfig;
-                break;
-            case 'both':
-            default:
-                $use = $this->_bothConfig;
-        }
+        $use = match ($scheme) {
+            'basic' => $this->_basicConfig,
+            'digest' => $this->_digestConfig,
+            default => $this->_bothConfig,
+        };
 
         // Create the HTTP Auth adapter
         $a = new Http($use);

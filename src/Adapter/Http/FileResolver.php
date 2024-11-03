@@ -11,7 +11,7 @@ use function fclose;
 use function fgetcsv;
 use function fopen;
 use function is_readable;
-use function strpos;
+use function str_contains;
 
 use const E_WARNING;
 
@@ -92,14 +92,14 @@ class FileResolver implements ResolverInterface
     {
         if (empty($username)) {
             throw new Exception\InvalidArgumentException('Username is required');
-        } elseif (! ctype_print($username) || strpos($username, ':') !== false) {
+        } elseif (! ctype_print($username) || str_contains($username, ':')) {
             throw new Exception\InvalidArgumentException(
                 'Username must consist only of printable characters, excluding the colon'
             );
         }
         if (empty($realm)) {
             throw new Exception\InvalidArgumentException('Realm is required');
-        } elseif (! ctype_print($realm) || strpos($realm, ':') !== false) {
+        } elseif (! ctype_print($realm) || str_contains($realm, ':')) {
             throw new Exception\InvalidArgumentException(
                 'Realm must consist only of printable characters, excluding the colon.'
             );

@@ -13,9 +13,8 @@ use Laminas\Validator\AbstractValidator;
 use Traversable;
 
 use function array_key_exists;
-use function gettype;
+use function get_debug_type;
 use function is_array;
-use function is_object;
 use function is_string;
 use function sprintf;
 
@@ -316,7 +315,7 @@ class Authentication extends AbstractValidator
             throw new Exception\RuntimeException(sprintf(
                 'Adapter must be an instance of %s; %s given',
                 ValidatableAdapterInterface::class,
-                is_object($adapter) ? $adapter::class : gettype($adapter)
+                get_debug_type($adapter)
             ));
         }
 

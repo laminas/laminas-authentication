@@ -11,7 +11,7 @@ use function fgets;
 use function fopen;
 use function hash_equals;
 use function md5;
-use function strpos;
+use function str_starts_with;
 use function substr;
 use function trim;
 
@@ -188,7 +188,7 @@ class Digest extends AbstractAdapter
             if (empty($line)) {
                 break;
             }
-            if (0 === strpos($line, $id)) {
+            if (str_starts_with($line, $id)) {
                 if (
                     hash_equals(
                         substr($line, -32),

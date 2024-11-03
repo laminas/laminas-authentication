@@ -44,13 +44,6 @@ class Result
     protected $code;
 
     /**
-     * The identity used in the authentication attempt
-     *
-     * @var mixed
-     */
-    protected $identity;
-
-    /**
      * An array of string reasons why the authentication attempt was unsuccessful
      *
      * If authentication was successful, this should be an empty array.
@@ -66,10 +59,15 @@ class Result
      * @param  mixed   $identity
      * @param  array   $messages
      */
-    public function __construct($code, $identity, array $messages = [])
-    {
+    public function __construct(
+        $code,
+        /**
+         * The identity used in the authentication attempt
+         */
+        protected $identity,
+        array $messages = []
+    ) {
         $this->code     = (int) $code;
-        $this->identity = $identity;
         $this->messages = $messages;
     }
 

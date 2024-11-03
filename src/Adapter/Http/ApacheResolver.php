@@ -14,7 +14,7 @@ use function fgetcsv;
 use function fopen;
 use function is_readable;
 use function is_string;
-use function strpos;
+use function str_contains;
 
 use const E_WARNING;
 
@@ -110,13 +110,13 @@ class ApacheResolver implements ResolverInterface
             throw new Exception\InvalidArgumentException('Username is required');
         }
 
-        if (! ctype_print($username) || strpos($username, ':') !== false) {
+        if (! ctype_print($username) || str_contains($username, ':')) {
             throw new Exception\InvalidArgumentException(
                 'Username must consist only of printable characters, excluding the colon'
             );
         }
 
-        if (! empty($realm) && (! ctype_print($realm) || strpos($realm, ':') !== false)) {
+        if (! empty($realm) && (! ctype_print($realm) || str_contains($realm, ':'))) {
             throw new Exception\InvalidArgumentException(
                 'Realm must consist only of printable characters, excluding the colon'
             );
