@@ -44,9 +44,7 @@ class CallbackCheckAdapter extends AbstractAdapter
         if (null !== $credentialValidationCallback) {
             $this->setCredentialValidationCallback($credentialValidationCallback);
         } else {
-            $this->setCredentialValidationCallback(function ($a, $b) {
-                return $a === $b;
-            });
+            $this->setCredentialValidationCallback(fn($a, $b) => $a === $b);
         }
     }
 

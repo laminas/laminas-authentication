@@ -149,7 +149,7 @@ class ObjectTest extends TestCase
         try {
             $a->authenticate();
             $this->fail('Attempted authentication without request/response objects');
-        } catch (Adapter\Exception\ExceptionInterface $e) {
+        } catch (Adapter\Exception\ExceptionInterface) {
             // Good, it threw an exception
         }
 

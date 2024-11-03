@@ -179,7 +179,7 @@ class Ldap extends AbstractAdapter
             $name = $options['accountDomainNameShort'];
         }
 
-        return $name ? $name : '';
+        return $name ?: '';
     }
 
     /**

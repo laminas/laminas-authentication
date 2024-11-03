@@ -31,12 +31,12 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * SQLite database connection
      */
-    protected DbAdapter|null $db;
+    protected DbAdapter|null $db = null;
 
     /**
      * Database table authentication adapter
      */
-    protected CallbackCheckAdapter|null $adapter;
+    protected CallbackCheckAdapter|null $adapter = null;
 
     /**
      * Set up test configuration
@@ -94,9 +94,7 @@ class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateSuccessWithCallback(): void
     {
-        $adapter = new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, function ($a, $b) {
-            return $a === $b;
-        });
+        $adapter = new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b);
         $adapter->setIdentity('my_username');
         $adapter->setCredential('my_password');
         $result = $adapter->authenticate();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Adapter/Callback.php">
     <MixedAssignment>
       <code><![CDATA[$identity]]></code>
@@ -328,8 +328,8 @@
       <code><![CDATA[$val]]></code>
     </MixedOperand>
     <MixedReturnStatement>
-      <code><![CDATA[$name ? $name : '']]></code>
-      <code><![CDATA[$name ? $name : '']]></code>
+      <code><![CDATA[$name ?: '']]></code>
+      <code><![CDATA[$name ?: '']]></code>
       <code><![CDATA[$this->getCredential()]]></code>
       <code><![CDATA[$this->getIdentity()]]></code>
     </MixedReturnStatement>
@@ -371,7 +371,6 @@
     <DocblockTypeContradiction>
       <code><![CDATA[$this->credential === null]]></code>
       <code><![CDATA[$this->identity === null]]></code>
-      <code><![CDATA[gettype($adapter)]]></code>
     </DocblockTypeContradiction>
     <MixedArgument>
       <code><![CDATA[$options['adapter']]]></code>
@@ -392,18 +391,13 @@
       <code><![CDATA[$credential]]></code>
       <code><![CDATA[$identity]]></code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_object($adapter)]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Adapter/DbTable/CallbackCheckAdapterTest.php">
     <DeprecatedClass>
       <code><![CDATA[new Adapter\DbTable($this->db())]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db(), 'users')]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, function ($a, $b) {
-            return $a === $b;
-        })]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b)]]></code>
     </DeprecatedClass>
     <InvalidClass>
       <code><![CDATA[Adapter\Dbtable\Exception\InvalidArgumentException]]></code>
@@ -433,9 +427,7 @@
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
     <TooManyArguments>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, function ($a, $b) {
-            return $a === $b;
-        })]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b)]]></code>
     </TooManyArguments>
     <UndefinedInterfaceMethod>
       <code><![CDATA[$lastWherePart]]></code>

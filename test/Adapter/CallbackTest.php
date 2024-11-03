@@ -117,11 +117,9 @@ class CallbackTest extends TestCase
     public function testAuthenticateResultIfCallbackReturnsIdentity(): void
     {
         $adapter  = $this->adapter;
-        $callback = function (): string {
-            return 'identity';
-        };
+        $callback = fn(): string => 'identity';
         $adapter->setCallback($callback);
-        $result = $adapter->authenticate();
+        $result   = $adapter->authenticate();
         self::assertTrue($result->isValid());
         self::assertEquals(Result::SUCCESS, $result->getCode());
         self::assertEquals('identity', $result->getIdentity());

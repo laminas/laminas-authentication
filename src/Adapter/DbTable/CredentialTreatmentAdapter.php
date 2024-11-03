@@ -10,7 +10,7 @@ use Laminas\Db\Sql;
 use Laminas\Db\Sql\Expression as SqlExpr;
 use Laminas\Db\Sql\Predicate\Operator as SqlOp;
 
-use function strpos;
+use function str_contains;
 
 class CredentialTreatmentAdapter extends AbstractAdapter
 {
@@ -75,7 +75,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
     protected function authenticateCreateSelect()
     {
         // build credential expression
-        if (empty($this->credentialTreatment) || (strpos($this->credentialTreatment, '?') === false)) {
+        if (empty($this->credentialTreatment) || (! str_contains($this->credentialTreatment, '?'))) {
             $this->credentialTreatment = '?';
         }
 
