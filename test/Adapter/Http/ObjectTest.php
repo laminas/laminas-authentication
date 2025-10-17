@@ -11,13 +11,11 @@ use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function sprintf;
 
-/**
- * @group      Laminas_Auth
- */
 final class ObjectTest extends TestCase
 {
     // @codingStandardsIgnoreStart
@@ -135,9 +133,7 @@ final class ObjectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidConfigs
-     */
+    #[DataProvider('invalidConfigs')]
     public function testInvalidConfigs(array $cfg): void
     {
         $this->expectException(Adapter\Exception\ExceptionInterface::class);
@@ -170,7 +166,7 @@ final class ObjectTest extends TestCase
      * @return string[][]
      * @psalm-return array{basic: array{0: string, 1: string}, digest: array{0: string, 1: string}}
      */
-    public function noResolvers(): array
+    public static function noResolvers(): array
     {
         return [
             'basic'  => [
@@ -184,9 +180,7 @@ final class ObjectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider noResolvers
-     */
+    #[DataProvider('noResolvers')]
     public function testNoResolvers(string $authHeader, string $cfgProperty): void
     {
         // Stub request for Basic auth
@@ -227,7 +221,7 @@ final class ObjectTest extends TestCase
                 ->setResponse($response);
         $result = $adapter->authenticate();
 
-        $this->assertEquals($result->getCode(), Authentication\Result::FAILURE_CREDENTIAL_INVALID);
+        $this->assertSame(Authentication\Result::FAILURE_CREDENTIAL_INVALID, $result->getCode());
     }
 
     public function testUnsupportedScheme(): void
@@ -244,6 +238,6 @@ final class ObjectTest extends TestCase
           ->setRequest($request)
           ->setResponse($response);
         $result = $a->authenticate();
-        $this->assertEquals($result->getCode(), Authentication\Result::FAILURE_UNCATEGORIZED);
+        $this->assertSame(Authentication\Result::FAILURE_UNCATEGORIZED, $result->getCode());
     }
 }

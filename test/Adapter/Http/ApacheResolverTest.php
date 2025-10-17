@@ -8,6 +8,7 @@ use Laminas\Authentication\Adapter\Http\ApacheResolver as Apache;
 use Laminas\Authentication\Adapter\Http\Exception\ExceptionInterface;
 use Laminas\Authentication\Result;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class ApacheResolverTest extends TestCase
@@ -89,7 +90,7 @@ final class ApacheResolverTest extends TestCase
      * @return string[][]
      * @psalm-return array<array-key, array{0: string}>
      */
-    public function providePasswordFiles(): array
+    public static function providePasswordFiles(): array
     {
         $path = __DIR__ . '/TestAsset';
         return [
@@ -103,9 +104,8 @@ final class ApacheResolverTest extends TestCase
 
     /**
      * Ensure that resolve() works fine with the specified password format
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveValidBasic(string $file): void
     {
         $this->apache->setFile($file);
@@ -117,9 +117,8 @@ final class ApacheResolverTest extends TestCase
     /**
      * Ensure that resolve() works fine with the specified password format
      * even if we pass a realm fake string for a basic authentication
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveValidBasicWithRealm(string $file): void
     {
         $this->apache->setFile($file);
@@ -130,9 +129,8 @@ final class ApacheResolverTest extends TestCase
 
     /**
      * Ensure that resolve() failed for not valid users
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveNoUsers(string $file): void
     {
         $this->apache->setFile($file);
@@ -143,9 +141,8 @@ final class ApacheResolverTest extends TestCase
 
     /**
      * Ensure that resolve() failed for not valid password
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveNoValidPassword(string $file): void
     {
         $this->apache->setFile($file);

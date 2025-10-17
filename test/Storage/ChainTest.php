@@ -9,9 +9,6 @@ use Laminas\Authentication\Storage\NonPersistent;
 use Laminas\Authentication\Storage\StorageInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group      Laminas_Auth
- */
 final class ChainTest extends TestCase
 {
     public const ID = 1337;

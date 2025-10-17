@@ -6,18 +6,11 @@ namespace LaminasTest\Authentication\Adapter;
 
 use Laminas\Authentication\Adapter;
 
-/**
- * @group      Laminas_Auth
- * @group      Laminas_Db_Table
- */
 final class DbTableTest extends DbTable\CredentialTreatmentAdapterTest
 {
     // @codingStandardsIgnoreStart
-    /**
-     * @return void
-     */
     #[\Override]
-    protected function _setupAuthAdapter()
+    protected function _setupAuthAdapter(): void
     {
         // @codingStandardsIgnoreEnd
         $this->_adapter = new Adapter\DbTable($this->_db, 'users', 'username', 'password');

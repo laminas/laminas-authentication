@@ -23,9 +23,6 @@ use function str_repeat;
 use function time;
 use function var_export;
 
-/**
- * @group      Laminas_Auth
- */
 final class ProxyTest extends TestCase
 {
     // @codingStandardsIgnoreStart
