@@ -524,6 +524,7 @@
     </PossiblyNullPropertyAssignmentValue>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')]]></code>
+      <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
     <UndefinedThisPropertyAssignment>
       <code><![CDATA[$this->authAdapter]]></code>
@@ -568,8 +569,6 @@
       <code><![CDATA[$lastWherePart[1]]]></code>
     </PossiblyNullArrayAccess>
     <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
       <code><![CDATA[null]]></code>
       <code><![CDATA[null]]></code>
       <code><![CDATA[null]]></code>
