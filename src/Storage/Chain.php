@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Authentication\Storage;
 
 use Laminas\Stdlib\PriorityQueue;
+use Override;
 
 class Chain implements StorageInterface
 {
@@ -47,6 +48,7 @@ class Chain implements StorageInterface
      *
      * @return bool
      */
+    #[Override]
     public function isEmpty()
     {
         $storageWithHigherPriority = [];
@@ -78,6 +80,7 @@ class Chain implements StorageInterface
      *
      * @return mixed
      */
+    #[Override]
     public function read()
     {
         return $this->storageChain->top()->read();
@@ -91,6 +94,7 @@ class Chain implements StorageInterface
      * @param mixed $contents
      * @return void
      */
+    #[Override]
     public function write($contents)
     {
         foreach ($this->storageChain as $storage) {
@@ -103,6 +107,7 @@ class Chain implements StorageInterface
      *
      * @see StorageInterface::clear()
      */
+    #[Override]
     public function clear()
     {
         foreach ($this->storageChain as $storage) {

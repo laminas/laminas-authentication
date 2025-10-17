@@ -24,8 +24,8 @@ The available configuration options include:
   represent the credential. Under a simple identity and password authentication
   scheme, the credential value corresponds to the password.
 - `credentialValidationCallback`: A PHP callable to execute when the database returns matches. The callback will receive:
-  - the value of the `credentialColumn` returned from the database
-  - the credential that was used by the adapter during authentication
+    - the value of the `credentialColumn` returned from the database
+    - the credential that was used by the adapter during authentication
 
 ## Basic Usage
 

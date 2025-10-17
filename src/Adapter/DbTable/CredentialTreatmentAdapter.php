@@ -9,8 +9,9 @@ use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
 use Laminas\Db\Sql\Expression as SqlExpr;
 use Laminas\Db\Sql\Predicate\Operator as SqlOp;
+use Override;
 
-use function strpos;
+use function str_contains;
 
 class CredentialTreatmentAdapter extends AbstractAdapter
 {
@@ -72,10 +73,11 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      *
      * @return Sql\Select
      */
+    #[Override]
     protected function authenticateCreateSelect()
     {
         // build credential expression
-        if (empty($this->credentialTreatment) || (strpos($this->credentialTreatment, '?') === false)) {
+        if (empty($this->credentialTreatment) || (! str_contains($this->credentialTreatment, '?'))) {
             $this->credentialTreatment = '?';
         }
 
@@ -102,6 +104,7 @@ class CredentialTreatmentAdapter extends AbstractAdapter
      * @param  array $resultIdentity
      * @return AuthenticationResult
      */
+    #[Override]
     protected function authenticateValidateResult($resultIdentity)
     {
         /**

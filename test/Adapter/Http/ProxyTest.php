@@ -9,8 +9,10 @@ use Laminas\Authentication\Result;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
+use Override;
 use PHPUnit\Framework\TestCase;
 
+use function assert;
 use function base64_encode;
 use function ceil;
 use function count;
@@ -21,10 +23,7 @@ use function str_repeat;
 use function time;
 use function var_export;
 
-/**
- * @group      Laminas_Auth
- */
-class ProxyTest extends TestCase
+final class ProxyTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**
@@ -73,6 +72,7 @@ class ProxyTest extends TestCase
     /**
      * Sets up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         $this->_filesPath      = __DIR__ . '/TestAsset';
@@ -235,6 +235,7 @@ class ProxyTest extends TestCase
 
         $cauth = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $cauth = preg_replace('/algorithm="MD5", /', '', $cauth);
+        assert($cauth !== null);
 
         $data = $this->_doAuth($cauth, 'digest');
         $this->checkOK($data);
@@ -247,6 +248,7 @@ class ProxyTest extends TestCase
 
         $cauth = $this->digestReply('Bryce', 'ThisIsNotMyPassword');
         $cauth = preg_replace('/nc=00000001/', 'nc="00000001"', $cauth);
+        assert($cauth !== null);
 
         $data = $this->_doAuth($cauth, 'digest');
         $this->checkOK($data);
@@ -272,6 +274,7 @@ class ProxyTest extends TestCase
             ' nonce="' . str_repeat('0', 32) . '", ',
             $tampered
         );
+        assert($tampered !== null);
 
         // The expected Digest Proxy-Authenticate header value
         $digest = $this->digestChallenge();
@@ -300,6 +303,7 @@ class ProxyTest extends TestCase
             '',
             $bad
         );
+        assert($bad !== null);
 
         $data = $this->_doAuth($bad, 'digest');
         $this->checkBadRequest($data);
@@ -330,17 +334,11 @@ class ProxyTest extends TestCase
         $request->setHeaders($headers);
 
         // Select an Authentication scheme
-        switch ($scheme) {
-            case 'basic':
-                $use = $this->_basicConfig;
-                break;
-            case 'digest':
-                $use = $this->_digestConfig;
-                break;
-            case 'both':
-            default:
-                $use = $this->_bothConfig;
-        }
+        $use = match ($scheme) {
+            'basic' => $this->_basicConfig,
+            'digest' => $this->_digestConfig,
+            default => $this->_bothConfig,
+        };
 
         // Create the HTTP Auth adapter
         $a = new Http($use);
@@ -384,7 +382,7 @@ class ProxyTest extends TestCase
     protected function digestReply($user, $pass)
     {
         $nc       = '00000001';
-        $timeout  = ceil(time() / 300) * 300;
+        $timeout  = ((int) ceil(time() / 300)) * 300;
         $nonce    = md5($timeout . ':PHPUnit:Laminas\\Authentication\\Adapter\\Http');
         $opaque   = md5('Opaque Data:Laminas\\Authentication\\Adapter\\Http');
         $cnonce   = md5('cnonce');

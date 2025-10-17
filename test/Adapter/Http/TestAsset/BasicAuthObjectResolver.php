@@ -6,15 +6,17 @@ namespace LaminasTest\Authentication\Adapter\Http\TestAsset;
 
 use Laminas\Authentication\Adapter\Http\ResolverInterface;
 use Laminas\Authentication\Result as AuthenticationResult;
+use Override;
 use stdClass;
 
-class BasicAuthObjectResolver implements ResolverInterface
+final class BasicAuthObjectResolver implements ResolverInterface
 {
     /**
      * @param string $username
      * @param string $realm
      * @param string|null $password
      */
+    #[Override]
     public function resolve($username, $realm, $password = null): AuthenticationResult
     {
         if ($username === 'Bryce' && $password === 'ThisIsNotMyPassword') {

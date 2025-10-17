@@ -7,9 +7,11 @@ namespace LaminasTest\Authentication\Adapter\Http;
 use Laminas\Authentication\Adapter\Http\ApacheResolver as Apache;
 use Laminas\Authentication\Adapter\Http\Exception\ExceptionInterface;
 use Laminas\Authentication\Result;
+use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class ApacheResolverTest extends TestCase
+final class ApacheResolverTest extends TestCase
 {
     /**
      * Path to a valid file
@@ -28,6 +30,7 @@ class ApacheResolverTest extends TestCase
      * Sets the paths to files used in this test, and creates a shared resolver instance
      * having a valid path.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->path      = __DIR__ . '/TestAsset';
@@ -87,7 +90,7 @@ class ApacheResolverTest extends TestCase
      * @return string[][]
      * @psalm-return array<array-key, array{0: string}>
      */
-    public function providePasswordFiles(): array
+    public static function providePasswordFiles(): array
     {
         $path = __DIR__ . '/TestAsset';
         return [
@@ -101,9 +104,8 @@ class ApacheResolverTest extends TestCase
 
     /**
      * Ensure that resolve() works fine with the specified password format
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveValidBasic(string $file): void
     {
         $this->apache->setFile($file);
@@ -115,9 +117,8 @@ class ApacheResolverTest extends TestCase
     /**
      * Ensure that resolve() works fine with the specified password format
      * even if we pass a realm fake string for a basic authentication
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveValidBasicWithRealm(string $file): void
     {
         $this->apache->setFile($file);
@@ -128,9 +129,8 @@ class ApacheResolverTest extends TestCase
 
     /**
      * Ensure that resolve() failed for not valid users
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveNoUsers(string $file): void
     {
         $this->apache->setFile($file);
@@ -141,9 +141,8 @@ class ApacheResolverTest extends TestCase
 
     /**
      * Ensure that resolve() failed for not valid password
-     *
-     * @dataProvider providePasswordFiles
      */
+    #[DataProvider('providePasswordFiles')]
     public function testResolveNoValidPassword(string $file): void
     {
         $this->apache->setFile($file);

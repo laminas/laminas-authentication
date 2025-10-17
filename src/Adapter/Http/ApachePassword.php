@@ -18,8 +18,8 @@ use function pack;
 use function password_verify;
 use function preg_match;
 use function sha1;
+use function str_contains;
 use function str_starts_with;
-use function strpos;
 use function strrev;
 use function strtr;
 use function substr;
@@ -39,7 +39,7 @@ final class ApachePassword
     {
         if (str_starts_with($hash, '{SHA}')) {
             return hash_equals(
-                base64_decode(substr($hash, 5), true),
+                (string) base64_decode(substr($hash, 5), true),
                 sha1($password, true)
             );
         }
@@ -89,7 +89,7 @@ final class ApachePassword
             );
         }
         for ($i = 0; $i < 8; $i++) {
-            if (strpos(self::ALPHA64, $salt[$i]) === false) {
+            if (! str_contains(self::ALPHA64, $salt[$i])) {
                 throw new Exception\InvalidArgumentException(
                     'The salt value must be a string in the alphabet "./0-9A-Za-z"'
                 );

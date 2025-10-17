@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Stdlib\ErrorHandler;
+use Override;
 
+use function assert;
 use function ctype_print;
 use function fclose;
 use function fgetcsv;
 use function fopen;
 use function is_readable;
-use function strpos;
+use function str_contains;
 
 use const E_WARNING;
 
@@ -88,18 +90,19 @@ class FileResolver implements ResolverInterface
      *         realm, false otherwise.
      * @throws Exception\ExceptionInterface
      */
+    #[Override]
     public function resolve($username, $realm, $password = null)
     {
         if (empty($username)) {
             throw new Exception\InvalidArgumentException('Username is required');
-        } elseif (! ctype_print($username) || strpos($username, ':') !== false) {
+        } elseif (! ctype_print($username) || str_contains($username, ':')) {
             throw new Exception\InvalidArgumentException(
                 'Username must consist only of printable characters, excluding the colon'
             );
         }
         if (empty($realm)) {
             throw new Exception\InvalidArgumentException('Realm is required');
-        } elseif (! ctype_print($realm) || strpos($realm, ':') !== false) {
+        } elseif (! ctype_print($realm) || str_contains($realm, ':')) {
             throw new Exception\InvalidArgumentException(
                 'Realm must consist only of printable characters, excluding the colon.'
             );
@@ -115,7 +118,8 @@ class FileResolver implements ResolverInterface
 
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
-        while (($line = fgetcsv($fp, 512, ':', '"')) !== false) {
+        while (($line = fgetcsv($fp, 512, ':', '"', escape: "\\")) !== false) {
+            assert(isset($line[0]) && isset($line[1]));
             if ($line[0] === $username && $line[1] === $realm) {
                 $password = $line[2];
                 fclose($fp);

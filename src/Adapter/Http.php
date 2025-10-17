@@ -8,6 +8,7 @@ use Laminas\Authentication;
 use Laminas\Http\Request as HTTPRequest;
 use Laminas\Http\Response as HTTPResponse;
 use Laminas\Uri\UriFactory;
+use Override;
 
 use function array_intersect;
 use function base64_decode;
@@ -23,6 +24,7 @@ use function is_array;
 use function is_numeric;
 use function preg_match;
 use function sprintf;
+use function str_contains;
 use function strlen;
 use function strpos;
 use function strtolower;
@@ -181,8 +183,8 @@ class Http implements AdapterInterface
         if (
             empty($config['realm']) ||
             ! ctype_print($config['realm']) ||
-            strpos($config['realm'], ':') !== false ||
-            strpos($config['realm'], '"') !== false
+            str_contains($config['realm'], ':') ||
+            str_contains($config['realm'], '"')
         ) {
             throw new Exception\InvalidArgumentException(
                 'Config key \'realm\' is required, and must contain only printable characters,'
@@ -199,7 +201,7 @@ class Http implements AdapterInterface
             if (
                 empty($config['digest_domains']) ||
                 ! ctype_print($config['digest_domains']) ||
-                strpos($config['digest_domains'], '"') !== false
+                str_contains($config['digest_domains'], '"')
             ) {
                 throw new Exception\InvalidArgumentException(
                     'Config key \'digest_domains\' is required, and must contain '
@@ -330,6 +332,7 @@ class Http implements AdapterInterface
      * @throws Exception\RuntimeException
      * @return Authentication\Result
      */
+    #[Override]
     public function authenticate()
     {
         if (empty($this->request) || empty($this->response)) {
@@ -373,18 +376,11 @@ class Http implements AdapterInterface
             return $this->challengeClient();
         }
 
-        switch ($clientScheme) {
-            case 'basic':
-                $result = $this->_basicAuth($authHeader);
-                break;
-            case 'digest':
-                $result = $this->_digestAuth($authHeader);
-                break;
-            default:
-                throw new Exception\RuntimeException('Unsupported authentication scheme: ' . $clientScheme);
-        }
-
-        return $result;
+        return match ($clientScheme) {
+            'basic' => $this->_basicAuth($authHeader),
+            'digest' => $this->_digestAuth($authHeader),
+            default => throw new Exception\RuntimeException('Unsupported authentication scheme: ' . $clientScheme),
+        };
     }
 
     /**
@@ -590,16 +586,13 @@ class Http implements AdapterInterface
 
         // Calculate h(a2). The value of this hash depends on the qop
         // option selected by the client and the supported hash functions
-        switch ($data['qop']) {
-            case 'auth':
-                $a2 = $this->request->getMethod() . ':' . $data['uri'];
-                break;
-            case 'auth-int':
+        $a2 = match ($data['qop']) {
+            'auth' => $this->request->getMethod() . ':' . $data['uri'],
+            // 'auth-int':
                 // Should be REQUEST_METHOD . ':' . uri . ':' . hash(entity-body),
                 // but this isn't supported yet, so fall through to default case
-            default:
-                throw new Exception\RuntimeException('Client requested an unsupported qop option');
-        }
+            default => throw new Exception\RuntimeException('Client requested an unsupported qop option'),
+        };
         // Using hash() should make parameterizing the hash algorithm
         // easier
         $ha2 = hash('md5', $a2);
@@ -637,7 +630,7 @@ class Http implements AdapterInterface
         // "boundaries" is not crossed between requests. If that happens, the
         // nonce will change on its own, and effectively log the user out. This
         // would be surprising if the user just logged in.
-        $timeout = ceil(time() / $this->nonceTimeout) * $this->nonceTimeout;
+        $timeout = ((int) ceil(time() / $this->nonceTimeout)) * $this->nonceTimeout;
 
         $userAgentHeader = $this->request->getHeaders()->get('User-Agent');
         if ($userAgentHeader) {
@@ -689,7 +682,7 @@ class Http implements AdapterInterface
         if (
             ! $ret || empty($temp[1])
                   || ! ctype_print($temp[1])
-                  || strpos($temp[1], ':') !== false
+                  || str_contains($temp[1], ':')
         ) {
             $data['username'] = '::invalid::';
         } else {
@@ -701,7 +694,7 @@ class Http implements AdapterInterface
         if (! $ret || empty($temp[1])) {
             return false;
         }
-        if (! ctype_print($temp[1]) || strpos($temp[1], ':') !== false) {
+        if (! ctype_print($temp[1]) || str_contains($temp[1], ':')) {
             return false;
         } else {
             $data['realm'] = $temp[1];
@@ -788,7 +781,7 @@ class Http implements AdapterInterface
                     return false;
                 }
                 $userAgent = $headers->get('User-Agent')->getFieldValue();
-                if (false === strpos($userAgent, 'MSIE')) {
+                if (! str_contains($userAgent, 'MSIE')) {
                     return false;
                 }
 

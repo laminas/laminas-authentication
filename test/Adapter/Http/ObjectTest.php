@@ -10,14 +10,13 @@ use Laminas\Authentication\Adapter\Http;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
+use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function sprintf;
 
-/**
- * @group      Laminas_Auth
- */
-class ObjectTest extends TestCase
+final class ObjectTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**
@@ -49,13 +48,6 @@ class ObjectTest extends TestCase
     protected $_bothConfig;
 
     /**
-     * File resolver setup against with HTTP Basic auth file
-     *
-     * @var Http\FileResolver
-     */
-    protected $_basicResolver;
-
-    /**
      * File resolver setup against with HTTP Digest auth file
      *
      * @var Http\FileResolver
@@ -66,10 +58,10 @@ class ObjectTest extends TestCase
     /**
      * Sets up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         $this->_filesPath      = __DIR__ . '/TestAsset';
-        $this->_basicResolver  = new Http\FileResolver("$this->_filesPath/htbasic.1");
         $this->_digestResolver = new Http\FileResolver("$this->_filesPath/htdigest.3");
         $this->_basicConfig    = [
             'accept_schemes' => 'basic',
@@ -103,9 +95,9 @@ class ObjectTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array{0: array}>
      */
-    public function invalidConfigs()
+    public static function invalidConfigs(): array
     {
         return [
             'bad1' => [
@@ -141,9 +133,7 @@ class ObjectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidConfigs
-     */
+    #[DataProvider('invalidConfigs')]
     public function testInvalidConfigs(array $cfg): void
     {
         $this->expectException(Adapter\Exception\ExceptionInterface::class);
@@ -157,7 +147,7 @@ class ObjectTest extends TestCase
         try {
             $a->authenticate();
             $this->fail('Attempted authentication without request/response objects');
-        } catch (Adapter\Exception\ExceptionInterface $e) {
+        } catch (Adapter\Exception\ExceptionInterface) {
             // Good, it threw an exception
         }
 
@@ -176,7 +166,7 @@ class ObjectTest extends TestCase
      * @return string[][]
      * @psalm-return array{basic: array{0: string, 1: string}, digest: array{0: string, 1: string}}
      */
-    public function noResolvers(): array
+    public static function noResolvers(): array
     {
         return [
             'basic'  => [
@@ -190,9 +180,7 @@ class ObjectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider noResolvers
-     */
+    #[DataProvider('noResolvers')]
     public function testNoResolvers(string $authHeader, string $cfgProperty): void
     {
         // Stub request for Basic auth
@@ -233,7 +221,7 @@ class ObjectTest extends TestCase
                 ->setResponse($response);
         $result = $adapter->authenticate();
 
-        $this->assertEquals($result->getCode(), Authentication\Result::FAILURE_CREDENTIAL_INVALID);
+        $this->assertSame(Authentication\Result::FAILURE_CREDENTIAL_INVALID, $result->getCode());
     }
 
     public function testUnsupportedScheme(): void
@@ -250,6 +238,6 @@ class ObjectTest extends TestCase
           ->setRequest($request)
           ->setResponse($response);
         $result = $a->authenticate();
-        $this->assertEquals($result->getCode(), Authentication\Result::FAILURE_UNCATEGORIZED);
+        $this->assertSame(Authentication\Result::FAILURE_UNCATEGORIZED, $result->getCode());
     }
 }

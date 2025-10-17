@@ -9,6 +9,7 @@ use Laminas\Authentication\Adapter\DbTable\CredentialTreatmentAdapter;
 use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function array_pop;
@@ -18,11 +19,7 @@ use function extension_loaded;
 use function getenv;
 use function serialize;
 
-/**
- * @group Laminas_Auth
- * @group Laminas_Db_Table
- */
-class CredentialTreatmentAdapterDb2Test extends TestCase
+final class CredentialTreatmentAdapterDb2Test extends TestCase
 {
     /**
      * IbmDb2 database connection
@@ -48,6 +45,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Set up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')) {
@@ -76,8 +74,16 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->setupAuthAdapter();
     }
 
+    #[Override]
     public function tearDown(): void
     {
+        if (
+            ! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')
+            || ! extension_loaded('ibm_db2')
+        ) {
+            return;
+        }
+
         $this->authAdapter = null;
 
         // BIND, REBIND or DROP operations fail when the package is in use
@@ -208,17 +214,11 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterCanReturnDbSelectObject(): void
     {
         $this->assertInstanceOf(Select::class, $this->authAdapter->getDbSelect());
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
         $select = $this->authAdapter->getDbSelect();
@@ -230,9 +230,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->assertEquals(Authentication\Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
         $select = $this->authAdapter->getDbSelect();
@@ -319,10 +316,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Test to see same usernames with different passwords can not authenticate
      * when flag is not set.
-     * This is the current state of
-     * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
-     *
-     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
@@ -340,8 +333,6 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
-     *
-     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {

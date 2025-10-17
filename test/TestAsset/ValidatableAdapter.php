@@ -7,8 +7,9 @@ namespace LaminasTest\Authentication\TestAsset;
 use Laminas\Authentication\Adapter\AbstractAdapter as AuthenticationAdapter;
 use Laminas\Authentication\Result;
 use Laminas\Authentication\Result as AuthenticationResult;
+use Override;
 
-class ValidatableAdapter extends AuthenticationAdapter
+final class ValidatableAdapter extends AuthenticationAdapter
 {
     /** @var int Authentication result code */
     private int $code;
@@ -21,6 +22,7 @@ class ValidatableAdapter extends AuthenticationAdapter
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function authenticate(): Result
     {
         return new AuthenticationResult($this->code, 'someIdentity');

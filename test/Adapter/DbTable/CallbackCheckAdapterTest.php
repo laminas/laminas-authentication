@@ -10,37 +10,34 @@ use Laminas\Authentication\Adapter\DbTable\Exception\InvalidArgumentException;
 use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
+use Override;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_pop;
 use function assert;
-use function count;
 use function extension_loaded;
 use function getenv;
 use function in_array;
 use function serialize;
 
-/**
- * @group      Laminas_Auth
- * @group      Laminas_Db_Table
- */
-class CallbackCheckAdapterTest extends TestCase
+final class CallbackCheckAdapterTest extends TestCase
 {
     /**
      * SQLite database connection
      */
-    protected DbAdapter|null $db;
+    protected DbAdapter|null $db = null;
 
     /**
      * Database table authentication adapter
      */
-    protected CallbackCheckAdapter|null $adapter;
+    protected CallbackCheckAdapter|null $adapter = null;
 
     /**
      * Set up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')) {
@@ -55,6 +52,7 @@ class CallbackCheckAdapterTest extends TestCase
         $this->setupAuthAdapter();
     }
 
+    #[Override]
     public function tearDown(): void
     {
         $this->adapter = null;
@@ -203,17 +201,11 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertEquals($expected, $resultRow);
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterCanReturnDbSelectObject(): void
     {
         $this->assertInstanceOf(Select::class, $this->adapter()->getDbSelect());
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
         $select = $this->adapter()->getDbSelect();
@@ -225,9 +217,6 @@ class CallbackCheckAdapterTest extends TestCase
         $this->assertEquals(Authentication\Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
         $select = $this->adapter()->getDbSelect();
@@ -237,7 +226,7 @@ class CallbackCheckAdapterTest extends TestCase
         $this->adapter()->authenticate();
         $selectAfterAuth = $this->adapter()->getDbSelect();
         $whereParts      = $selectAfterAuth->where->getPredicates();
-        $this->assertEquals(1, count($whereParts));
+        $this->assertCount(1, $whereParts);
 
         $lastWherePart  = array_pop($whereParts);
         $expressionData = $lastWherePart[1]->getExpressionData();
@@ -313,10 +302,7 @@ class CallbackCheckAdapterTest extends TestCase
 
     /**
      * Test to see same usernames with different passwords can not authenticate
-     * when flag is not set. This is the current state of
-     * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
-     *
-     * @group Laminas-7289
+     * when flag is not set.
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
@@ -338,8 +324,6 @@ class CallbackCheckAdapterTest extends TestCase
     /**
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
-     *
-     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {

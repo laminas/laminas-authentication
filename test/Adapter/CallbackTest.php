@@ -8,14 +8,16 @@ use Exception;
 use Laminas\Authentication\Adapter\Callback;
 use Laminas\Authentication\Exception as AuthenticationException;
 use Laminas\Authentication\Result;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function array_map;
 
-class CallbackTest extends TestCase
+final class CallbackTest extends TestCase
 {
     private Callback $adapter;
 
+    #[Override]
     public function setUp(): void
     {
         $this->adapter = new Callback();
@@ -117,11 +119,9 @@ class CallbackTest extends TestCase
     public function testAuthenticateResultIfCallbackReturnsIdentity(): void
     {
         $adapter  = $this->adapter;
-        $callback = function (): string {
-            return 'identity';
-        };
+        $callback = fn(): string => 'identity';
         $adapter->setCallback($callback);
-        $result = $adapter->authenticate();
+        $result   = $adapter->authenticate();
         self::assertTrue($result->isValid());
         self::assertEquals(Result::SUCCESS, $result->getCode());
         self::assertEquals('identity', $result->getIdentity());

@@ -10,13 +10,16 @@ use Laminas\Authentication\Exception;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 use LaminasTest\Authentication as AuthTest;
+use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
 use function print_r;
 use function sprintf;
 
-class AuthenticationTest extends TestCase
+final class AuthenticationTest extends TestCase
 {
     /** @var AuthenticationValidator */
     protected $validator;
@@ -27,6 +30,7 @@ class AuthenticationTest extends TestCase
     /** @var ValidatableAdapterInterface */
     protected $authAdapter;
 
+    #[Override]
     public function setUp(): void
     {
         $this->validator   = new AuthenticationValidator();
@@ -123,9 +127,7 @@ class AuthenticationTest extends TestCase
         );
     }
 
-    /**
-     * @depends testCodeMapAllowsToAddCustomMessageTemplates
-     */
+    #[Depends('testCodeMapAllowsToAddCustomMessageTemplates')]
     public function testCodeMapCustomMessageTemplateValueDefaultsToGeneralMessageTemplate(): void
     {
         $auth      = new AuthenticationValidator([
@@ -137,9 +139,7 @@ class AuthenticationTest extends TestCase
         $this->assertEquals($templates['general'], $templates['custom_error']);
     }
 
-    /**
-     * @depends testCodeMapAllowsToAddCustomMessageTemplates
-     */
+    #[Depends('testCodeMapAllowsToAddCustomMessageTemplates')]
     public function testCustomMessageTemplateValueCanBeProvidedAsOption(): void
     {
         $auth      = new AuthenticationValidator([
@@ -205,7 +205,6 @@ class AuthenticationTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $r = new ReflectionProperty($this->validator, 'messageTemplates');
-        $r->setAccessible(true);
         $this->assertEquals($this->validator->getOption('messageTemplates'), $r->getValue($this->validator));
     }
 
@@ -244,7 +243,7 @@ class AuthenticationTest extends TestCase
      *     2: array<string, string>
      * }>
      */
-    public function errorMessagesProvider(): array
+    public static function errorMessagesProvider(): array
     {
         return [
             'failure'            => [
@@ -281,11 +280,11 @@ class AuthenticationTest extends TestCase
     }
 
     /**
-     * @dataProvider errorMessagesProvider
      * @param int   $code
      * @param bool  $valid
      * @param array $messages
      */
+    #[DataProvider('errorMessagesProvider')]
     public function testErrorMessages($code, $valid, $messages): void
     {
         $adapter = new AuthTest\TestAsset\ValidatableAdapter($code);
