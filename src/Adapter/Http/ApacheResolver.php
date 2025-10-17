@@ -6,6 +6,7 @@ namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Result as AuthResult;
 use Laminas\Stdlib\ErrorHandler;
+use Override;
 
 use function assert;
 use function ctype_print;
@@ -104,6 +105,7 @@ class ApacheResolver implements ResolverInterface
      * @return AuthResult
      * @throws Exception\ExceptionInterface
      */
+    #[Override]
     public function resolve($username, $realm, $password = null)
     {
         if (empty($username)) {
@@ -137,6 +139,7 @@ class ApacheResolver implements ResolverInterface
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
         while (($line = fgetcsv($fp, 512, ':', escape: "\\")) !== false) {
+            assert(isset($line[0]));
             if ($line[0] !== $username) {
                 continue;
             }

@@ -7,9 +7,10 @@ namespace LaminasTest\Authentication\Adapter\Http;
 use Laminas\Authentication\Adapter\Http\ApacheResolver as Apache;
 use Laminas\Authentication\Adapter\Http\Exception\ExceptionInterface;
 use Laminas\Authentication\Result;
+use Override;
 use PHPUnit\Framework\TestCase;
 
-class ApacheResolverTest extends TestCase
+final class ApacheResolverTest extends TestCase
 {
     /**
      * Path to a valid file
@@ -28,6 +29,7 @@ class ApacheResolverTest extends TestCase
      * Sets the paths to files used in this test, and creates a shared resolver instance
      * having a valid path.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->path      = __DIR__ . '/TestAsset';

@@ -8,6 +8,7 @@ use Exception;
 use Laminas\Authentication\Exception\InvalidArgumentException;
 use Laminas\Authentication\Exception\RuntimeException;
 use Laminas\Authentication\Result;
+use Override;
 
 use function call_user_func;
 use function is_callable;
@@ -39,6 +40,7 @@ class Callback extends AbstractAdapter
      * @return Result The authentication result
      * @throws RuntimeException
      */
+    #[Override]
     public function authenticate()
     {
         $callback = $this->getCallback();

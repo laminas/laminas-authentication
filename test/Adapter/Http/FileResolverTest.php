@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function rename;
@@ -12,7 +13,7 @@ use function rename;
 /**
  * @group      Laminas_Auth
  */
-class FileResolverTest extends TestCase
+final class FileResolverTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**
@@ -48,6 +49,7 @@ class FileResolverTest extends TestCase
      * Sets the paths to files used in this test, and creates a shared resolver instance
      * having a valid path.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->_filesPath = __DIR__ . '/TestAsset';

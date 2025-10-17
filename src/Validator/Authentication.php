@@ -10,6 +10,7 @@ use Laminas\Authentication\Exception;
 use Laminas\Authentication\Result;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\AbstractValidator;
+use Override;
 use Traversable;
 
 use function array_key_exists;
@@ -236,6 +237,7 @@ class Authentication extends AbstractValidator
      * @return bool
      * @throws Exception\RuntimeException
      */
+    #[Override]
     public function isValid($value = null, $context = null)
     {
         if ($value !== null) {

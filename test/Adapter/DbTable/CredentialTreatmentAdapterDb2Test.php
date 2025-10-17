@@ -8,6 +8,7 @@ use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function array_pop;
@@ -21,7 +22,7 @@ use function serialize;
  * @group Laminas_Auth
  * @group Laminas_Db_Table
  */
-class CredentialTreatmentAdapterDb2Test extends TestCase
+final class CredentialTreatmentAdapterDb2Test extends TestCase
 {
     /**
      * IbmDb2 database connection
@@ -47,6 +48,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Set up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')) {
@@ -75,6 +77,7 @@ class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->setupAuthAdapter();
     }
 
+    #[Override]
     public function tearDown(): void
     {
         $this->authAdapter = null;

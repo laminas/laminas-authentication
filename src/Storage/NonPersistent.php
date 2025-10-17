@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Authentication\Storage;
 
+use Override;
+
 /**
  * Non-Persistent Authentication Storage
  *
@@ -25,6 +27,7 @@ class NonPersistent implements StorageInterface
      *
      * @return bool
      */
+    #[Override]
     public function isEmpty()
     {
         return empty($this->data);
@@ -36,6 +39,7 @@ class NonPersistent implements StorageInterface
      *
      * @return mixed
      */
+    #[Override]
     public function read()
     {
         return $this->data;
@@ -47,6 +51,7 @@ class NonPersistent implements StorageInterface
      * @param  mixed $contents
      * @return void
      */
+    #[Override]
     public function write($contents)
     {
         $this->data = $contents;
@@ -57,6 +62,7 @@ class NonPersistent implements StorageInterface
      *
      * @return void
      */
+    #[Override]
     public function clear()
     {
         $this->data = null;

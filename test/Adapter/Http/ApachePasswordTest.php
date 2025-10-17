@@ -15,7 +15,7 @@ use const PASSWORD_BCRYPT;
 /**
  * @psalm-suppress InternalMethod, InternalClass
  */
-class ApachePasswordTest extends TestCase
+final class ApachePasswordTest extends TestCase
 {
     /**
      * Test vectors generated using openssl and htpasswd

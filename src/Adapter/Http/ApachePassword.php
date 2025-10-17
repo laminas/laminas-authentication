@@ -39,7 +39,7 @@ final class ApachePassword
     {
         if (str_starts_with($hash, '{SHA}')) {
             return hash_equals(
-                base64_decode(substr($hash, 5), true),
+                (string) base64_decode(substr($hash, 5), true),
                 sha1($password, true)
             );
         }

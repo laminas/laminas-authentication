@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Authentication;
 
+use Override;
+
 use function assert;
 
 class AuthenticationService implements AuthenticationServiceInterface
@@ -93,6 +95,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      * @return Result
      * @throws Exception\RuntimeException
      */
+    #[Override]
     public function authenticate(?Adapter\AdapterInterface $adapter = null)
     {
         if (! $adapter) {
@@ -124,6 +127,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return bool
      */
+    #[Override]
     public function hasIdentity()
     {
         return ! $this->getStorage()->isEmpty();
@@ -134,6 +138,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return mixed
      */
+    #[Override]
     public function getIdentity()
     {
         $storage = $this->getStorage();
@@ -150,6 +155,7 @@ class AuthenticationService implements AuthenticationServiceInterface
      *
      * @return void
      */
+    #[Override]
     public function clearIdentity()
     {
         $this->getStorage()->clear();

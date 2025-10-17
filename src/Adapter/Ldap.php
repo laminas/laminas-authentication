@@ -7,6 +7,7 @@ namespace Laminas\Authentication\Adapter;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Ldap as LaminasLdap;
 use Laminas\Ldap\Exception\LdapException;
+use Override;
 use stdClass;
 
 use function array_diff;
@@ -188,6 +189,7 @@ class Ldap extends AbstractAdapter
      * @return AuthenticationResult
      * @throws Exception\ExceptionInterface
      */
+    #[Override]
     public function authenticate()
     {
         $messages    = [];

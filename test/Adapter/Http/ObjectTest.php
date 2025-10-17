@@ -10,6 +10,7 @@ use Laminas\Authentication\Adapter\Http;
 use Laminas\Http\Headers;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function sprintf;
@@ -17,7 +18,7 @@ use function sprintf;
 /**
  * @group      Laminas_Auth
  */
-class ObjectTest extends TestCase
+final class ObjectTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /**
@@ -59,6 +60,7 @@ class ObjectTest extends TestCase
     /**
      * Sets up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         $this->_filesPath      = __DIR__ . '/TestAsset';

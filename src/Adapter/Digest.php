@@ -6,6 +6,7 @@ namespace Laminas\Authentication\Adapter;
 
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Stdlib\ErrorHandler;
+use Override;
 
 use function fgets;
 use function fopen;
@@ -156,6 +157,7 @@ class Digest extends AbstractAdapter
      * @throws Exception\ExceptionInterface
      * @return AuthenticationResult
      */
+    #[Override]
     public function authenticate()
     {
         $optionsRequired = ['filename', 'realm', 'identity', 'credential'];

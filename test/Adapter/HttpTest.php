@@ -7,7 +7,7 @@ namespace LaminasTest\Authentication\Adapter;
 use Laminas\Authentication\Adapter\Http;
 use PHPUnit\Framework\TestCase;
 
-class HttpTest extends TestCase
+final class HttpTest extends TestCase
 {
     public function testSetGetBasicResolver(): void
     {

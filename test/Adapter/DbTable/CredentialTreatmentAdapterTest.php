@@ -8,12 +8,12 @@ use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql\Select;
+use Override;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_pop;
-use function count;
 use function extension_loaded;
 use function getenv;
 use function in_array;
@@ -44,6 +44,7 @@ class CredentialTreatmentAdapterTest extends TestCase
     /**
      * Set up test configuration
      */
+    #[Override]
     public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')) {
@@ -58,6 +59,7 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->_setupAuthAdapter();
     }
 
+    #[Override]
     public function tearDown(): void
     {
         $this->_adapter = null;
@@ -208,7 +210,7 @@ class CredentialTreatmentAdapterTest extends TestCase
         $this->_adapter->authenticate();
         $selectAfterAuth = $this->_adapter->getDbSelect();
         $whereParts      = $selectAfterAuth->where->getPredicates();
-        $this->assertEquals(1, count($whereParts));
+        $this->assertCount(1, $whereParts);
 
         $lastWherePart  = array_pop($whereParts);
         $expressionData = $lastWherePart[1]->getExpressionData();

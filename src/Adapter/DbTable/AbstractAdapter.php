@@ -10,6 +10,7 @@ use Laminas\Authentication\Adapter\DbTable\Exception\RuntimeException;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
+use Override;
 use stdClass;
 
 use function array_keys;
@@ -227,6 +228,7 @@ abstract class AbstractAdapter extends BaseAdapter
      * @throws RuntimeException If answering the authentication query is impossible.
      * @return AuthenticationResult
      */
+    #[Override]
     public function authenticate()
     {
         $this->authenticateSetup();
