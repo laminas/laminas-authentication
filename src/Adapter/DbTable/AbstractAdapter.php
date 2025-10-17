@@ -342,7 +342,6 @@ abstract class AbstractAdapter extends BaseAdapter
      * _authenticateValidateResultSet() - This method attempts to make
      * certain that only one record was returned in the resultset
      *
-     * @param  array $resultIdentities
      * @return bool|AuthenticationResult
      */
     protected function authenticateValidateResultSet(array $resultIdentities)

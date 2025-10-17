@@ -328,7 +328,6 @@ class Ldap extends AbstractAdapter
     /**
      * Sets the LDAP specific options on the Laminas\Ldap\Ldap instance
      *
-     * @param  array         $options
      * @return array of auth-adapter specific options
      */
     protected function prepareOptions(LaminasLdap\Ldap $ldap, array $options)
@@ -382,7 +381,6 @@ class Ldap extends AbstractAdapter
      *
      * @param  string        $canonicalName
      * @param  string        $dn
-     * @param  array         $adapterOptions
      * @return string|true
      */
     protected function checkGroupMembership(LaminasLdap\Ldap $ldap, $canonicalName, $dn, array $adapterOptions)
@@ -420,8 +418,6 @@ class Ldap extends AbstractAdapter
      * This resembles the feature {@see Laminas\Authentication\Adapter\DbTable::getResultRowObject()}.
      * Closes Laminas-6813
      *
-     * @param  array $returnAttribs
-     * @param  array $omitAttribs
      * @return stdClass|bool
      */
     public function getAccountObject(array $returnAttribs = [], array $omitAttribs = [])
@@ -454,7 +450,6 @@ class Ldap extends AbstractAdapter
     /**
      * Converts options to string
      *
-     * @param  array $options
      * @return string
      */
     private function optionsToString(array $options)

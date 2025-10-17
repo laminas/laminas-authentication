@@ -57,7 +57,6 @@ class Result
      *
      * @param  int     $code
      * @param  mixed   $identity
-     * @param  array   $messages
      */
     public function __construct(
         $code,
