@@ -358,8 +358,6 @@ final class AuthTest extends TestCase
 
     /**
      * check if response is validated
-     *
-     * @group PR6983
      */
     public function testBadDigestResponse(): void
     {

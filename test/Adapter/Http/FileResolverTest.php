@@ -10,9 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 use function rename;
 
-/**
- * @group      Laminas_Auth
- */
 final class FileResolverTest extends TestCase
 {
     // @codingStandardsIgnoreStart

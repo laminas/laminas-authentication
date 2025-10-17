@@ -18,10 +18,6 @@ use function extension_loaded;
 use function getenv;
 use function serialize;
 
-/**
- * @group Laminas_Auth
- * @group Laminas_Db_Table
- */
 final class CredentialTreatmentAdapterDb2Test extends TestCase
 {
     /**
@@ -210,17 +206,11 @@ final class CredentialTreatmentAdapterDb2Test extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterCanReturnDbSelectObject(): void
     {
         $this->assertInstanceOf(Select::class, $this->authAdapter->getDbSelect());
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterCanUseModifiedDbSelectObject(): void
     {
         $select = $this->authAdapter->getDbSelect();
@@ -232,9 +222,6 @@ final class CredentialTreatmentAdapterDb2Test extends TestCase
         $this->assertEquals(Authentication\Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
     }
 
-    /**
-     * @group Laminas-5957
-     */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth(): void
     {
         $select = $this->authAdapter->getDbSelect();
@@ -321,10 +308,6 @@ final class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Test to see same usernames with different passwords can not authenticate
      * when flag is not set.
-     * This is the current state of
-     * Laminas_Auth_Adapter_DbTable (up to Laminas 1.10.6)
-     *
-     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldNotAuthenticateWhenFlagIsNotSet(): void
     {
@@ -342,8 +325,6 @@ final class CredentialTreatmentAdapterDb2Test extends TestCase
     /**
      * Test to see same usernames with different passwords can authenticate when
      * a flag is set
-     *
-     * @group Laminas-7289
      */
     public function testEqualUsernamesDifferentPasswordShouldAuthenticateWhenFlagIsSet(): void
     {

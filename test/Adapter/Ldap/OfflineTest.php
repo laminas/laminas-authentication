@@ -11,9 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 use function extension_loaded;
 
-/**
- * @group      Laminas_Auth
- */
 final class OfflineTest extends TestCase
 {
     /**

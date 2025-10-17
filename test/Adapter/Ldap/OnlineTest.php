@@ -13,9 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 use function getenv;
 
-/**
- * @group      Laminas_Auth
- */
 final class OnlineTest extends TestCase
 {
     /**

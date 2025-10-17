@@ -6,6 +6,7 @@ namespace LaminasTest\Authentication\Adapter\Http;
 
 use Laminas\Authentication\Adapter\Http\ApachePassword;
 use Laminas\Authentication\Exception\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function password_hash;
@@ -40,9 +41,7 @@ final class ApachePasswordTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTestVectors
-     */
+    #[DataProvider('provideTestVectors')]
     public function testVerify(string $password, string $hash, string|null $username, string|null $realm): void
     {
         self::assertTrue(ApachePassword::verify($password, $hash, $username, $realm));

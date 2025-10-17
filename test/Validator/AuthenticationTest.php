@@ -11,6 +11,8 @@ use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 use LaminasTest\Authentication as AuthTest;
 use Override;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -125,9 +127,7 @@ final class AuthenticationTest extends TestCase
         );
     }
 
-    /**
-     * @depends testCodeMapAllowsToAddCustomMessageTemplates
-     */
+    #[Depends('testCodeMapAllowsToAddCustomMessageTemplates')]
     public function testCodeMapCustomMessageTemplateValueDefaultsToGeneralMessageTemplate(): void
     {
         $auth      = new AuthenticationValidator([
@@ -139,9 +139,7 @@ final class AuthenticationTest extends TestCase
         $this->assertEquals($templates['general'], $templates['custom_error']);
     }
 
-    /**
-     * @depends testCodeMapAllowsToAddCustomMessageTemplates
-     */
+    #[Depends('testCodeMapAllowsToAddCustomMessageTemplates')]
     public function testCustomMessageTemplateValueCanBeProvidedAsOption(): void
     {
         $auth      = new AuthenticationValidator([
@@ -245,7 +243,7 @@ final class AuthenticationTest extends TestCase
      *     2: array<string, string>
      * }>
      */
-    public function errorMessagesProvider(): array
+    public static function errorMessagesProvider(): array
     {
         return [
             'failure'            => [
@@ -282,11 +280,11 @@ final class AuthenticationTest extends TestCase
     }
 
     /**
-     * @dataProvider errorMessagesProvider
      * @param int   $code
      * @param bool  $valid
      * @param array $messages
      */
+    #[DataProvider('errorMessagesProvider')]
     public function testErrorMessages($code, $valid, $messages): void
     {
         $adapter = new AuthTest\TestAsset\ValidatableAdapter($code);
