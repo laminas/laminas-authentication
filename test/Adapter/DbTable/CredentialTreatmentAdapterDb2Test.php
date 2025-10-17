@@ -77,6 +77,13 @@ final class CredentialTreatmentAdapterDb2Test extends TestCase
     #[Override]
     public function tearDown(): void
     {
+        if (
+            ! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')
+            || ! extension_loaded('ibm_db2')
+        ) {
+            return;
+        }
+
         $this->authAdapter = null;
 
         // BIND, REBIND or DROP operations fail when the package is in use
