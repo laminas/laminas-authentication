@@ -11,17 +11,6 @@
       <code><![CDATA[! $callback]]></code>
     </RiskyTruthyFalsyComparison>
   </file>
-  <file src="src/Adapter/DbTable.php">
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[DbTable]]></code>
-      <code><![CDATA[DbTable]]></code>
-      <code><![CDATA[DbTable]]></code>
-      <code><![CDATA[DbTable]]></code>
-      <code><![CDATA[DbTable]]></code>
-      <code><![CDATA[DbTable]]></code>
-      <code><![CDATA[DbTable]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/Adapter/DbTable/AbstractAdapter.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->dbSelect === null]]></code>
@@ -223,7 +212,6 @@
       <code><![CDATA[has]]></code>
     </PossiblyUndefinedMethod>
     <PossiblyUnusedMethod>
-      <code><![CDATA[_challengeClient]]></code>
       <code><![CDATA[getRequest]]></code>
       <code><![CDATA[getResponse]]></code>
     </PossiblyUnusedMethod>
@@ -384,29 +372,16 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/Adapter/DbTable/CallbackCheckAdapterTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[new Adapter\DbTable($this->db())]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b)]]></code>
-    </DeprecatedClass>
-    <InvalidClass>
-      <code><![CDATA[Adapter\Dbtable\Exception\InvalidArgumentException]]></code>
-    </InvalidClass>
     <MissingClosureParamType>
       <code><![CDATA[$a]]></code>
       <code><![CDATA[$b]]></code>
     </MissingClosureParamType>
-    <MissingParamType>
-      <code><![CDATA[$optionalParams]]></code>
-    </MissingParamType>
     <MixedArrayAccess>
       <code><![CDATA[$expressionData[0]]]></code>
       <code><![CDATA[$expressionData[0][0]]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code><![CDATA[$expressionData]]></code>
-      <code><![CDATA[$params['options']]]></code>
     </MixedAssignment>
     <MixedMethodCall>
       <code><![CDATA[getExpressionData]]></code>
@@ -424,9 +399,6 @@
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
-    <TooManyArguments>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b)]]></code>
-    </TooManyArguments>
     <UndefinedInterfaceMethod>
       <code><![CDATA[$lastWherePart]]></code>
     </UndefinedInterfaceMethod>
@@ -436,12 +408,6 @@
     </UndefinedMethod>
   </file>
   <file src="test/Adapter/DbTable/CredentialTreatmentAdapterDb2Test.php">
-    <DeprecatedClass>
-      <code><![CDATA[new Adapter\DbTable($this->db)]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db, $this->tableName, 'username', 'password', '?')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db, 'users')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db, 'users', 'username')]]></code>
-    </DeprecatedClass>
     <MixedArgument>
       <code><![CDATA[$result->getMessages()]]></code>
       <code><![CDATA[$result->getMessages()]]></code>
@@ -556,9 +522,6 @@
     <PossiblyNullPropertyAssignmentValue>
       <code><![CDATA[null]]></code>
     </PossiblyNullPropertyAssignmentValue>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->db instanceof DbAdapter]]></code>
-    </RedundantConditionGivenDocblockType>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
@@ -588,24 +551,12 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="test/Adapter/DbTable/CredentialTreatmentAdapterTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[\Laminas\Authentication\Adapter\DbTable]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->_db)]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->_db, 'users')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->_db, 'users', 'username')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->_db, 'users', 'username', 'password', '?')]]></code>
-      <code><![CDATA[protected $_adapter = null;]]></code>
-    </DeprecatedClass>
-    <MissingParamType>
-      <code><![CDATA[$optionalParams]]></code>
-    </MissingParamType>
     <MixedArrayAccess>
       <code><![CDATA[$expressionData[0]]]></code>
       <code><![CDATA[$expressionData[0][0]]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code><![CDATA[$expressionData]]></code>
-      <code><![CDATA[$params['options']]]></code>
     </MixedAssignment>
     <MixedMethodCall>
       <code><![CDATA[getExpressionData]]></code>
@@ -627,12 +578,6 @@
       <code><![CDATA[$lastWherePart]]></code>
       <code><![CDATA[getExpressionData]]></code>
     </PossiblyNullReference>
-    <PropertyTypeCoercion>
-      <code><![CDATA[new Adapter\DbTable\CredentialTreatmentAdapter($this->_db, 'users', 'username', 'password')]]></code>
-    </PropertyTypeCoercion>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->_db instanceof DbAdapter]]></code>
-    </RedundantConditionGivenDocblockType>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
@@ -643,11 +588,6 @@
       <code><![CDATA[setAmbiguityIdentity]]></code>
       <code><![CDATA[setAmbiguityIdentity]]></code>
     </UndefinedMethod>
-  </file>
-  <file src="test/Adapter/DbTableTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[new Adapter\DbTable($this->_db, 'users', 'username', 'password')]]></code>
-    </DeprecatedClass>
   </file>
   <file src="test/Adapter/DigestTest.php">
     <MixedArgument>
