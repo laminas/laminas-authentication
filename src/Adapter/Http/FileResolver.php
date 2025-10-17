@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Laminas\Authentication\Adapter\Http;
 
 use Laminas\Stdlib\ErrorHandler;
+use Override;
 
+use function assert;
 use function ctype_print;
 use function fclose;
 use function fgetcsv;
@@ -88,6 +90,7 @@ class FileResolver implements ResolverInterface
      *         realm, false otherwise.
      * @throws Exception\ExceptionInterface
      */
+    #[Override]
     public function resolve($username, $realm, $password = null)
     {
         if (empty($username)) {
@@ -116,6 +119,7 @@ class FileResolver implements ResolverInterface
         // No real validation is done on the contents of the password file. The
         // assumption is that we trust the administrators to keep it secure.
         while (($line = fgetcsv($fp, 512, ':', '"', escape: "\\")) !== false) {
+            assert(isset($line[0]) && isset($line[1]));
             if ($line[0] === $username && $line[1] === $realm) {
                 $password = $line[2];
                 fclose($fp);

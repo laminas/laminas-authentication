@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 use function count;
 
-class DigestTest extends TestCase
+final class DigestTest extends TestCase
 {
     protected string $filesPath = __DIR__ . '/TestAsset/Digest';
 

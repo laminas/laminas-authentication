@@ -8,6 +8,7 @@ use Laminas\Authentication;
 use Laminas\Authentication\Adapter;
 use Laminas\Authentication\Result;
 use Laminas\Ldap;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function getenv;
@@ -15,7 +16,7 @@ use function getenv;
 /**
  * @group      Laminas_Auth
  */
-class OnlineTest extends TestCase
+final class OnlineTest extends TestCase
 {
     /**
      * LDAP connection options
@@ -27,6 +28,7 @@ class OnlineTest extends TestCase
     /** @var array */
     protected $names = [];
 
+    #[Override]
     public function setUp(): void
     {
         if (! getenv('TESTS_LAMINAS_AUTH_ADAPTER_LDAP_ONLINE_ENABLED')) {

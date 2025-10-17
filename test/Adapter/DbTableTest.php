@@ -10,12 +10,13 @@ use Laminas\Authentication\Adapter;
  * @group      Laminas_Auth
  * @group      Laminas_Db_Table
  */
-class DbTableTest extends DbTable\CredentialTreatmentAdapterTest
+final class DbTableTest extends DbTable\CredentialTreatmentAdapterTest
 {
     // @codingStandardsIgnoreStart
     /**
      * @return void
      */
+    #[\Override]
     protected function _setupAuthAdapter()
     {
         // @codingStandardsIgnoreEnd

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Authentication\Adapter;
 
+use Override;
+
 abstract class AbstractAdapter implements ValidatableAdapterInterface
 {
     /** @var mixed */
@@ -18,6 +20,7 @@ abstract class AbstractAdapter implements ValidatableAdapterInterface
      *
      * @return mixed
      */
+    #[Override]
     public function getCredential()
     {
         return $this->credential;
@@ -29,6 +32,7 @@ abstract class AbstractAdapter implements ValidatableAdapterInterface
      * @param  mixed $credential
      * @return self Provides a fluent interface
      */
+    #[Override]
     public function setCredential($credential)
     {
         $this->credential = $credential;
@@ -42,6 +46,7 @@ abstract class AbstractAdapter implements ValidatableAdapterInterface
      *
      * @return mixed
      */
+    #[Override]
     public function getIdentity()
     {
         return $this->identity;
@@ -53,6 +58,7 @@ abstract class AbstractAdapter implements ValidatableAdapterInterface
      * @param  mixed $identity
      * @return self Provides a fluent interface
      */
+    #[Override]
     public function setIdentity($identity)
     {
         $this->identity = $identity;

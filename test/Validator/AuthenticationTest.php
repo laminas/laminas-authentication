@@ -10,13 +10,14 @@ use Laminas\Authentication\Exception;
 use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Authentication\Validator\Authentication as AuthenticationValidator;
 use LaminasTest\Authentication as AuthTest;
+use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
 use function print_r;
 use function sprintf;
 
-class AuthenticationTest extends TestCase
+final class AuthenticationTest extends TestCase
 {
     /** @var AuthenticationValidator */
     protected $validator;
@@ -27,6 +28,7 @@ class AuthenticationTest extends TestCase
     /** @var ValidatableAdapterInterface */
     protected $authAdapter;
 
+    #[Override]
     public function setUp(): void
     {
         $this->validator   = new AuthenticationValidator();

@@ -8,6 +8,7 @@ use Laminas\Authentication;
 use Laminas\Http\Request as HTTPRequest;
 use Laminas\Http\Response as HTTPResponse;
 use Laminas\Uri\UriFactory;
+use Override;
 
 use function array_intersect;
 use function base64_decode;
@@ -334,6 +335,7 @@ class Http implements AdapterInterface
      * @throws Exception\RuntimeException
      * @return Authentication\Result
      */
+    #[Override]
     public function authenticate()
     {
         if (empty($this->request) || empty($this->response)) {
@@ -652,7 +654,7 @@ class Http implements AdapterInterface
         // "boundaries" is not crossed between requests. If that happens, the
         // nonce will change on its own, and effectively log the user out. This
         // would be surprising if the user just logged in.
-        $timeout = ceil(time() / $this->nonceTimeout) * $this->nonceTimeout;
+        $timeout = ((int) ceil(time() / $this->nonceTimeout)) * $this->nonceTimeout;
 
         $userAgentHeader = $this->request->getHeaders()->get('User-Agent');
         if ($userAgentHeader) {

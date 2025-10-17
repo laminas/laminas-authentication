@@ -6,6 +6,7 @@ namespace LaminasTest\Authentication\Adapter\Ldap;
 
 use Laminas\Authentication\Adapter;
 use Laminas\Ldap;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function extension_loaded;
@@ -13,7 +14,7 @@ use function extension_loaded;
 /**
  * @group      Laminas_Auth
  */
-class OfflineTest extends TestCase
+final class OfflineTest extends TestCase
 {
     /**
      * Authentication adapter instance
@@ -27,6 +28,7 @@ class OfflineTest extends TestCase
      *
      * * Creates an instance of Laminas\Authentication\Adapter\Ldap
      */
+    #[Override]
     public function setUp(): void
     {
         $this->adapter = new Adapter\Ldap();

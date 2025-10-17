@@ -9,12 +9,14 @@ use Laminas\Authentication\Exception\RuntimeException;
 use Laminas\Authentication\Result;
 use Laminas\Authentication\Storage\Session;
 use Laminas\Authentication\Storage\StorageInterface;
+use Override;
 use PHPUnit\Framework\TestCase;
 
-class AuthenticationServiceTest extends TestCase
+final class AuthenticationServiceTest extends TestCase
 {
     private AuthenticationService $auth;
 
+    #[Override]
     public function setUp(): void
     {
         $this->auth = new AuthenticationService();

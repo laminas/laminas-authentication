@@ -19,25 +19,17 @@
     </projectFiles>
 
     <issueHandlers>
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <directory name="src" />
+            </errorLevel>
+        </ClassMustBeFinal>
+
         <DeprecatedClass>
             <errorLevel type="suppress">
                 <referencedClass name="Laminas\Authentication\Adapter\Digest"/>
             </errorLevel>
         </DeprecatedClass>
-
-        <InternalMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::method"/>
-            </errorLevel>
-
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::willReturn"/>
-            </errorLevel>
-
-            <errorLevel type="suppress">
-                <referencedMethod name="PHPUnit\Framework\MockObject\Builder\InvocationMocker::with"/>
-            </errorLevel>
-        </InternalMethod>
     </issueHandlers>
 
     <plugins>

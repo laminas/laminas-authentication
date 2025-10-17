@@ -10,6 +10,7 @@ use Laminas\Authentication\Result as AuthenticationResult;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Sql;
 use Laminas\Db\Sql\Predicate\Operator as SqlOp;
+use Override;
 
 use function call_user_func;
 use function is_callable;
@@ -71,6 +72,7 @@ class CallbackCheckAdapter extends AbstractAdapter
      *
      * @return Sql\Select
      */
+    #[Override]
     protected function authenticateCreateSelect()
     {
         // get select
@@ -90,6 +92,7 @@ class CallbackCheckAdapter extends AbstractAdapter
      * @param  array $resultIdentity
      * @return AuthenticationResult
      */
+    #[Override]
     protected function authenticateValidateResult($resultIdentity)
     {
         try {
