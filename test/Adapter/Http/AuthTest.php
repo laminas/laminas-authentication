@@ -35,21 +35,21 @@ final class AuthTest extends TestCase
     /**
      * HTTP Basic configuration
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $_basicConfig;
 
     /**
      * HTTP Digest configuration
      *
-     * @var array
+     * @var array<string, string|int>
      */
     protected $_digestConfig;
 
     /**
      * HTTP Basic Digest configuration
      *
-     * @var array
+     * @var array<string, string|int>
      */
     protected $_bothConfig;
 
@@ -312,6 +312,16 @@ final class AuthTest extends TestCase
         $this->checkUnauthorized($data, $digest);
     }
 
+    public function testDigestAuthDifferentRealm(): void
+    {
+        // A user with valid Digest credentials for a specific realm should not be able
+        // to authenticate if the configured realm ('Test Realm' in this case) does not match.
+        $data = $this->doAuth($this->digestReply('Bryce', 'ThisIsNotMyPassword', 'Other Realm'), 'digest');
+
+        $digest = $this->digestChallenge();
+        $this->checkUnauthorized($data, $digest);
+    }
+
     public function testDigestTampered(): void
     {
         // Create the tampered header value
@@ -436,21 +446,20 @@ final class AuthTest extends TestCase
 
     /**
      * Constructs a client digest Authorization header
-     *
-     * @return string
      */
-    protected function digestReply(string $user, string $pass)
+    protected function digestReply(string $user, string $pass, ?string $realm = null): string
     {
         $nc       = '00000001';
         $timeout  = ((int) ceil(time() / 300)) * 300;
         $nonce    = md5($timeout . ':PHPUnit:Laminas\Authentication\Adapter\Http');
         $opaque   = md5('Opaque Data:Laminas\\Authentication\\Adapter\\Http');
         $cnonce   = md5('cnonce');
-        $response = md5(md5($user . ':' . $this->_digestConfig['realm'] . ':' . $pass) . ":$nonce:$nc:$cnonce:auth:"
+        $realm    = $realm ?? $this->_digestConfig['realm'];
+        $response = md5(md5($user . ':' . $realm . ':' . $pass) . ":$nonce:$nc:$cnonce:auth:"
                   . md5('GET:/'));
         return 'Digest '
                . 'username="Bryce", '
-               . 'realm="' . $this->_digestConfig['realm'] . '", '
+               . 'realm="' . $realm . '", '
                . 'nonce="' . $nonce . '", '
                . 'uri="/", '
                . 'response="' . $response . '", '

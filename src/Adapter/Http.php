@@ -582,6 +582,11 @@ class Http implements AdapterInterface
             return $this->challengeClient();
         }
 
+        // Verify that the client supplied realm matches the configured realm.
+        if ($this->realm !== $data['realm']) {
+            return $this->challengeClient();
+        }
+
         // Verify that the client sent back the same nonce
         if ($this->_calcNonce() !== $data['nonce']) {
             return $this->challengeClient();
@@ -690,7 +695,7 @@ class Http implements AdapterInterface
      * Parse Digest Authorization header
      *
      * @param  string $header Client's Authorization: HTTP header
-     * @return array|bool Data elements from header, or false if any part of
+     * @return array<string, string>|bool Data elements from header, or false if any part of
      *                    the header is invalid
      */
     // @codingStandardsIgnoreStart
