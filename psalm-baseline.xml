@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+<files psalm-version="6.19.1@e2ca44251c1f1aa2e35452d426895746b47de64e">
   <file src="src/Adapter/Callback.php">
     <MixedAssignment>
       <code><![CDATA[$identity]]></code>
@@ -388,7 +388,7 @@
       <code><![CDATA[new Adapter\DbTable($this->db())]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db(), 'users')]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b)]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, static fn($a, $b) => $a === $b)]]></code>
     </DeprecatedClass>
     <InvalidClass>
       <code><![CDATA[Adapter\Dbtable\Exception\InvalidArgumentException]]></code>
@@ -425,7 +425,7 @@
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
     <TooManyArguments>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, fn($a, $b) => $a === $b)]]></code>
+      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, static fn($a, $b) => $a === $b)]]></code>
     </TooManyArguments>
     <UndefinedInterfaceMethod>
       <code><![CDATA[$lastWherePart]]></code>
@@ -442,93 +442,37 @@
       <code><![CDATA[new Adapter\DbTable($this->db, 'users')]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db, 'users', 'username')]]></code>
     </DeprecatedClass>
-    <MixedArgument>
-      <code><![CDATA[$result->getMessages()]]></code>
-      <code><![CDATA[$result->getMessages()]]></code>
-      <code><![CDATA[$result->getMessages()]]></code>
-      <code><![CDATA[$whereParts]]></code>
-      <code><![CDATA[$whereParts]]></code>
-    </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$expressionData[0]]]></code>
       <code><![CDATA[$expressionData[0][0]]]></code>
-      <code><![CDATA[$lastWherePart[1]]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code><![CDATA[$expressionData]]></code>
-      <code><![CDATA[$lastWherePart]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result]]></code>
-      <code><![CDATA[$result2]]></code>
-      <code><![CDATA[$resultRow]]></code>
-      <code><![CDATA[$resultRow]]></code>
-      <code><![CDATA[$resultRow]]></code>
-      <code><![CDATA[$select]]></code>
-      <code><![CDATA[$select]]></code>
-      <code><![CDATA[$selectAfterAuth]]></code>
-      <code><![CDATA[$whereParts]]></code>
     </MixedAssignment>
     <MixedMethodCall>
+      <code><![CDATA[getExpressionData]]></code>
+    </MixedMethodCall>
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[getenv(
+            'TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE'
+        )]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
+    <PossiblyInvalidPropertyFetch>
+      <code><![CDATA[$resultRow->USERNAME]]></code>
+    </PossiblyInvalidPropertyFetch>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$lastWherePart[1]]]></code>
+    </PossiblyNullArrayAccess>
+    <PossiblyNullPropertyAssignmentValue>
+      <code><![CDATA[null]]></code>
+    </PossiblyNullPropertyAssignmentValue>
+    <PossiblyNullReference>
+      <code><![CDATA[$lastWherePart]]></code>
       <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[authenticate]]></code>
-      <code><![CDATA[getCode]]></code>
-      <code><![CDATA[getCode]]></code>
-      <code><![CDATA[getCode]]></code>
-      <code><![CDATA[getDbSelect]]></code>
       <code><![CDATA[getDbSelect]]></code>
       <code><![CDATA[getDbSelect]]></code>
       <code><![CDATA[getDbSelect]]></code>
       <code><![CDATA[getExpressionData]]></code>
-      <code><![CDATA[getIdentity]]></code>
-      <code><![CDATA[getIdentity]]></code>
-      <code><![CDATA[getMessages]]></code>
-      <code><![CDATA[getMessages]]></code>
-      <code><![CDATA[getMessages]]></code>
-      <code><![CDATA[getPredicates]]></code>
-      <code><![CDATA[getResultRowObject]]></code>
-      <code><![CDATA[getResultRowObject]]></code>
-      <code><![CDATA[getResultRowObject]]></code>
-      <code><![CDATA[isValid]]></code>
-      <code><![CDATA[isValid]]></code>
-      <code><![CDATA[isValid]]></code>
-      <code><![CDATA[isValid]]></code>
-      <code><![CDATA[isValid]]></code>
-      <code><![CDATA[setAmbiguityIdentity]]></code>
-      <code><![CDATA[setAmbiguityIdentity]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setCredential]]></code>
-      <code><![CDATA[setIdentity]]></code>
-      <code><![CDATA[setIdentity]]></code>
-      <code><![CDATA[setIdentity]]></code>
       <code><![CDATA[setIdentity]]></code>
       <code><![CDATA[setIdentity]]></code>
       <code><![CDATA[setIdentity]]></code>
@@ -541,51 +485,20 @@
       <code><![CDATA[setIdentity]]></code>
       <code><![CDATA[setIdentity]]></code>
       <code><![CDATA[setTableName]]></code>
-      <code><![CDATA[where]]></code>
-      <code><![CDATA[where]]></code>
-    </MixedMethodCall>
-    <MixedPropertyFetch>
-      <code><![CDATA[$resultRow->USERNAME]]></code>
-      <code><![CDATA[$selectAfterAuth->where]]></code>
-    </MixedPropertyFetch>
-    <PossiblyFalsePropertyAssignmentValue>
-      <code><![CDATA[getenv(
-            'TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_CREDENTIAL_TABLE'
-        )]]></code>
-    </PossiblyFalsePropertyAssignmentValue>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[null]]></code>
-    </PossiblyNullPropertyAssignmentValue>
+    </PossiblyNullReference>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[$this->db instanceof DbAdapter]]></code>
     </RedundantConditionGivenDocblockType>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_DB2_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
-    <UndefinedThisPropertyAssignment>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-      <code><![CDATA[$this->authAdapter]]></code>
-    </UndefinedThisPropertyFetch>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[$lastWherePart]]></code>
+    </UndefinedInterfaceMethod>
+    <UndefinedMethod>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+      <code><![CDATA[setAmbiguityIdentity]]></code>
+    </UndefinedMethod>
   </file>
   <file src="test/Adapter/DbTable/CredentialTreatmentAdapterTest.php">
     <DeprecatedClass>
