@@ -41,6 +41,8 @@ final class CredentialTreatmentAdapterDb2Test extends TestCase
      */
     protected $tableName;
 
+    private ?Adapter\DbTable\CredentialTreatmentAdapter $authAdapter = null;
+
     /**
      * Set up test configuration
      */
