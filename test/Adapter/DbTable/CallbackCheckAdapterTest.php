@@ -92,7 +92,14 @@ final class CallbackCheckAdapterTest extends TestCase
      */
     public function testAuthenticateSuccessWithCallback(): void
     {
-        $adapter = new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, static fn($a, $b) => $a === $b);
+        $adapter = new Adapter\DbTable(
+            $this->db(),
+            'users',
+            'username',
+            'password',
+            null,
+            static fn($a, $b) => $a === $b
+        );
         $adapter->setIdentity('my_username');
         $adapter->setCredential('my_password');
         $result = $adapter->authenticate();

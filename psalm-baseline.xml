@@ -385,10 +385,17 @@
   </file>
   <file src="test/Adapter/DbTable/CallbackCheckAdapterTest.php">
     <DeprecatedClass>
+      <code><![CDATA[new Adapter\DbTable(
+            $this->db(),
+            'users',
+            'username',
+            'password',
+            null,
+            static fn($a, $b) => $a === $b
+        )]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db())]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db(), 'users')]]></code>
       <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username')]]></code>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, static fn($a, $b) => $a === $b)]]></code>
     </DeprecatedClass>
     <InvalidClass>
       <code><![CDATA[Adapter\Dbtable\Exception\InvalidArgumentException]]></code>
@@ -425,7 +432,14 @@
       <code><![CDATA[! getenv('TESTS_LAMINAS_AUTH_ADAPTER_DBTABLE_PDO_SQLITE_ENABLED')]]></code>
     </RiskyTruthyFalsyComparison>
     <TooManyArguments>
-      <code><![CDATA[new Adapter\DbTable($this->db(), 'users', 'username', 'password', null, static fn($a, $b) => $a === $b)]]></code>
+      <code><![CDATA[new Adapter\DbTable(
+            $this->db(),
+            'users',
+            'username',
+            'password',
+            null,
+            static fn($a, $b) => $a === $b
+        )]]></code>
     </TooManyArguments>
     <UndefinedInterfaceMethod>
       <code><![CDATA[$lastWherePart]]></code>
