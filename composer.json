@@ -21,26 +21,27 @@
         },
         "sort-packages": true,
         "platform": {
-            "php": "8.2.99"
+            "php": "8.3.99"
         }
     },
     "require": {
-        "php": "~8.2.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "php": "~8.3 || ~8.4 || ~8.5 || ~8.6",
         "ext-mbstring": "*",
         "laminas/laminas-stdlib": "^3.19.0"
     },
     "require-dev": {
-        "boundwize/structarmed": "^0.18.10",
+        "boundwize/structarmed": "^0.18.11",
+        "laminas/internal-tooling": "1.0.x-dev",
         "laminas/laminas-coding-standard": "~3.1.0",
-        "laminas/laminas-db": "^2.20.0",
-        "laminas/laminas-http": "^2.19.0",
-        "laminas/laminas-ldap": "^2.18.1",
-        "laminas/laminas-session": "^2.21.0",
-        "laminas/laminas-uri": "^2.12.0",
-        "laminas/laminas-validator": "^2.64.1",
-        "phpunit/phpunit": "^11.5.42",
-        "psalm/plugin-phpunit": "^0.19.5",
-        "vimeo/psalm": "^6.13.1"
+        "laminas/laminas-db": "^2.22.0",
+        "laminas/laminas-http": "^2.23.0",
+        "laminas/laminas-ldap": "^2.20.0",
+        "laminas/laminas-session": "^2.27.0",
+        "laminas/laminas-uri": "^2.14.0",
+        "laminas/laminas-validator": "^2.65.0",
+        "phpunit/phpunit": "^11.5.57",
+        "psalm/plugin-phpunit": "^0.19.7",
+        "vimeo/psalm": "^6.19.1"
     },
     "suggest": {
         "laminas/laminas-db": "Laminas\\Db component",
