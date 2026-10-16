@@ -1,5 +1,5 @@
 # Minimum version of PHP supported by this project
-PHP_VERSION ?= 8.2
+PHP_VERSION ?= 8.3
 
 # Uncomment and modify for custom extensions. Don't use "Quotes".
 PHP_EXTENSIONS ?= mbstring json xdebug ldap pdo-sqlite
