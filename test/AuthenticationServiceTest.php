@@ -72,9 +72,7 @@ final class AuthenticationServiceTest extends TestCase
 
     protected function authenticate(?TestAsset\ValidatableAdapter $adapter = null): Result
     {
-        if ($adapter === null) {
-            $adapter = new TestAsset\ValidatableAdapter();
-        }
+        $adapter ??= new TestAsset\ValidatableAdapter();
         return $this->auth->authenticate($adapter);
     }
 
