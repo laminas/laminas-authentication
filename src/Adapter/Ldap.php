@@ -20,6 +20,7 @@ use function is_array;
 use function preg_quote;
 use function preg_replace;
 use function strcasecmp;
+use function strtolower;
 use function substr;
 use function trim;
 
@@ -430,8 +431,8 @@ class Ldap extends AbstractAdapter
 
         $returnObject = new stdClass();
 
-        $returnAttribs = array_map('strtolower', $returnAttribs);
-        $omitAttribs   = array_map('strtolower', $omitAttribs);
+        $returnAttribs = array_map(strtolower(...), $returnAttribs);
+        $omitAttribs   = array_map(strtolower(...), $omitAttribs);
         $returnAttribs = array_diff($returnAttribs, $omitAttribs);
 
         $entry = $this->getLdap()->getEntry($this->authenticatedDn, $returnAttribs, true);

@@ -126,10 +126,8 @@ class Authentication extends AbstractValidator
                             'Message key in code_map option must be a non-empty string'
                         );
                     }
-                    if (! isset($this->messageTemplates[$template])) {
-                        $this->messageTemplates[$template] = $this->messageTemplates[static::GENERAL];
-                    }
-                    $this->codeMap[(int) $code] = $template;
+                    $this->messageTemplates[$template] ??= $this->messageTemplates[static::GENERAL];
+                    $this->codeMap[(int) $code]          = $template;
                 }
             }
         }

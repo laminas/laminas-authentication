@@ -3,7 +3,7 @@
 `Laminas\Authentication\Adapter\Ldap` supports web application authentication with
 LDAP services. Its features include username and domain name canonicalization,
 multi-domain authentication, and failover capabilities. It has been tested to
-work with [Microsoft Active Directory](http://www.microsoft.com/windowsserver2003/technologies/directory/activedirectory/)
+work with [Microsoft Active Directory](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview)
 and [OpenLDAP](http://www.openldap.org/), but it should also work with other
 LDAP service providers.
 
@@ -94,7 +94,7 @@ The `Laminas\Authentication\Adapter\Ldap` constructor accepts three parameters.
 
 The `$options` parameter is required and must be an array containing one or
 more sets of options.  Note that it is **an array of arrays**, with each
-sub-array providing [laminas-ldap](https://docs.laminas.dev/laminas.ldap.introduction.html)
+sub-array providing [laminas-ldap](https://docs.laminas.dev/laminas-ldap/)
 options. Even if you will be using only one LDAP server, the options must still
 be within a sub-array.
 

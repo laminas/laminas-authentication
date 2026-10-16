@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.19.1@e2ca44251c1f1aa2e35452d426895746b47de64e">
+<files psalm-version="6.20.0@804f03c0c183d149fcd4b8c7c0c9b3fbf836d34c">
   <file src="src/Adapter/Callback.php">
     <MixedAssignment>
       <code><![CDATA[$identity]]></code>
@@ -296,11 +296,9 @@
       <code><![CDATA[$adapterOptions['groupDn']]]></code>
       <code><![CDATA[$adapterOptions['groupScope']]]></code>
       <code><![CDATA[$adapterOptions['memberAttr']]]></code>
-      <code><![CDATA[$omitAttribs]]></code>
       <code><![CDATA[$password]]></code>
       <code><![CDATA[$password]]></code>
       <code><![CDATA[$password]]></code>
-      <code><![CDATA[$returnAttribs]]></code>
       <code><![CDATA[$username]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
@@ -343,6 +341,14 @@
     </TooManyArguments>
   </file>
   <file src="src/Result.php">
+    <MissingClassConstType>
+      <code><![CDATA[FAILURE = 0]]></code>
+      <code><![CDATA[FAILURE_CREDENTIAL_INVALID = -3]]></code>
+      <code><![CDATA[FAILURE_IDENTITY_AMBIGUOUS = -2]]></code>
+      <code><![CDATA[FAILURE_IDENTITY_NOT_FOUND = -1]]></code>
+      <code><![CDATA[FAILURE_UNCATEGORIZED = -4]]></code>
+      <code><![CDATA[SUCCESS = 1]]></code>
+    </MissingClassConstType>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(int) $code]]></code>
     </RedundantCastGivenDocblockType>
@@ -353,6 +359,10 @@
     </MixedAssignment>
   </file>
   <file src="src/Storage/Session.php">
+    <MissingClassConstType>
+      <code><![CDATA[MEMBER_DEFAULT = 'storage']]></code>
+      <code><![CDATA[NAMESPACE_DEFAULT = 'Laminas_Auth']]></code>
+    </MissingClassConstType>
     <PossiblyUnusedMethod>
       <code><![CDATA[getMember]]></code>
       <code><![CDATA[getNamespace]]></code>
@@ -363,6 +373,19 @@
       <code><![CDATA[$this->credential === null]]></code>
       <code><![CDATA[$this->identity === null]]></code>
     </DocblockTypeContradiction>
+    <MissingClassConstType>
+      <code><![CDATA[CODE_MAP = [
+        Result::FAILURE_IDENTITY_NOT_FOUND => self::IDENTITY_NOT_FOUND,
+        Result::FAILURE_CREDENTIAL_INVALID => self::CREDENTIAL_INVALID,
+        Result::FAILURE_IDENTITY_AMBIGUOUS => self::IDENTITY_AMBIGUOUS,
+        Result::FAILURE_UNCATEGORIZED      => self::UNCATEGORIZED,
+    ]]]></code>
+      <code><![CDATA[CREDENTIAL_INVALID = 'credentialInvalid']]></code>
+      <code><![CDATA[GENERAL            = 'general']]></code>
+      <code><![CDATA[IDENTITY_AMBIGUOUS = 'identityAmbiguous']]></code>
+      <code><![CDATA[IDENTITY_NOT_FOUND = 'identityNotFound']]></code>
+      <code><![CDATA[UNCATEGORIZED      = 'uncategorized']]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[$options['adapter']]]></code>
       <code><![CDATA[$options['service']]]></code>
