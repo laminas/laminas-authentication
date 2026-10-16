@@ -13,3 +13,4 @@
 /psalm-baseline.xml export-ignore
 /renovate.json export-ignore
 /structarmed.php export-ignore
+tools export-ignore
