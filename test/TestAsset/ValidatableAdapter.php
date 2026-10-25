@@ -11,12 +11,10 @@ use Override;
 
 final class ValidatableAdapter extends AuthenticationAdapter
 {
-    /** @var int Authentication result code */
-    private int $code;
-
-    public function __construct(int $code = AuthenticationResult::SUCCESS)
-    {
-        $this->code = $code;
+    public function __construct(
+        /** @var int Authentication result code */
+        private readonly int $code = AuthenticationResult::SUCCESS
+    ) {
     }
 
     /**

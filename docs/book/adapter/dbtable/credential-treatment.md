@@ -7,7 +7,7 @@ if an identity is returned, authentication succeeds. Credential
 treatments depends on your RDBMS, and while simple hashing function such as
 `md5` and `sha1` are generally available, it is recommended not to use them and
 rather use the RDBMS specific function such as
-[`PASSWORD(?)` for MySQL](http://dev.mysql.com/doc/refman/5.7/en/password-hashing.html) or
+[`PASSWORD(?)` for MySQL](https://docs.oracle.com/cd/E17952_01/mysql-5.7-en/password-hashing.html) or
 [`crypt()` for PostgreSQL](https://www.postgresql.org/docs/11/pgcrypto.html#id-1.11.7.34.6).
 More details are available in the next section.
 
