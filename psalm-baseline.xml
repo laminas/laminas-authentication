@@ -159,8 +159,6 @@
       <code><![CDATA[$config['realm']]]></code>
       <code><![CDATA[$config['realm']]]></code>
       <code><![CDATA[$config['realm']]]></code>
-      <code><![CDATA[$data['realm']]]></code>
-      <code><![CDATA[$data['response']]]></code>
       <code><![CDATA[$data['username']]]></code>
       <code><![CDATA[$userAgent]]></code>
     </MixedArgument>
@@ -178,21 +176,12 @@
       <code><![CDATA[getFieldValue]]></code>
     </MixedMethodCall>
     <MixedOperand>
-      <code><![CDATA[$data['cnonce']]]></code>
-      <code><![CDATA[$data['cnonce']]]></code>
-      <code><![CDATA[$data['nc']]]></code>
-      <code><![CDATA[$data['nonce']]]></code>
-      <code><![CDATA[$data['nonce']]]></code>
-      <code><![CDATA[$data['qop']]]></code>
-      <code><![CDATA[$data['uri']]]></code>
       <code><![CDATA[$userAgent]]></code>
     </MixedOperand>
     <PossiblyInvalidArrayAccess>
       <code><![CDATA[$data['cnonce']]]></code>
       <code><![CDATA[$data['cnonce']]]></code>
       <code><![CDATA[$data['nc']]]></code>
-      <code><![CDATA[$data['nonce']]]></code>
-      <code><![CDATA[$data['nonce']]]></code>
       <code><![CDATA[$data['nonce']]]></code>
       <code><![CDATA[$data['opaque']]]></code>
       <code><![CDATA[$data['qop']]]></code>
@@ -648,20 +637,6 @@
       <code><![CDATA[has]]></code>
       <code><![CDATA[has]]></code>
     </MixedMethodCall>
-    <MixedOperand>
-      <code><![CDATA[$this->_basicConfig['realm']]]></code>
-      <code><![CDATA[$this->_basicConfig['realm']]]></code>
-      <code><![CDATA[$this->_basicConfig['realm']]]></code>
-      <code><![CDATA[$this->_basicConfig['realm']]]></code>
-      <code><![CDATA[$this->_basicConfig['realm']]]></code>
-      <code><![CDATA[$this->_bothConfig['digest_domains']]]></code>
-      <code><![CDATA[$this->_bothConfig['realm']]]></code>
-      <code><![CDATA[$this->_bothConfig['realm']]]></code>
-      <code><![CDATA[$this->_bothConfig['realm']]]></code>
-      <code><![CDATA[$this->_digestConfig['realm']]]></code>
-      <code><![CDATA[$this->_digestConfig['realm']]]></code>
-      <code><![CDATA[$this->_digestConfig['realm']]]></code>
-    </MixedOperand>
     <PossiblyInvalidMethodCall>
       <code><![CDATA[addHeaderLine]]></code>
       <code><![CDATA[addHeaderLine]]></code>
