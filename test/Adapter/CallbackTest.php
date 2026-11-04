@@ -38,7 +38,7 @@ final class CallbackTest extends TestCase
      */
     public function testCallbackSetGetMethods(): void
     {
-        $callback = function (): void {
+        $callback = static function (): void {
         };
         $this->adapter->setCallback($callback);
         $this->assertEquals($callback, $this->adapter->getCallback());
@@ -49,7 +49,7 @@ final class CallbackTest extends TestCase
      */
     public function testClassConstructorSetCallback(): void
     {
-        $callback = function (): void {
+        $callback = static function (): void {
         };
         $adapter  = new Callback($callback);
         $this->assertEquals($callback, $adapter->getCallback());
@@ -73,7 +73,7 @@ final class CallbackTest extends TestCase
         $adapter = $this->adapter;
         $adapter->setIdentity('testIdentity');
         $adapter->setCredential('testCredential');
-        $callback = function (mixed $identity, mixed $credential) use ($adapter): void {
+        $callback = static function (mixed $identity, mixed $credential) use ($adapter): void {
             self::assertEquals($identity, $adapter->getIdentity());
             self::assertEquals($credential, $adapter->getCredential());
         };
@@ -87,7 +87,7 @@ final class CallbackTest extends TestCase
     public function testAuthenticateResultIfCallbackThrows(): void
     {
         $exception = new Exception('Callback Exception');
-        $callback  = function () use ($exception): void {
+        $callback  = static function () use ($exception): void {
             throw $exception;
         };
         $this->adapter->setCallback($callback);
@@ -119,7 +119,7 @@ final class CallbackTest extends TestCase
     public function testAuthenticateResultIfCallbackReturnsIdentity(): void
     {
         $adapter  = $this->adapter;
-        $callback = fn(): string => 'identity';
+        $callback = static fn(): string => 'identity';
         $adapter->setCallback($callback);
         $result   = $adapter->authenticate();
         self::assertTrue($result->isValid());
